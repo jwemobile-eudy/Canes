@@ -1,0 +1,2 @@
+# Canes
+Carolina Hurricanes Tracker
