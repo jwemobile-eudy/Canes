@@ -355,10 +355,18 @@ async function fj(url) {
   throw new Error('All proxies failed for: ' + url);
 }
 
-function fmtDate(iso){ return new Date(iso).toLocaleDateString('en-US',{month:'short',day:'numeric'}); }
-function fmtMo(iso)  { return new Date(iso).toLocaleDateString('en-US',{month:'short'}).toUpperCase(); }
-function fmtDay(iso) { return new Date(iso).getDate(); }
-function fmtTime(iso){ return new Date(iso).toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit',timeZoneName:'short'}); }
+function fmtDate(iso){ 
+  return new Date(iso).toLocaleDateString('en-US',{month:'short',day:'numeric',timeZone:'America/New_York'}); 
+}
+function fmtMo(iso)  { 
+  return new Date(iso).toLocaleDateString('en-US',{month:'short',timeZone:'America/New_York'}).toUpperCase(); 
+}
+function fmtDay(iso) { 
+  return new Date(iso).toLocaleDateString('en-US',{day:'numeric',timeZone:'America/New_York'}); 
+}
+function fmtTime(iso){ 
+  return new Date(iso).toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit',timeZoneName:'short',timeZone:'America/New_York'}); 
+}
 
 function setSurge(wins, losses, seed, ppW, ppL) {
   const gp = wins + losses;
