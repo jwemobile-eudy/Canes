@@ -32,28 +32,37 @@
   header{position:relative;background:var(--black);border-bottom:3px solid var(--red);overflow:hidden;}
   .hbg{position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent,transparent 60px,rgba(204,0,0,0.04) 60px,rgba(204,0,0,0.04) 61px),repeating-linear-gradient(0deg,transparent,transparent 60px,rgba(204,0,0,0.04) 60px,rgba(204,0,0,0.04) 61px);}
   .hglow{position:absolute;top:-80px;left:50%;transform:translateX(-50%);width:700px;height:300px;background:radial-gradient(ellipse,rgba(204,0,0,0.2) 0%,transparent 70%);pointer-events:none;}
-  .header-inner{position:relative;z-index:2;display:flex;align-items:center;justify-content:space-between;padding:26px 40px 22px;gap:20px;flex-wrap:wrap;}
+  .header-inner{position:relative;z-index:2;display:flex;align-items:center;padding:26px 40px 22px;gap:20px;}
   .logo-block{display:flex;align-items:center;gap:16px;}
   .site-title h1{font-family:'Bebas Neue',sans-serif;font-size:3rem;letter-spacing:2px;color:var(--white);text-shadow:0 0 30px var(--red-glow);line-height:1;}
   .site-title h1 span{color:var(--red);}
   .site-title p{font-family:'Barlow Condensed',sans-serif;font-size:0.78rem;letter-spacing:3px;text-transform:uppercase;color:var(--silver);margin-top:3px;}
-  .header-right{display:flex;flex-direction:column;align-items:flex-end;gap:5px;}
-  .live-pill{display:inline-flex;align-items:center;gap:6px;background:var(--red);color:white;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:0.7rem;letter-spacing:2px;text-transform:uppercase;padding:4px 12px;border-radius:2px;}
-  .live-dot{width:7px;height:7px;background:white;border-radius:50%;animation:blink 1.2s ease-in-out infinite;}
-  @keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
-  .hg-score{font-family:'Bebas Neue',sans-serif;font-size:1.9rem;letter-spacing:2px;text-align:right;}
-  .hg-sub{font-family:'Barlow Condensed',sans-serif;font-size:0.68rem;letter-spacing:2px;color:var(--silver);text-align:right;text-transform:uppercase;}
-  .no-live{font-family:'Barlow Condensed',sans-serif;font-size:0.8rem;letter-spacing:2px;color:var(--silver);text-transform:uppercase;}
 
   /* SURGE */
-  .surge-section{background:linear-gradient(135deg,#100000,var(--gray-dark));border-bottom:2px solid var(--gray-border);padding:20px 40px;}
-  .surge-label{font-family:'Barlow Condensed',sans-serif;font-size:0.7rem;letter-spacing:3px;text-transform:uppercase;color:var(--red);margin-bottom:5px;}
+  .surge-section{background:linear-gradient(135deg,#100000,var(--gray-dark));border-bottom:2px solid var(--gray-border);padding:20px 40px;cursor:pointer;user-select:none;}
+  .surge-section:active{opacity:0.85;}
+  .surge-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:5px;}
+  .surge-label{font-family:'Barlow Condensed',sans-serif;font-size:0.7rem;letter-spacing:3px;text-transform:uppercase;color:var(--red);}
+  .surge-tap-hint{font-family:'Barlow Condensed',sans-serif;font-size:0.65rem;letter-spacing:2px;text-transform:uppercase;color:var(--silver);opacity:0.6;}
   .surge-title{font-family:'Bebas Neue',sans-serif;font-size:1.35rem;letter-spacing:2px;margin-bottom:11px;}
   .surge-bar-wrap{position:relative;background:var(--gray-border);border-radius:3px;height:20px;overflow:hidden;}
   .surge-fill{height:100%;background:linear-gradient(90deg,var(--red-dark),#ff2222);border-radius:3px;box-shadow:0 0 16px var(--red-glow);transition:width 1.6s cubic-bezier(0.4,0,0.2,1);width:0%;}
   .surge-num{position:absolute;right:10px;top:50%;transform:translateY(-50%);font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:0.76rem;color:white;letter-spacing:1px;}
   .surge-ends{display:flex;justify-content:space-between;margin-top:5px;}
   .surge-ends span{font-family:'Barlow Condensed',sans-serif;font-size:0.7rem;color:var(--silver);letter-spacing:1px;}
+
+  /* SURGE EXPLAINER */
+  .surge-explainer{overflow:hidden;max-height:0;transition:max-height 0.4s ease;background:rgba(0,0,0,0.3);border-top:1px solid var(--gray-border);margin:12px -40px -20px;padding:0 40px;}
+  .surge-explainer.open{max-height:200px;}
+  .surge-explainer-inner{padding:14px 0;}
+  .surge-bullet{display:flex;align-items:flex-start;gap:10px;margin-bottom:8px;}
+  .surge-bullet:last-child{margin-bottom:0;}
+  .surge-bullet-bar{width:3px;flex-shrink:0;margin-top:3px;border-radius:2px;align-self:stretch;}
+  .surge-bullet-bar.b1{background:var(--red);}
+  .surge-bullet-bar.b2{background:#ff7700;}
+  .surge-bullet-bar.b3{background:var(--green);}
+  .surge-bullet-text{font-family:'Barlow Condensed',sans-serif;font-size:0.8rem;color:var(--silver);letter-spacing:0.5px;line-height:1.4;}
+  .surge-bullet-text strong{color:var(--white);}
 
   /* GRID */
   .main{padding:26px 40px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;max-width:1400px;margin:0 auto;}
@@ -92,7 +101,7 @@
   @keyframes pdot{0%,100%{border-color:var(--silver)}50%{border-color:white}}
 
   /* STANDINGS */
-  .standings-card{grid-column:3/4;grid-row:1/3;}
+  .standings-card{grid-column:2/3;}
   .s-row{display:flex;align-items:center;padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.05);gap:7px;}
   .s-row:last-child{border-bottom:none;}
   .s-row.hl{background:rgba(204,0,0,0.08);margin:0 -18px;padding:6px 18px;border-left:3px solid var(--red);}
@@ -106,8 +115,10 @@
 
   /* RESULTS */
   .results-card{grid-column:1/2;}
-  .r-row{display:flex;align-items:center;padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.05);gap:7px;}
+  .r-row{display:flex;align-items:center;padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.05);gap:7px;cursor:pointer;transition:background 0.15s ease;}
+  .r-row:hover{background:rgba(255,255,255,0.03);}
   .r-row:last-child{border-bottom:none;}
+  .r-row.expanded{background:rgba(204,0,0,0.05);}
   .r-badge{width:24px;height:24px;border-radius:3px;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:0.85rem;flex-shrink:0;}
   .r-badge.W{background:rgba(0,180,60,0.16);color:var(--green);border:1px solid rgba(0,180,60,0.22);}
   .r-badge.L{background:rgba(204,0,0,0.16);color:var(--red);border:1px solid rgba(204,0,0,0.22);}
@@ -115,9 +126,23 @@
   .r-opp .loc{color:var(--silver);font-size:0.68rem;display:block;}
   .r-score{font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:2px;}
   .r-date{font-family:'Barlow Condensed',sans-serif;font-size:0.66rem;color:var(--silver);width:30px;text-align:right;}
+  .r-chevron{font-size:0.6rem;color:var(--silver);margin-left:4px;transition:transform 0.2s ease;flex-shrink:0;}
+  .r-row.expanded .r-chevron{transform:rotate(180deg);}
+
+  /* PLAYER STATS INLINE */
+  .r-players{overflow:hidden;max-height:0;transition:max-height 0.35s ease;background:rgba(0,0,0,0.25);margin:0 -18px;border-top:0px solid var(--gray-border);}
+  .r-players.open{max-height:300px;border-top:1px solid var(--gray-border);}
+  .r-players-inner{padding:10px 18px 12px;}
+  .r-players-label{font-family:'Barlow Condensed',sans-serif;font-size:0.62rem;letter-spacing:3px;text-transform:uppercase;color:var(--red);margin-bottom:8px;}
+  .r-player-row{display:flex;align-items:center;padding:4px 0;border-bottom:1px solid rgba(255,255,255,0.04);gap:8px;}
+  .r-player-row:last-child{border-bottom:none;}
+  .r-player-name{flex:1;font-family:'Barlow Condensed',sans-serif;font-size:0.82rem;font-weight:600;}
+  .r-player-pos{font-family:'Barlow Condensed',sans-serif;font-size:0.65rem;color:var(--silver);width:22px;}
+  .r-player-stat{font-family:'Barlow Condensed',sans-serif;font-size:0.75rem;color:var(--ice-dim);letter-spacing:0.5px;}
+  .r-player-loading{font-family:'Barlow Condensed',sans-serif;font-size:0.75rem;color:var(--silver);letter-spacing:2px;text-transform:uppercase;padding:6px 0;}
 
   /* STATS */
-  .stats-card{grid-column:2/3;}
+  .stats-card{grid-column:3/4;grid-row:1/3;}
   .stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;}
   .stat-block{background:var(--gray-dark);border:1px solid var(--gray-border);border-radius:3px;padding:11px 11px 7px;position:relative;overflow:hidden;}
   .stat-block::after{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:var(--red);}
@@ -139,7 +164,7 @@
   .u-type.regular{color:var(--ice-dim);background:rgba(208,232,245,0.06);border:1px solid rgba(208,232,245,0.09);}
 
   /* RIVAL */
-  .rival-card{grid-column:3/4;}
+  .rival-card{grid-column:1/3;}
   .rv-row{display:flex;align-items:center;padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.05);gap:8px;}
   .rv-row:last-child{border-bottom:none;}
   .rv-name{flex:1;font-family:'Barlow Condensed',sans-serif;font-size:0.86rem;font-weight:600;}
@@ -156,23 +181,23 @@
   /* RESPONSIVE — TABLET */
   @media(max-width:900px){
     .main{grid-template-columns:1fr 1fr;padding:14px;gap:12px;}
-    .game-card,.standings-card,.upcoming-card,.rival-card{grid-column:1/3;grid-row:auto;}
+    .game-card,.upcoming-card,.rival-card{grid-column:1/3;grid-row:auto;}
+    .standings-card{grid-column:1/2;grid-row:auto;}
+    .stats-card{grid-column:2/3;grid-row:auto;}
     .surge-section{padding:16px 18px;}
+    .surge-explainer{margin:12px -18px -16px;}
     .header-inner{padding:18px 18px 14px;}
     footer{padding:12px 18px;}
   }
 
   /* RESPONSIVE — MOBILE */
   @media(max-width:560px){
-    .header-inner{flex-direction:column;align-items:flex-start;padding:16px 16px 14px;gap:12px;}
+    .header-inner{padding:16px 16px 14px;}
     .logo-block{gap:12px;}
     .site-title h1{font-size:2rem;letter-spacing:1px;}
     .site-title p{font-size:0.7rem;letter-spacing:2px;}
-    .header-right{width:100%;flex-direction:row;align-items:center;justify-content:flex-start;gap:10px;padding:10px 0 0;border-top:1px solid var(--gray-border);}
-    .hg-score{font-size:1.4rem;text-align:left;}
-    .hg-sub{text-align:left;font-size:0.65rem;}
-    .no-live{font-size:0.72rem;}
     .surge-section{padding:14px 16px;}
+    .surge-explainer{margin:12px -16px -14px;}
     .surge-title{font-size:1.1rem;margin-bottom:9px;}
     .surge-ends span:nth-child(2){display:none;}
     .main{grid-template-columns:1fr;padding:10px;gap:10px;}
@@ -230,12 +255,14 @@
         <p>Carolina Hurricanes · Live Dashboard</p>
       </div>
     </div>
-    <div class="header-right" id="header-live"><div class="no-live">Loading…</div></div>
   </div>
 </header>
 
-<div class="surge-section">
-  <div class="surge-label">⚡ Storm Surge Rating</div>
+<div class="surge-section" id="surge-section">
+  <div class="surge-top">
+    <div class="surge-label">⚡ Storm Surge Rating</div>
+    <div class="surge-tap-hint">Tap to learn more</div>
+  </div>
   <div class="surge-title">SEASON DOMINANCE METER</div>
   <div class="surge-bar-wrap">
     <div class="surge-fill" id="surge-fill"></div>
@@ -245,6 +272,22 @@
     <span>🌧 Mild</span>
     <span>Based on W%, Conference Seed, Playoff Record</span>
     <span>⚡ Category 5</span>
+  </div>
+  <div class="surge-explainer" id="surge-explainer">
+    <div class="surge-explainer-inner">
+      <div class="surge-bullet">
+        <div class="surge-bullet-bar b1"></div>
+        <div class="surge-bullet-text"><strong>Win % (50 pts)</strong> — Regular season wins divided by games played. A .646 win rate scores near 32 of 50 possible points.</div>
+      </div>
+      <div class="surge-bullet">
+        <div class="surge-bullet-bar b2"></div>
+        <div class="surge-bullet-text"><strong>Conference Seed (30 pts)</strong> — Seed #1 scores a full 30. Each lower seed drops proportionally. CAR at #1 earns the max.</div>
+      </div>
+      <div class="surge-bullet">
+        <div class="surge-bullet-bar b3"></div>
+        <div class="surge-bullet-text"><strong>Playoff Record (20 pts)</strong> — Playoff win % times 20. Going 2-0 in Round 1 scores the full 20 points.</div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -272,14 +315,14 @@
     <div class="card-body" id="standings-body"><p class="api-error">Loading…</p></div>
   </div>
 
-  <div class="card upcoming-card">
+  <div class="card stats-card">
     <div class="card-header">
       <div>
-        <div class="card-label">Schedule</div>
-        <div class="card-title">Upcoming Games</div>
+        <div class="card-label">2025–26 Season</div>
+        <div class="card-title">Team Stats</div>
       </div>
     </div>
-    <div class="card-body" id="upcoming-body"><p class="api-error">Loading…</p></div>
+    <div class="card-body" id="stats-body"><p class="api-error">Loading…</p></div>
   </div>
 
   <div class="card results-card">
@@ -293,14 +336,14 @@
     <div class="card-body" id="results-body"><p class="api-error">Loading…</p></div>
   </div>
 
-  <div class="card stats-card">
+  <div class="card upcoming-card">
     <div class="card-header">
       <div>
-        <div class="card-label">2025–26 Season</div>
-        <div class="card-title">Team Stats</div>
+        <div class="card-label">Schedule</div>
+        <div class="card-title">Upcoming Games</div>
       </div>
     </div>
-    <div class="card-body" id="stats-body"><p class="api-error">Loading…</p></div>
+    <div class="card-body" id="upcoming-body"><p class="api-error">Loading…</p></div>
   </div>
 
   <div class="card rival-card">
@@ -336,6 +379,7 @@ const API = {
   standings:  `https://api-web.nhle.com/v1/standings/now`,
   schedule:   `https://api-web.nhle.com/v1/club-schedule-season/${CAR}/${SEASON}`,
   scoreboard: `https://api-web.nhle.com/v1/score/now`,
+  boxscore:   id => `https://api-web.nhle.com/v1/gamecenter/${id}/boxscore`,
 };
 const PROXIES = [
   u => `https://corsproxy.io/?url=${encodeURIComponent(u)}`,
@@ -352,21 +396,20 @@ async function fj(url) {
       if (r.ok) return r.json();
     } catch(e) { continue; }
   }
-  throw new Error('All proxies failed for: ' + url);
+  throw new Error('All proxies failed');
 }
 
-function fmtDate(iso){ 
-  return new Date(iso).toLocaleDateString('en-US',{month:'short',day:'numeric',timeZone:'America/New_York'}); 
-}
-function fmtMo(iso)  { 
-  return new Date(iso).toLocaleDateString('en-US',{month:'short',timeZone:'America/New_York'}).toUpperCase(); 
-}
-function fmtDay(iso) { 
-  return new Date(iso).toLocaleDateString('en-US',{day:'numeric',timeZone:'America/New_York'}); 
-}
-function fmtTime(iso){ 
-  return new Date(iso).toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit',timeZoneName:'short',timeZone:'America/New_York'}); 
-}
+function fmtDate(iso){ return new Date(iso).toLocaleDateString('en-US',{month:'short',day:'numeric',timeZone:'America/New_York'}); }
+function fmtMo(iso)  { return new Date(iso).toLocaleDateString('en-US',{month:'short',timeZone:'America/New_York'}).toUpperCase(); }
+function fmtDay(iso) { return new Date(iso).toLocaleDateString('en-US',{day:'numeric',timeZone:'America/New_York'}); }
+function fmtTime(iso){ return new Date(iso).toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit',timeZoneName:'short',timeZone:'America/New_York'}); }
+
+// Surge meter toggle
+document.getElementById('surge-section').addEventListener('click', () => {
+  document.getElementById('surge-explainer').classList.toggle('open');
+  document.querySelector('.surge-tap-hint').textContent =
+    document.getElementById('surge-explainer').classList.contains('open') ? 'Tap to close' : 'Tap to learn more';
+});
 
 function setSurge(wins, losses, seed, ppW, ppL) {
   const gp = wins + losses;
@@ -435,6 +478,62 @@ async function loadStandings() {
   return carData;
 }
 
+// Fetch and render player stats for a game
+async function loadPlayerStats(gameId, containerId) {
+  const el = document.getElementById(containerId);
+  if (!el) return;
+  el.querySelector('.r-players-inner').innerHTML = '<p class="r-player-loading">Loading stats…</p>';
+  try {
+    const data = await fj(API.boxscore(gameId));
+    // Find CAR team in playerByGameStats
+    const teams = data.playerByGameStats;
+    if (!teams) throw new Error('No player stats');
+
+    const homeAbbr = data.homeTeam?.abbrev;
+    const carSide  = homeAbbr === CAR ? teams.homeTeam : teams.awayTeam;
+    if (!carSide) throw new Error('No CAR stats');
+
+    // Collect all skaters + goalies
+    const skaters = [
+      ...(carSide.forwards||[]),
+      ...(carSide.defense||[]),
+    ].filter(p => (p.goals||0) + (p.assists||0) > 0)
+     .sort((a,b) => (b.goals+b.assists) - (a.goals+a.assists))
+     .slice(0,5);
+
+    const goalies = (carSide.goalies||[]).slice(0,1);
+
+    if (skaters.length === 0 && goalies.length === 0) {
+      el.querySelector('.r-players-inner').innerHTML = '<p class="r-player-loading">No scoring data</p>';
+      return;
+    }
+
+    let html = '';
+    skaters.forEach(p => {
+      const pts = (p.goals||0) + (p.assists||0);
+      html += `<div class="r-player-row">
+        <div class="r-player-pos">${p.position||''}</div>
+        <div class="r-player-name">${p.name?.default||'—'}</div>
+        <div class="r-player-stat">${p.goals||0}G ${p.assists||0}A · ${pts}PTS</div>
+      </div>`;
+    });
+    goalies.forEach(g => {
+      html += `<div class="r-player-row">
+        <div class="r-player-pos">G</div>
+        <div class="r-player-name">${g.name?.default||'—'}</div>
+        <div class="r-player-stat">${g.savePctg?Math.round(g.savePctg*100)+'% SV':''} ${g.shotsAgainst||0} shots</div>
+      </div>`;
+    });
+
+    el.querySelector('.r-players-inner').innerHTML =
+      `<div class="r-players-label">CAR Top Performers</div>${html}`;
+  } catch(e) {
+    el.querySelector('.r-players-inner').innerHTML = '<p class="r-player-loading">Stats unavailable</p>';
+  }
+}
+
+let expandedRow = null;
+
 async function loadSchedule() {
   const data     = await fj(API.schedule);
   const games    = data.games || [];
@@ -444,7 +543,7 @@ async function loadSchedule() {
                         .sort((a,b) => new Date(a.gameDate)-new Date(b.gameDate)).slice(0,4);
 
   let w=0, l=0;
-  $('results-body').innerHTML = past.map(g => {
+  const resultRows = past.map((g, idx) => {
     const home = g.homeTeam?.abbrev === CAR;
     const carS = home ? g.homeTeam?.score : g.awayTeam?.score;
     const oppS = home ? g.awayTeam?.score : g.homeTeam?.score;
@@ -452,16 +551,24 @@ async function loadSchedule() {
     const win  = carS > oppS;
     if (win) w++; else l++;
     const pp = g.gameType === 3;
-    return `<div class="r-row">
-      <div class="r-badge ${win?'W':'L'}">${win?'W':'L'}</div>
-      <div class="r-opp">
-        <span class="loc">${pp?'🏒 Playoffs · ':''}${home?'vs':'@'} ${opp?.abbrev||'?'}</span>
-        ${opp?.name?.default||opp?.abbrev||'?'}
+    const playersId = `players-${idx}`;
+    return `
+      <div class="r-row" onclick="toggleResult(this, '${g.id}', '${playersId}')">
+        <div class="r-badge ${win?'W':'L'}">${win?'W':'L'}</div>
+        <div class="r-opp">
+          <span class="loc">${pp?'🏒 Playoffs · ':''}${home?'vs':'@'} ${opp?.abbrev||'?'}</span>
+          ${opp?.name?.default||opp?.abbrev||'?'}
+        </div>
+        <div class="r-score">${carS}–${oppS}</div>
+        <div class="r-date">${fmtDate(g.gameDate)}</div>
+        <div class="r-chevron">▼</div>
       </div>
-      <div class="r-score">${carS}–${oppS}</div>
-      <div class="r-date">${fmtDate(g.gameDate)}</div>
-    </div>`;
-  }).join('') || '<p class="api-error">No recent games found</p>';
+      <div class="r-players" id="${playersId}">
+        <div class="r-players-inner"></div>
+      </div>`;
+  });
+
+  $('results-body').innerHTML = resultRows.join('') || '<p class="api-error">No recent games found</p>';
   $('results-record').textContent = `${w}-${l}`;
   $('results-label').textContent  = `Last ${past.length} Games`;
 
@@ -480,6 +587,29 @@ async function loadSchedule() {
   }).join('') || '<p class="api-error">No upcoming games found</p>';
 
   return {past, upcoming};
+}
+
+function toggleResult(row, gameId, playersId) {
+  const panel = document.getElementById(playersId);
+  const isOpen = row.classList.contains('expanded');
+
+  // Close previously open row
+  if (expandedRow && expandedRow !== row) {
+    expandedRow.classList.remove('expanded');
+    const prevId = expandedRow.nextElementSibling?.id;
+    if (prevId) document.getElementById(prevId)?.classList.remove('open');
+  }
+
+  if (isOpen) {
+    row.classList.remove('expanded');
+    panel.classList.remove('open');
+    expandedRow = null;
+  } else {
+    row.classList.add('expanded');
+    panel.classList.add('open');
+    expandedRow = row;
+    loadPlayerStats(gameId, playersId);
+  }
 }
 
 async function loadScoreboard() {
@@ -529,7 +659,7 @@ function renderGame(game, upcoming, past) {
         </div>
         <div class="g-center">
           <div class="g-score">${home?carS:oppS} — ${home?oppS:carS}</div>
-          <div class="g-status">${live?perLbl+' · '+clock:final?'Final':fmtTime(game.startTimeUTC)}</div>
+          <div class="g-status">${live?perLbl+' · '+clock:final?'Final':fmtDate(game.startTimeUTC)+' · '+fmtTime(game.startTimeUTC)}</div>
         </div>
         <div class="g-team">
           <div class="g-abbr ${!home?'car':''}">${!home?CAR:oppT?.abbrev||'?'}</div>
@@ -538,12 +668,6 @@ function renderGame(game, upcoming, past) {
         </div>
       </div>
       ${seriesHTML}`;
-
-    $('header-live').innerHTML = live
-      ? `<div class="live-pill"><div class="live-dot"></div>Live Now</div>
-         <div class="hg-score">CAR ${home?carS:oppS} — ${home?oppS:carS} ${oppT?.abbrev}</div>
-         <div class="hg-sub">${perLbl} · ${clock}</div>`
-      : `<div class="no-live">${final?`Final: CAR ${carS} – ${oppS} ${oppT?.abbrev}`:'No live game'}</div>`;
 
   } else if (upcoming?.length) {
     const next = upcoming[0];
@@ -555,8 +679,7 @@ function renderGame(game, upcoming, past) {
     $('game-title').textContent = `${home?'vs':'@'} ${opp?.abbrev||'?'}`;
     $('game-badge').innerHTML   = '';
 
-    // Show series dots even between games
-    let seriesHTML = `<div class="series-info">Next game: ${fmtDate(next.gameDate)}</div>`;
+    let seriesHTML = `<div class="series-info">${fmtDate(next.startTimeUTC)} · ${fmtTime(next.startTimeUTC)}</div>`;
     if (pp) {
       const {dots, cW, oW} = buildDotsFromHistory(past, opp?.abbrev, 0, 0, false);
       if (cW > 0 || oW > 0) {
@@ -572,17 +695,14 @@ function renderGame(game, upcoming, past) {
         <div class="g-team"><div class="g-abbr car">${CAR}</div><div class="g-name">Carolina Hurricanes</div></div>
         <div class="g-center">
           <div class="g-score" style="font-size:2rem;color:var(--silver);">VS</div>
-          <div class="g-status">${fmtTime(next.startTimeUTC)}</div>
+          <div class="g-status">${fmtDate(next.startTimeUTC)} · ${fmtTime(next.startTimeUTC)}</div>
         </div>
         <div class="g-team"><div class="g-abbr">${opp?.abbrev||'?'}</div><div class="g-name">${opp?.name?.default||opp?.abbrev||'?'}</div></div>
       </div>
       ${seriesHTML}`;
 
-    $('header-live').innerHTML = `<div class="no-live">Next: ${home?'vs':'@'} ${opp?.abbrev} · ${fmtDate(next.gameDate)}</div>`;
-
   } else {
-    $('game-body').innerHTML   = '<div class="card-body"><p class="api-error">No game data</p></div>';
-    $('header-live').innerHTML = '<div class="no-live">No upcoming games</div>';
+    $('game-body').innerHTML = '<div class="card-body"><p class="api-error">No game data</p></div>';
   }
 }
 
