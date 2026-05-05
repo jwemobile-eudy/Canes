@@ -17,19 +17,9 @@
   body.loading{overflow:hidden;height:100vh;}
 
   /* LOADER */
-  #loader{
-    position:fixed;inset:0;z-index:9999;
-    background:var(--black);
-    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;
-    transition:opacity 0.5s ease;
-  }
+  #loader{position:fixed;inset:0;z-index:9999;background:var(--black);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;transition:opacity 0.5s ease;}
   #loader.hidden{opacity:0;pointer-events:none;}
-  .loader-glow{
-    position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
-    width:400px;height:400px;
-    background:radial-gradient(circle,rgba(204,0,0,0.18) 0%,transparent 65%);
-    animation:glow-pulse 2.4s ease-in-out infinite;pointer-events:none;
-  }
+  .loader-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:400px;height:400px;background:radial-gradient(circle,rgba(204,0,0,0.18) 0%,transparent 65%);animation:glow-pulse 2.4s ease-in-out infinite;pointer-events:none;}
   @keyframes glow-pulse{0%,100%{opacity:0.5;transform:translate(-50%,-50%) scale(1)}50%{opacity:1;transform:translate(-50%,-50%) scale(1.15)}}
   .loader-ring-wrap{position:relative;width:120px;height:120px;z-index:2;}
   .loader-ring{position:absolute;inset:0;border-radius:50%;border:3px solid rgba(204,0,0,0.15);border-top-color:var(--red);animation:spin 1s linear infinite;}
@@ -259,6 +249,8 @@
 </div>
 
 <div class="main">
+
+  <!-- 1. Game card -->
   <div class="card game-card" id="game-card">
     <div class="card-header">
       <div>
@@ -270,6 +262,7 @@
     <div id="game-body"><div class="card-body"><p class="api-error">Fetching game data…</p></div></div>
   </div>
 
+  <!-- 2. Standings (spans 2 rows) -->
   <div class="card standings-card">
     <div class="card-header">
       <div>
@@ -281,6 +274,18 @@
     <div class="card-body" id="standings-body"><p class="api-error">Loading…</p></div>
   </div>
 
+  <!-- 3. Upcoming (moved up, under game card) -->
+  <div class="card upcoming-card">
+    <div class="card-header">
+      <div>
+        <div class="card-label">Schedule</div>
+        <div class="card-title">Upcoming Games</div>
+      </div>
+    </div>
+    <div class="card-body" id="upcoming-body"><p class="api-error">Loading…</p></div>
+  </div>
+
+  <!-- 4. Results -->
   <div class="card results-card">
     <div class="card-header">
       <div>
@@ -292,6 +297,7 @@
     <div class="card-body" id="results-body"><p class="api-error">Loading…</p></div>
   </div>
 
+  <!-- 5. Stats -->
   <div class="card stats-card">
     <div class="card-header">
       <div>
@@ -302,16 +308,7 @@
     <div class="card-body" id="stats-body"><p class="api-error">Loading…</p></div>
   </div>
 
-  <div class="card upcoming-card">
-    <div class="card-header">
-      <div>
-        <div class="card-label">Schedule</div>
-        <div class="card-title">Upcoming Games</div>
-      </div>
-    </div>
-    <div class="card-body" id="upcoming-body"><p class="api-error">Loading…</p></div>
-  </div>
-
+  <!-- 6. Rivals -->
   <div class="card rival-card">
     <div class="card-header">
       <div>
@@ -321,6 +318,7 @@
     </div>
     <div class="card-body" id="rival-body"><p class="api-error">Loading…</p></div>
   </div>
+
 </div>
 
 <footer>
@@ -351,7 +349,7 @@ const PROXIES = [
   u => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(u)}`,
 ];
 const PERIOD_LABEL = ['','1st','2nd','3rd','OT','OT2'];
-const $  = id => document.getElementById(id);
+const $ = id => document.getElementById(id);
 
 async function fj(url) {
   for (const proxy of PROXIES) {
@@ -466,7 +464,31 @@ async function loadScoreboard() {
   return (data.games||[]).find(g => g.homeTeam?.abbrev===CAR || g.awayTeam?.abbrev===CAR) || null;
 }
 
-function renderGame(game, upcoming) {
+// Build series dots from schedule history when seriesStatus is stale
+function buildDotsFromHistory(past, oppAbbr, currentCarWins, currentOppWins, isLive) {
+  // Count wins from completed playoff games vs this opponent
+  let cW = 0, oW = 0;
+  past.filter(g => g.gameType === 3).forEach(g => {
+    const home  = g.homeTeam?.abbrev === CAR;
+    const opp   = (home ? g.awayTeam : g.homeTeam)?.abbrev;
+    if (opp !== oppAbbr) return;
+    const carS  = home ? g.homeTeam?.score : g.awayTeam?.score;
+    const oppS  = home ? g.awayTeam?.score : g.homeTeam?.score;
+    if (carS > oppS) cW++; else oW++;
+  });
+  // Fall back to API values if history gives nothing
+  if (cW === 0 && oW === 0) { cW = currentCarWins; oW = currentOppWins; }
+  let dots = '';
+  for (let i=0;i<7;i++) {
+    if (i < cW) dots += `<div class="sdot car"></div>`;
+    else if (i < cW+oW) dots += `<div class="sdot opp"></div>`;
+    else if (isLive && i === cW+oW) dots += `<div class="sdot cur"></div>`;
+    else dots += `<div class="sdot"></div>`;
+  }
+  return {dots, cW, oW};
+}
+
+function renderGame(game, upcoming, past) {
   if (game) {
     const home  = game.homeTeam?.abbrev === CAR;
     const carT  = home ? game.homeTeam : game.awayTeam;
@@ -488,16 +510,15 @@ function renderGame(game, upcoming) {
       ? `<div class="live-pill"><div class="live-dot"></div>Live</div>`
       : final ? `<span style="font-family:'Barlow Condensed',sans-serif;font-size:0.78rem;letter-spacing:2px;color:var(--silver);text-transform:uppercase;">Final</span>` : '';
 
-    let dots = '';
-    if (ss) {
-      const cW = home ? (ss.homeTeamWins||0) : (ss.awayTeamWins||0);
-      const oW = home ? (ss.awayTeamWins||0) : (ss.homeTeamWins||0);
-      for (let i=0;i<7;i++) {
-        if (i<cW) dots+=`<div class="sdot car"></div>`;
-        else if (i<cW+oW) dots+=`<div class="sdot opp"></div>`;
-        else if (live&&i===cW+oW) dots+=`<div class="sdot cur"></div>`;
-        else dots+=`<div class="sdot"></div>`;
-      }
+    let seriesHTML = '';
+    if (pp) {
+      const apiCarW = ss ? (home ? ss.homeTeamWins||0 : ss.awayTeamWins||0) : 0;
+      const apiOppW = ss ? (home ? ss.awayTeamWins||0 : ss.homeTeamWins||0) : 0;
+      const {dots, cW, oW} = buildDotsFromHistory(past||[], oppT?.abbrev, apiCarW, apiOppW, live);
+      seriesHTML = `<div class="series-info">
+        Series: <strong>CAR ${cW} – ${oW} ${oppT?.abbrev}</strong> · Best of 7
+        <div class="series-dots">${dots}</div>
+      </div>`;
     }
 
     $('game-body').innerHTML = `
@@ -517,10 +538,7 @@ function renderGame(game, upcoming) {
           ${(!home?carT:oppT)?.seed?`<div class="g-seed">SEED #${(!home?carT:oppT).seed}</div>`:''}
         </div>
       </div>
-      ${ss?`<div class="series-info">
-        Series: <strong>CAR ${home?ss.homeTeamWins||0:ss.awayTeamWins||0} – ${home?ss.awayTeamWins||0:ss.homeTeamWins||0} ${oppT?.abbrev}</strong> · Best of 7
-        <div class="series-dots">${dots}</div>
-      </div>`:''}`;
+      ${seriesHTML}`;
 
     $('header-live').innerHTML = live
       ? `<div class="live-pill"><div class="live-dot"></div>Live Now</div>
@@ -548,8 +566,8 @@ function renderGame(game, upcoming) {
       <div class="series-info">Next game: ${fmtDate(next.gameDate)}</div>`;
     $('header-live').innerHTML = `<div class="no-live">Next: ${home?'vs':'@'} ${opp?.abbrev} · ${fmtDate(next.gameDate)}</div>`;
   } else {
-    $('game-body').innerHTML    = '<div class="card-body"><p class="api-error">No game data</p></div>';
-    $('header-live').innerHTML  = '<div class="no-live">No upcoming games</div>';
+    $('game-body').innerHTML   = '<div class="card-body"><p class="api-error">No game data</p></div>';
+    $('header-live').innerHTML = '<div class="no-live">No upcoming games</div>';
   }
 }
 
@@ -583,7 +601,7 @@ async function init() {
       const oS   = home ? g.awayTeam?.score : g.homeTeam?.score;
       if (cS>oS) ppW++; else ppL++;
     });
-    renderGame(scoreboard, upcoming);
+    renderGame(scoreboard, upcoming, past);
     renderStats(car, ppW, ppL);
     if (car) setSurge(car.wins||0, car.losses||0, car.conferenceSequence||4, ppW, ppL);
     $('last-updated').textContent = 'Updated ' + new Date().toLocaleTimeString();
