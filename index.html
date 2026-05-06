@@ -36,30 +36,7 @@
   .site-title h1 span{color:var(--red);}
   .site-title p{font-family:'Barlow Condensed',sans-serif;font-size:0.78rem;letter-spacing:3px;text-transform:uppercase;color:var(--silver);margin-top:3px;}
 
-  /* SURGE — now a card in the grid */
-  .surge-card{grid-column:1/3;background:linear-gradient(135deg,#100000,var(--gray-dark));border:1px solid var(--gray-border);border-radius:4px;overflow:hidden;cursor:pointer;user-select:none;animation:fadein 0.5s ease both;}
-  .surge-inner{padding:16px 18px 14px;}
-  .surge-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:5px;}
-  .surge-label{font-family:'Barlow Condensed',sans-serif;font-size:0.67rem;letter-spacing:3px;text-transform:uppercase;color:var(--red);}
-  .surge-tap-hint{font-family:'Barlow Condensed',sans-serif;font-size:0.65rem;letter-spacing:2px;text-transform:uppercase;color:var(--silver);opacity:0.6;}
-  .surge-title{font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:2px;margin-bottom:10px;}
-  .surge-bar-wrap{position:relative;background:var(--gray-border);border-radius:3px;height:20px;overflow:hidden;}
-  .surge-fill{height:100%;background:linear-gradient(90deg,var(--red-dark),#ff2222);border-radius:3px;box-shadow:0 0 16px var(--red-glow);transition:width 1.6s cubic-bezier(0.4,0,0.2,1);width:0%;}
-  .surge-num{position:absolute;right:10px;top:50%;transform:translateY(-50%);font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:0.76rem;color:white;letter-spacing:1px;}
-  .surge-ends{display:flex;justify-content:space-between;margin-top:5px;}
-  .surge-ends span{font-family:'Barlow Condensed',sans-serif;font-size:0.7rem;color:var(--silver);letter-spacing:1px;}
-  .surge-explainer{overflow:hidden;max-height:0;transition:max-height 0.4s ease;background:rgba(0,0,0,0.3);border-top:1px solid var(--gray-border);}
-  .surge-explainer.open{max-height:200px;}
-  .surge-explainer-inner{padding:14px 18px;}
-  .surge-bullet{display:flex;align-items:flex-start;gap:10px;margin-bottom:8px;}
-  .surge-bullet:last-child{margin-bottom:0;}
-  .surge-bullet-bar{width:3px;flex-shrink:0;margin-top:3px;border-radius:2px;align-self:stretch;}
-  .surge-bullet-bar.b1{background:var(--red);}
-  .surge-bullet-bar.b2{background:#ff7700;}
-  .surge-bullet-bar.b3{background:var(--green);}
-  .surge-bullet-text{font-family:'Barlow Condensed',sans-serif;font-size:0.8rem;color:var(--silver);letter-spacing:0.5px;line-height:1.4;}
-  .surge-bullet-text strong{color:var(--white);}
-
+  /* GRID — single column flow, no spanning tricks */
   .main{padding:26px 40px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;max-width:1400px;margin:0 auto;}
 
   .card{background:var(--gray-mid);border:1px solid var(--gray-border);border-radius:4px;overflow:hidden;animation:fadein 0.5s ease both;}
@@ -73,8 +50,8 @@
   .card-body{padding:13px 18px;}
   .api-error{font-family:'Barlow Condensed',sans-serif;font-size:0.8rem;color:var(--silver);padding:8px 0;letter-spacing:1px;}
 
-  /* GAME CARD */
-  .game-card{grid-column:1/3;background:linear-gradient(135deg,#160000,#1a0000 50%,#1c1c1c);border-color:var(--red);position:relative;}
+  /* ROW 1: game card col 1-3 full width */
+  .game-card{grid-column:1/4;background:linear-gradient(135deg,#160000,#1a0000 50%,#1c1c1c);border-color:var(--red);position:relative;}
   .game-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--red),transparent);animation:scan 2.5s ease-in-out infinite;}
   @keyframes scan{0%,100%{opacity:0.3}50%{opacity:1}}
   .game-matchup{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 22px 8px;}
@@ -94,7 +71,6 @@
   .sdot.opp{background:var(--red);border-color:var(--red);box-shadow:0 0 6px var(--red-glow);}
   .sdot.cur{border-color:var(--silver);animation:pdot 1.4s ease-in-out infinite;}
   @keyframes pdot{0%,100%{border-color:var(--silver)}50%{border-color:white}}
-
   .scorers-wrap{padding:0 22px 14px;display:flex;gap:16px;justify-content:center;flex-wrap:wrap;}
   .scorers-col{flex:1;min-width:120px;}
   .scorers-label{font-family:'Barlow Condensed',sans-serif;font-size:0.6rem;letter-spacing:3px;text-transform:uppercase;color:var(--silver);margin-bottom:5px;text-align:center;}
@@ -102,13 +78,12 @@
   .scorer-row:last-child{border-bottom:none;}
   .scorer-name{flex:1;}
   .scorer-detail{color:var(--silver);font-size:0.72rem;}
-
   .countdown-wrap{text-align:center;padding:8px 22px 14px;}
   .countdown-label{font-family:'Barlow Condensed',sans-serif;font-size:0.65rem;letter-spacing:3px;text-transform:uppercase;color:var(--silver);margin-bottom:4px;}
   .countdown-timer{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:3px;color:var(--red);text-shadow:0 0 12px var(--red-glow);white-space:nowrap;}
 
-  /* BRACKET */
-  .bracket-card{grid-column:1/3;}
+  /* ROW 2: bracket col 1-3 full width */
+  .bracket-card{grid-column:1/4;}
   .bracket-toggle{cursor:pointer;user-select:none;}
   .bracket-chevron{font-size:0.7rem;color:var(--silver);transition:transform 0.3s ease;margin-left:8px;display:inline-block;}
   .bracket-chevron.open{transform:rotate(180deg);}
@@ -132,17 +107,41 @@
   .b-wins.lead{color:var(--green);}
   .b-status{font-family:'Barlow Condensed',sans-serif;font-size:0.6rem;letter-spacing:2px;text-transform:uppercase;color:var(--red);text-align:center;padding:3px 0 5px;}
 
-  /* STATS */
-  .stats-card{grid-column:3/4;grid-row:1/3;}
-  .stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;}
+  /* ROW 3: surge col 1-3 full width */
+  .surge-card{grid-column:1/4;background:linear-gradient(135deg,#100000,var(--gray-dark));border:1px solid var(--gray-border);border-radius:4px;overflow:hidden;cursor:pointer;user-select:none;animation:fadein 0.5s ease both;}
+  .surge-inner{padding:16px 18px 14px;}
+  .surge-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:5px;}
+  .surge-label{font-family:'Barlow Condensed',sans-serif;font-size:0.67rem;letter-spacing:3px;text-transform:uppercase;color:var(--red);}
+  .surge-tap-hint{font-family:'Barlow Condensed',sans-serif;font-size:0.65rem;letter-spacing:2px;text-transform:uppercase;color:var(--silver);opacity:0.6;}
+  .surge-title{font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:2px;margin-bottom:10px;}
+  .surge-bar-wrap{position:relative;background:var(--gray-border);border-radius:3px;height:20px;overflow:hidden;}
+  .surge-fill{height:100%;background:linear-gradient(90deg,var(--red-dark),#ff2222);border-radius:3px;box-shadow:0 0 16px var(--red-glow);transition:width 1.6s cubic-bezier(0.4,0,0.2,1);width:0%;}
+  .surge-num{position:absolute;right:10px;top:50%;transform:translateY(-50%);font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:0.76rem;color:white;letter-spacing:1px;}
+  .surge-ends{display:flex;justify-content:space-between;margin-top:5px;}
+  .surge-ends span{font-family:'Barlow Condensed',sans-serif;font-size:0.7rem;color:var(--silver);letter-spacing:1px;}
+  .surge-explainer{overflow:hidden;max-height:0;transition:max-height 0.4s ease;background:rgba(0,0,0,0.3);border-top:1px solid var(--gray-border);}
+  .surge-explainer.open{max-height:200px;}
+  .surge-explainer-inner{padding:14px 18px;}
+  .surge-bullet{display:flex;align-items:flex-start;gap:10px;margin-bottom:8px;}
+  .surge-bullet:last-child{margin-bottom:0;}
+  .surge-bullet-bar{width:3px;flex-shrink:0;margin-top:3px;border-radius:2px;align-self:stretch;}
+  .surge-bullet-bar.b1{background:var(--red);}
+  .surge-bullet-bar.b2{background:#ff7700;}
+  .surge-bullet-bar.b3{background:var(--green);}
+  .surge-bullet-text{font-family:'Barlow Condensed',sans-serif;font-size:0.8rem;color:var(--silver);letter-spacing:0.5px;line-height:1.4;}
+  .surge-bullet-text strong{color:var(--white);}
+
+  /* ROW 4: team stats col 1-3 full width */
+  .stats-card{grid-column:1/4;}
+  .stat-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:9px;}
   .stat-block{background:var(--gray-dark);border:1px solid var(--gray-border);border-radius:3px;padding:11px 11px 7px;position:relative;overflow:hidden;}
   .stat-block::after{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:var(--red);}
   .stat-num{font-family:'Bebas Neue',sans-serif;font-size:2.1rem;letter-spacing:2px;line-height:1;}
   .stat-lbl{font-family:'Barlow Condensed',sans-serif;font-size:0.66rem;letter-spacing:2px;text-transform:uppercase;color:var(--silver);margin-top:1px;}
   .stat-sub{font-family:'Barlow Condensed',sans-serif;font-size:0.68rem;color:var(--ice-dim);margin-top:2px;}
 
-  /* UPCOMING */
-  .upcoming-card{grid-column:1/3;}
+  /* ROW 5: upcoming col 1-3 full width */
+  .upcoming-card{grid-column:1/4;}
   .u-row{display:flex;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.05);gap:11px;}
   .u-row:last-child{border-bottom:none;}
   .u-date{text-align:center;flex-shrink:0;width:30px;}
@@ -154,7 +153,7 @@
   .u-type.playoff{color:var(--red);background:rgba(204,0,0,0.09);border:1px solid rgba(204,0,0,0.18);}
   .u-type.regular{color:var(--ice-dim);background:rgba(208,232,245,0.06);border:1px solid rgba(208,232,245,0.09);}
 
-  /* RESULTS */
+  /* ROW 6: results col 1, standings col 2, rivals col 3 */
   .results-card{grid-column:1/2;}
   .r-row{display:flex;align-items:center;padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.05);gap:7px;cursor:pointer;transition:background 0.15s ease;}
   .r-row:hover{background:rgba(255,255,255,0.03);}
@@ -180,7 +179,6 @@
   .r-player-stat{font-family:'Barlow Condensed',sans-serif;font-size:0.75rem;color:var(--ice-dim);}
   .r-player-loading{font-family:'Barlow Condensed',sans-serif;font-size:0.75rem;color:var(--silver);letter-spacing:2px;text-transform:uppercase;padding:6px 0;}
 
-  /* STANDINGS */
   .standings-card{grid-column:2/3;}
   .s-row{display:flex;align-items:center;padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.05);gap:7px;}
   .s-row:last-child{border-bottom:none;}
@@ -193,7 +191,6 @@
   .s-rec{font-family:'Barlow Condensed',sans-serif;font-size:0.75rem;color:var(--silver);width:50px;text-align:right;}
   .clinched{font-family:'Barlow Condensed',sans-serif;font-size:0.56rem;letter-spacing:1px;text-transform:uppercase;background:var(--red);color:white;padding:1px 4px;border-radius:2px;flex-shrink:0;}
 
-  /* RIVALS */
   .rival-card{grid-column:3/4;}
   .rv-row{display:flex;align-items:center;padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.05);gap:8px;}
   .rv-row:last-child{border-bottom:none;}
@@ -211,16 +208,19 @@
   #last-updated{color:var(--ice-dim);}
   .canes-motto{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:3px;color:var(--red);text-shadow:0 0 14px var(--red-glow);}
 
+  /* TABLET */
   @media(max-width:900px){
     .main{grid-template-columns:1fr 1fr;padding:14px;gap:12px;}
-    .game-card,.bracket-card,.surge-card,.upcoming-card{grid-column:1/3;}
-    .stats-card{grid-column:1/3;grid-row:auto;}
-    .results-card{grid-column:1/2;grid-row:auto;}
-    .standings-card{grid-column:2/3;grid-row:auto;}
+    .game-card,.bracket-card,.surge-card,.stats-card,.upcoming-card{grid-column:1/3;}
+    .results-card{grid-column:1/2;}
+    .standings-card{grid-column:2/3;}
     .rival-card{grid-column:1/3;}
+    .stat-grid{grid-template-columns:repeat(3,1fr);}
     .header-inner{padding:18px 18px 14px;}
     footer{padding:12px 18px;}
   }
+
+  /* MOBILE */
   @media(max-width:560px){
     .header-inner{padding:16px 16px 14px;}
     .logo-block{gap:12px;}
@@ -228,7 +228,8 @@
     .site-title p{font-size:0.7rem;letter-spacing:2px;}
     .surge-ends span:nth-child(2){display:none;}
     .main{grid-template-columns:1fr;padding:10px;gap:10px;}
-    .game-card,.bracket-card,.surge-card,.stats-card,.upcoming-card,.results-card,.standings-card,.rival-card{grid-column:1/2;grid-row:auto;}
+    .game-card,.bracket-card,.surge-card,.stats-card,.upcoming-card,.results-card,.standings-card,.rival-card{grid-column:1/2;}
+    .stat-grid{grid-template-columns:repeat(2,1fr);}
     .game-matchup{padding:14px 14px 6px;gap:6px;}
     .g-abbr{font-size:2rem;letter-spacing:2px;}
     .g-score{font-size:2.8rem;letter-spacing:3px;}
@@ -238,7 +239,6 @@
     .card-header{padding:10px 14px 8px;}
     .card-body{padding:10px 14px;}
     .card-title{font-size:1.1rem;}
-    .stat-grid{gap:7px;}
     .stat-num{font-size:1.7rem;}
     .stat-block{padding:9px 9px 6px;}
     .u-type{display:none;}
@@ -288,7 +288,7 @@
 
 <div class="main">
 
-  <!-- 1. GAME CARD -->
+  <!-- ROW 1: GAME CARD — full width -->
   <div class="card game-card" id="game-card">
     <div class="card-header">
       <div>
@@ -300,18 +300,7 @@
     <div id="game-body"><div class="card-body"><p class="api-error">Fetching game data…</p></div></div>
   </div>
 
-  <!-- TEAM STATS col 3 rows 1-2 -->
-  <div class="card stats-card">
-    <div class="card-header">
-      <div>
-        <div class="card-label">2025–26 Season</div>
-        <div class="card-title">Team Stats</div>
-      </div>
-    </div>
-    <div class="card-body" id="stats-body"><p class="api-error">Loading…</p></div>
-  </div>
-
-  <!-- 2. BRACKET -->
+  <!-- ROW 2: BRACKET — full width, collapsible -->
   <div class="card bracket-card">
     <div class="card-header bracket-toggle" id="bracket-toggle">
       <div>
@@ -327,7 +316,7 @@
     </div>
   </div>
 
-  <!-- 3. SURGE — now a grid card -->
+  <!-- ROW 3: SURGE METER — full width -->
   <div class="surge-card" id="surge-card">
     <div class="surge-inner">
       <div class="surge-top">
@@ -363,7 +352,18 @@
     </div>
   </div>
 
-  <!-- 4. UPCOMING -->
+  <!-- ROW 4: TEAM STATS — full width, 6 cols -->
+  <div class="card stats-card">
+    <div class="card-header">
+      <div>
+        <div class="card-label">2025–26 Season</div>
+        <div class="card-title">Team Stats</div>
+      </div>
+    </div>
+    <div class="card-body" id="stats-body"><p class="api-error">Loading…</p></div>
+  </div>
+
+  <!-- ROW 5: UPCOMING — full width -->
   <div class="card upcoming-card">
     <div class="card-header">
       <div>
@@ -374,7 +374,7 @@
     <div class="card-body" id="upcoming-body"><p class="api-error">Loading…</p></div>
   </div>
 
-  <!-- 5. RESULTS -->
+  <!-- ROW 6: RESULTS col1 | STANDINGS col2 | RIVALS col3 -->
   <div class="card results-card">
     <div class="card-header">
       <div>
@@ -389,7 +389,6 @@
     <div class="card-body" id="results-body"><p class="api-error">Loading…</p></div>
   </div>
 
-  <!-- 6. STANDINGS -->
   <div class="card standings-card">
     <div class="card-header">
       <div>
@@ -401,7 +400,6 @@
     <div class="card-body" id="standings-body"><p class="api-error">Loading…</p></div>
   </div>
 
-  <!-- 7. RIVALS -->
   <div class="card rival-card">
     <div class="card-header">
       <div>
@@ -425,205 +423,150 @@ const SEASON = '20252026';
 const TZ     = 'America/Chicago';
 const EAST_TEAMS = ['CAR','BUF','TB','MTL','BOS','OTT','PHI','PIT'];
 const WEST_TEAMS = ['COL','DAL','VGK','ANA','MIN','EDM','UTA','LAK'];
-
 const API = {
   standings:  `https://api-web.nhle.com/v1/standings/now`,
-  schedule:   team => `https://api-web.nhle.com/v1/club-schedule-season/${team}/${SEASON}`,
+  schedule:   t => `https://api-web.nhle.com/v1/club-schedule-season/${t}/${SEASON}`,
   scoreboard: `https://api-web.nhle.com/v1/score/now`,
-  boxscore:   id   => `https://api-web.nhle.com/v1/gamecenter/${id}/boxscore`,
-  espnBracket:`https://site.api.espn.com/apis/v2/sports/hockey/nhl/playoffs`,
+  boxscore:   id => `https://api-web.nhle.com/v1/gamecenter/${id}/boxscore`,
+  espn:       `https://site.api.espn.com/apis/v2/sports/hockey/nhl/playoffs`,
 };
 const PROXIES = [
-  u => `https://corsproxy.io/?url=${encodeURIComponent(u)}`,
-  u => `https://api.allorigins.win/raw?url=${encodeURIComponent(u)}`,
-  u => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(u)}`,
+  u=>`https://corsproxy.io/?url=${encodeURIComponent(u)}`,
+  u=>`https://api.allorigins.win/raw?url=${encodeURIComponent(u)}`,
+  u=>`https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(u)}`,
 ];
-const PERIOD_LABEL = ['','1st','2nd','3rd','OT','OT2'];
-const $ = id => document.getElementById(id);
-let playoffEliminatedTeams = new Set();
+const PERIOD_LABEL=['','1st','2nd','3rd','OT','OT2'];
+const $=id=>document.getElementById(id);
+let playoffEliminatedTeams=new Set();
 
-async function fj(url) {
-  for (const proxy of PROXIES) {
-    try {
-      const r = await fetch(proxy(url),{signal:AbortSignal.timeout(8000)});
-      if (r.ok) return r.json();
-    } catch(e){continue;}
-  }
+async function fj(url){
+  for(const p of PROXIES){try{const r=await fetch(p(url),{signal:AbortSignal.timeout(8000)});if(r.ok)return r.json();}catch(e){continue;}}
   throw new Error('All proxies failed');
 }
-async function fjDirect(url) {
-  try {
-    const r = await fetch(url,{signal:AbortSignal.timeout(8000)});
-    if (r.ok) return r.json();
-  } catch(e){}
+async function fjD(url){
+  try{const r=await fetch(url,{signal:AbortSignal.timeout(8000)});if(r.ok)return r.json();}catch(e){}
   return fj(url);
 }
-
 function fmtDate(iso){return new Date(iso).toLocaleDateString('en-US',{month:'short',day:'numeric',timeZone:TZ});}
 function fmtMo(iso){return new Date(iso).toLocaleDateString('en-US',{month:'short',timeZone:TZ}).toUpperCase();}
 function fmtDay(iso){return new Date(iso).toLocaleDateString('en-US',{day:'numeric',timeZone:TZ});}
 function fmtTime(iso){return new Date(iso).toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit',timeZoneName:'short',timeZone:TZ});}
 
-// Surge toggle
-document.getElementById('surge-card').addEventListener('click',()=>{
+$('surge-card').addEventListener('click',()=>{
   const ex=$('surge-explainer');
   ex.classList.toggle('open');
   document.querySelector('.surge-tap-hint').textContent=ex.classList.contains('open')?'Tap to close':'Tap to learn more';
 });
-
-// Bracket toggle
-document.getElementById('bracket-toggle').addEventListener('click',()=>{
+$('bracket-toggle').addEventListener('click',()=>{
   $('bracket-collapse').classList.toggle('open');
   $('bracket-chevron').classList.toggle('open');
 });
 
-function setSurge(wins,losses,seed,ppW,ppL){
-  const gp=wins+losses;
-  const pct=gp?wins/gp:0;
-  const seedScore=Math.max(0,(9-seed)/8);
-  const ppGP=ppW+ppL;
-  const ppScore=ppGP?ppW/ppGP:0.5;
-  const surge=Math.round(pct*50+seedScore*30+ppScore*20);
-  setTimeout(()=>{
-    $('surge-fill').style.width=surge+'%';
-    $('surge-num').textContent=surge+' / 100';
-  },500);
+function setSurge(w,l,seed,ppW,ppL){
+  const gp=w+l,pct=gp?w/gp:0,ss=Math.max(0,(9-seed)/8),ppGP=ppW+ppL,ppS=ppGP?ppW/ppGP:0.5;
+  const surge=Math.round(pct*50+ss*30+ppS*20);
+  setTimeout(()=>{$('surge-fill').style.width=surge+'%';$('surge-num').textContent=surge+' / 100';},500);
 }
 
-function buildDotsFromHistory(past,oppAbbr,fallbackCarW,fallbackOppW,isLive){
+function buildDots(past,oppAbbr,fbCW,fbOW,live){
   let cW=0,oW=0;
   (past||[]).filter(g=>g.gameType===3).forEach(g=>{
-    const home=g.homeTeam?.abbrev===CAR;
-    const opp=(home?g.awayTeam:g.homeTeam)?.abbrev;
+    const home=g.homeTeam?.abbrev===CAR,opp=(home?g.awayTeam:g.homeTeam)?.abbrev;
     if(opp!==oppAbbr)return;
-    const carS=home?g.homeTeam?.score:g.awayTeam?.score;
-    const oppS=home?g.awayTeam?.score:g.homeTeam?.score;
-    if(carS>oppS)cW++;else oW++;
+    const cS=home?g.homeTeam?.score:g.awayTeam?.score,oS=home?g.awayTeam?.score:g.homeTeam?.score;
+    if(cS>oS)cW++;else oW++;
   });
-  if(cW===0&&oW===0){cW=fallbackCarW;oW=fallbackOppW;}
+  if(cW===0&&oW===0){cW=fbCW;oW=fbOW;}
   let dots='';
   for(let i=0;i<7;i++){
     if(i<cW)dots+=`<div class="sdot car"></div>`;
     else if(i<cW+oW)dots+=`<div class="sdot opp"></div>`;
-    else if(isLive&&i===cW+oW)dots+=`<div class="sdot cur"></div>`;
+    else if(live&&i===cW+oW)dots+=`<div class="sdot cur"></div>`;
     else dots+=`<div class="sdot"></div>`;
   }
   return{dots,cW,oW};
 }
 
-let countdownInterval=null;
-function startCountdown(targetISO){
-  if(countdownInterval)clearInterval(countdownInterval);
+let cdInt=null;
+function startCountdown(iso){
+  if(cdInt)clearInterval(cdInt);
   function tick(){
-    const el=$('game-countdown');
-    const diff=new Date(targetISO)-new Date();
-    if(!el){clearInterval(countdownInterval);return;}
-    if(diff<=0){el.textContent='PUCK DROP!';clearInterval(countdownInterval);return;}
-    const h=Math.floor(diff/3600000);
-    const m=Math.floor((diff%3600000)/60000);
-    const s=Math.floor((diff%60000)/1000);
+    const el=$('game-countdown'),diff=new Date(iso)-new Date();
+    if(!el){clearInterval(cdInt);return;}
+    if(diff<=0){el.textContent='PUCK DROP!';clearInterval(cdInt);return;}
+    const h=Math.floor(diff/3600000),m=Math.floor((diff%3600000)/60000),s=Math.floor((diff%60000)/1000);
     el.textContent=h>0?`${h}h ${m}m ${s}s`:`${m}m ${s}s`;
   }
-  tick();
-  countdownInterval=setInterval(tick,1000);
+  tick();cdInt=setInterval(tick,1000);
 }
 
-function extractEliminatedFromSeries(seriesList){
-  const elim=new Set();
-  seriesList.forEach(s=>{
-    if(s.w1===4&&s.t2&&s.t2!=='TBD')elim.add(s.t2);
-    if(s.w2===4&&s.t1&&s.t1!=='TBD')elim.add(s.t1);
-  });
-  return elim;
+function extractElim(series){
+  const e=new Set();
+  series.forEach(s=>{if(s.w1===4&&s.t2&&s.t2!=='TBD')e.add(s.t2);if(s.w2===4&&s.t1&&s.t1!=='TBD')e.add(s.t1);});
+  return e;
 }
 
-function renderBracketFromSeries(eastSeries,westSeries){
-  const allSeries=[...eastSeries,...westSeries];
-  playoffEliminatedTeams=extractEliminatedFromSeries(allSeries);
-
-  const carSeries=allSeries.find(s=>(s.t1===CAR||s.t2===CAR)&&s.w1<4&&s.w2<4);
-  if(carSeries){
-    const cW=carSeries.t1===CAR?carSeries.w1:carSeries.w2;
-    const oW=carSeries.t1===CAR?carSeries.w2:carSeries.w1;
-    const opp=carSeries.t1===CAR?carSeries.t2:carSeries.t1;
-    $('bracket-summary').textContent=`CAR ${cW}–${oW} ${opp}`;
-  }
-
+function renderBracket(east,west){
+  const all=[...east,...west];
+  playoffEliminatedTeams=extractElim(all);
+  const car=all.find(s=>(s.t1===CAR||s.t2===CAR)&&s.w1<4&&s.w2<4);
+  if(car){const cW=car.t1===CAR?car.w1:car.w2,oW=car.t1===CAR?car.w2:car.w1,opp=car.t1===CAR?car.t2:car.t1;$('bracket-summary').textContent=`CAR ${cW}–${oW} ${opp}`;}
   const TBD=`<div class="b-series tbd"><div class="b-team"><div class="b-seed">—</div><div class="b-name">TBD</div><div class="b-wins">—</div></div><div class="b-team"><div class="b-seed">—</div><div class="b-name">TBD</div><div class="b-wins">—</div></div></div>`;
-
-  function sHTML(s){
-    const t1car=s.t1===CAR,t2car=s.t2===CAR,carIn=t1car||t2car;
-    const done=s.w1===4||s.w2===4,tbd=!s.t1||s.t1==='TBD';
+  function sH(s){
+    const t1c=s.t1===CAR,t2c=s.t2===CAR,carIn=t1c||t2c,done=s.w1===4||s.w2===4,tbd=!s.t1||s.t1==='TBD';
     return `<div class="b-series ${tbd?'tbd':carIn&&!done?'active':''}">
-      <div class="b-team ${done&&s.w1>s.w2?'winner':''}">
-        <div class="b-seed">${s.s1||''}</div><div class="b-name ${t1car?'car':''}">${s.t1||'TBD'}</div>
-        <div class="b-wins ${s.w1>=s.w2&&s.w1>0?'lead':''}">${tbd?'—':s.w1}</div>
-      </div>
-      <div class="b-team ${done&&s.w2>s.w1?'winner':''}">
-        <div class="b-seed">${s.s2||''}</div><div class="b-name ${t2car?'car':''}">${s.t2||'TBD'}</div>
-        <div class="b-wins ${s.w2>s.w1&&s.w2>0?'lead':''}">${tbd?'—':s.w2}</div>
-      </div>
+      <div class="b-team ${done&&s.w1>s.w2?'winner':''}"><div class="b-seed">${s.s1||''}</div><div class="b-name ${t1c?'car':''}">${s.t1||'TBD'}</div><div class="b-wins ${s.w1>=s.w2&&s.w1>0?'lead':''}">${tbd?'—':s.w1}</div></div>
+      <div class="b-team ${done&&s.w2>s.w1?'winner':''}"><div class="b-seed">${s.s2||''}</div><div class="b-name ${t2c?'car':''}">${s.t2||'TBD'}</div><div class="b-wins ${s.w2>s.w1&&s.w2>0?'lead':''}">${tbd?'—':s.w2}</div></div>
       ${carIn&&!done&&!tbd?'<div class="b-status">⚡ Active</div>':''}
     </div>`;
   }
-
+  const eN=['Eastern First Round','Eastern Semifinals','Eastern Finals'];
+  const wN=['Western Finals','Western Semifinals','Western First Round'];
   let html='';
-  const eNames=['Eastern First Round','Eastern Semifinals','Eastern Finals'];
-  const wNames=['Western Finals','Western Semifinals','Western First Round'];
-  for(let r=1;r<=3;r++){
-    const rd=eastSeries.filter(s=>s.round===r);
-    html+=`<div class="bracket-round"><div class="round-title">${eNames[r-1]}</div>${rd.length?rd.map(sHTML).join(''):TBD}</div>`;
-  }
-  const cup=allSeries.find(s=>s.round===4)||{t1:'TBD',t2:'TBD',w1:0,w2:0,s1:'',s2:'',round:4};
-  html+=`<div class="bracket-round"><div class="round-title">Stanley Cup Final</div>${sHTML(cup)}</div>`;
-  for(let r=3;r>=1;r--){
-    const rd=westSeries.filter(s=>s.round===r);
-    html+=`<div class="bracket-round"><div class="round-title">${wNames[3-r]}</div>${rd.length?rd.map(sHTML).join(''):TBD}</div>`;
-  }
+  for(let r=1;r<=3;r++){const rd=east.filter(s=>s.round===r);html+=`<div class="bracket-round"><div class="round-title">${eN[r-1]}</div>${rd.length?rd.map(sH).join(''):TBD}</div>`;}
+  const cup=all.find(s=>s.round===4)||{t1:'TBD',t2:'TBD',w1:0,w2:0,s1:'',s2:'',round:4};
+  html+=`<div class="bracket-round"><div class="round-title">Stanley Cup Final</div>${sH(cup)}</div>`;
+  for(let r=3;r>=1;r--){const rd=west.filter(s=>s.round===r);html+=`<div class="bracket-round"><div class="round-title">${wN[3-r]}</div>${rd.length?rd.map(sH).join(''):TBD}</div>`;}
   $('bracket-body').innerHTML=html;
 }
 
-function buildBracketFromSchedules(allGames){
+function buildFromSchedules(allGames){
   const seen=new Set();
   const games=allGames.filter(g=>{if(seen.has(g.id))return false;seen.add(g.id);return true;}).filter(g=>g.gameType===3);
-  const seriesMap={};
+  const sm={};
   games.forEach(g=>{
-    const ha=g.homeTeam?.abbrev||'?',aa=g.awayTeam?.abbrev||'?';
-    const key=[ha,aa].sort().join('-');
-    if(!seriesMap[key])seriesMap[key]={teams:[ha,aa],homeSeed:g.homeTeam?.seed,awaySeed:g.awayTeam?.seed,wins:{[ha]:0,[aa]:0},games:[]};
-    const s=seriesMap[key];
+    const ha=g.homeTeam?.abbrev||'?',aa=g.awayTeam?.abbrev||'?',key=[ha,aa].sort().join('-');
+    if(!sm[key])sm[key]={teams:[ha,aa],hSeed:g.homeTeam?.seed,aSeed:g.awayTeam?.seed,wins:{[ha]:0,[aa]:0},games:[]};
+    const s=sm[key];
     if(['OFF','FINAL'].includes(g.gameState)){const hs=g.homeTeam?.score||0,as=g.awayTeam?.score||0;if(hs>as)s.wins[ha]++;else s.wins[aa]++;}
     s.games.push(g);
   });
-  return Object.values(seriesMap).map(s=>{
-    const sorted=s.games.sort((a,b)=>new Date(a.startTimeUTC||a.gameDate)-new Date(b.startTimeUTC||b.gameDate));
-    const first=sorted[0];
-    const startDate=first?new Date(first.startTimeUTC||first.gameDate):new Date();
-    let round=startDate>=new Date('2026-05-01')?2:1;
-    const [ha,aa]=s.teams;
-    const hSeed=s.homeSeed||9,aSeed=s.awaySeed||9;
-    const topTeam=hSeed<=aSeed?ha:aa,botTeam=hSeed<=aSeed?aa:ha;
-    const isEast=EAST_TEAMS.includes(topTeam)||['OTT','BOS','MTL','TB','PIT','PHI','BUF'].includes(topTeam);
-    return{conf:isEast?'east':'west',round,t1:topTeam,t2:botTeam,s1:hSeed<=aSeed?hSeed:aSeed,s2:hSeed<=aSeed?aSeed:hSeed,w1:s.wins[topTeam]||0,w2:s.wins[botTeam]||0};
+  return Object.values(sm).map(s=>{
+    const first=s.games.sort((a,b)=>new Date(a.startTimeUTC||a.gameDate)-new Date(b.startTimeUTC||b.gameDate))[0];
+    const sd=first?new Date(first.startTimeUTC||first.gameDate):new Date();
+    const round=sd>=new Date('2026-05-01')?2:1;
+    const [ha,aa]=s.teams,hS=s.hSeed||9,aS=s.aSeed||9;
+    const top=hS<=aS?ha:aa,bot=hS<=aS?aa:ha,topS=hS<=aS?hS:aS,botS=hS<=aS?aS:hS;
+    const isEast=EAST_TEAMS.includes(top)||['OTT','BOS','MTL','TB','PIT','PHI','BUF'].includes(top);
+    return{conf:isEast?'east':'west',round,t1:top,t2:bot,s1:topS,s2:botS,w1:s.wins[top]||0,w2:s.wins[bot]||0};
   });
 }
 
 async function loadBracket(){
   let series=null;
   try{
-    const data=await fjDirect(API.espnBracket);
-    const parsed=[];
-    (data?.brackets||[]).forEach(bracket=>{
-      const conf=bracket.name?.toLowerCase().includes('west')?'west':'east';
-      (bracket.rounds||[]).forEach((round,ri)=>{
-        (round.series||round.matchups||[]).forEach(s=>{
-          const comps=s.competitors||s.teams||[];
-          const t1=comps[0]||{},t2=comps[1]||{};
-          parsed.push({conf,round:ri+1,t1:t1.abbreviation||t1.abbrev||t1.team?.abbreviation||'TBD',t2:t2.abbreviation||t2.abbrev||t2.team?.abbreviation||'TBD',s1:t1.seed||'',s2:t2.seed||'',w1:t1.wins||0,w2:t2.wins||0});
+    const data=await fjD(API.espn);
+    const p=[];
+    (data?.brackets||[]).forEach(b=>{
+      const conf=b.name?.toLowerCase().includes('west')?'west':'east';
+      (b.rounds||[]).forEach((r,ri)=>{
+        (r.series||r.matchups||[]).forEach(s=>{
+          const c=s.competitors||s.teams||[],t1=c[0]||{},t2=c[1]||{};
+          p.push({conf,round:ri+1,t1:t1.abbreviation||t1.abbrev||t1.team?.abbreviation||'TBD',t2:t2.abbreviation||t2.abbrev||t2.team?.abbreviation||'TBD',s1:t1.seed||'',s2:t2.seed||'',w1:t1.wins||0,w2:t2.wins||0});
         });
       });
     });
-    if(parsed.length>=4)series=parsed;
+    if(p.length>=4)series=p;
   }catch(e){}
 
   if(!series){
@@ -632,15 +575,12 @@ async function loadBracket(){
         const data=await fj(url);
         const rounds=data?.rounds||data?.bracket?.rounds||[];
         if(rounds.length){
-          const parsed=[];
-          rounds.forEach((round,ri)=>{
-            (round.series||round.matchups||[]).forEach(s=>{
-              const t1=s.topSeedTeam||s.team1||{},t2=s.bottomSeedTeam||s.team2||{};
-              const confRaw=s.conference||round.conference||'';
-              parsed.push({conf:confRaw.toLowerCase().includes('west')?'west':'east',round:ri+1,t1:t1.abbrev||'TBD',t2:t2.abbrev||'TBD',s1:t1.seed||'',s2:t2.seed||'',w1:s.topSeedWins??s.team1Wins??0,w2:s.bottomSeedWins??s.team2Wins??0});
-            });
-          });
-          if(parsed.length>=4){series=parsed;break;}
+          const p=[];
+          rounds.forEach((r,ri)=>(r.series||r.matchups||[]).forEach(s=>{
+            const t1=s.topSeedTeam||s.team1||{},t2=s.bottomSeedTeam||s.team2||{},cr=s.conference||r.conference||'';
+            p.push({conf:cr.toLowerCase().includes('west')?'west':'east',round:ri+1,t1:t1.abbrev||'TBD',t2:t2.abbrev||'TBD',s1:t1.seed||'',s2:t2.seed||'',w1:s.topSeedWins??s.team1Wins??0,w2:s.bottomSeedWins??s.team2Wins??0});
+          }));
+          if(p.length>=4){series=p;break;}
         }
       }catch(e){continue;}
     }
@@ -648,24 +588,20 @@ async function loadBracket(){
 
   if(!series){
     try{
-      const allTeams=[...EAST_TEAMS,...WEST_TEAMS];
-      const results=await Promise.allSettled(allTeams.map(t=>fj(API.schedule(t))));
-      const allGames=[];
-      results.forEach(r=>{if(r.status==='fulfilled')(r.value?.games||[]).filter(g=>g.gameType===3).forEach(g=>allGames.push(g));});
-      if(allGames.length)series=buildBracketFromSchedules(allGames);
+      const results=await Promise.allSettled([...EAST_TEAMS,...WEST_TEAMS].map(t=>fj(API.schedule(t))));
+      const all=[];
+      results.forEach(r=>{if(r.status==='fulfilled')(r.value?.games||[]).filter(g=>g.gameType===3).forEach(g=>all.push(g));});
+      if(all.length)series=buildFromSchedules(all);
     }catch(e){}
   }
 
-  if(!series?.length){
-    $('bracket-body').innerHTML='<div class="card-body" style="padding:16px 18px"><p class="api-error">Bracket unavailable — try again later</p></div>';
-    return;
-  }
+  if(!series?.length){$('bracket-body').innerHTML='<div class="card-body" style="padding:16px 18px"><p class="api-error">Bracket unavailable</p></div>';return;}
 
-  const isEastTeam=t=>EAST_TEAMS.includes(t)||['OTT','BOS','MTL','TB','PIT','PHI','BUF','CAR'].includes(t);
-  const isWestTeam=t=>WEST_TEAMS.includes(t)||['COL','DAL','VGK','ANA','MIN','EDM','UTA','LAK'].includes(t);
-  const eastSeries=series.filter(s=>s.conf==='east'||(s.conf!=='west'&&isEastTeam(s.t1)));
-  const westSeries=series.filter(s=>s.conf==='west'||(s.conf!=='east'&&isWestTeam(s.t1)));
-  renderBracketFromSeries(eastSeries,westSeries);
+  const isE=t=>EAST_TEAMS.includes(t)||['OTT','BOS','MTL','TB','PIT','PHI','BUF','CAR'].includes(t);
+  const isW=t=>WEST_TEAMS.includes(t)||['COL','DAL','VGK','ANA','MIN','EDM','UTA','LAK'].includes(t);
+  const east=series.filter(s=>s.conf==='east'||(s.conf!=='west'&&isE(s.t1)));
+  const west=series.filter(s=>s.conf==='west'||(s.conf!=='east'&&isW(s.t1)));
+  renderBracket(east,west);
 }
 
 async function loadStandings(){
@@ -673,11 +609,11 @@ async function loadStandings(){
   const all=data.standings||[];
   const metro=all.filter(t=>t.divisionName==='Metropolitan').sort((a,b)=>b.points-a.points);
   let carData=null;
-  const clinchMap={e:'ELIM',x:'PLAYOFF',y:'DIV',z:'PRES',p:'PLAYOFF'};
+  const cm={e:'ELIM',x:'PLAYOFF',y:'DIV',z:'PRES',p:'PLAYOFF'};
   $('standings-body').innerHTML=metro.map((t,i)=>{
     const abbr=t.teamAbbrev?.default||'',isCar=abbr===CAR;
     if(isCar)carData=t;
-    const cl=clinchMap[(t.clinchIndicator||'').toLowerCase()]||'';
+    const cl=cm[(t.clinchIndicator||'').toLowerCase()]||'';
     return `<div class="s-row ${isCar?'hl':''}">
       <div class="s-rank ${i===0?'top':''}">${i+1}</div>
       <div class="s-name ${isCar?'hl-name':''}">${t.teamName?.default||abbr}</div>
@@ -687,34 +623,21 @@ async function loadStandings(){
     </div>`;
   }).join('')||'<p class="api-error">No data</p>';
 
-  // Rivals sorted by division standing, excluding CAR
-  $('rival-body').innerHTML=metro
-    .filter(t=>(t.teamAbbrev?.default||'')!==CAR)
-    .map(t=>{
-      const abbr=t.teamAbbrev?.default||'';
-      const name=t.teamName?.default||abbr;
-      const regElim=t.clinchIndicator==='e'||t.eliminationNumber===0;
-      const ppElim=playoffEliminatedTeams.has(abbr);
-      const elim=regElim||ppElim;
-      return `<div class="rv-row">
-        <div class="rv-name">${name}</div>
-        <div class="rv-tag ${elim?'elim':'alive'}">${elim?'🗑 Eliminated':'⚠ Still Alive'}</div>
-      </div>`;
-    }).join('');
+  $('rival-body').innerHTML=metro.filter(t=>(t.teamAbbrev?.default||'')!==CAR).map(t=>{
+    const abbr=t.teamAbbrev?.default||'',name=t.teamName?.default||abbr;
+    const elim=(t.clinchIndicator==='e'||t.eliminationNumber===0)||playoffEliminatedTeams.has(abbr);
+    return `<div class="rv-row"><div class="rv-name">${name}</div><div class="rv-tag ${elim?'elim':'alive'}">${elim?'🗑 Eliminated':'⚠ Still Alive'}</div></div>`;
+  }).join('');
   return carData;
 }
 
-async function loadPlayerStats(gameId,containerId){
-  const el=document.getElementById(containerId);
-  if(!el)return;
+async function loadPlayerStats(gameId,cid){
+  const el=document.getElementById(cid);if(!el)return;
   el.querySelector('.r-players-inner').innerHTML='<p class="r-player-loading">Loading stats…</p>';
   try{
     const data=await fj(API.boxscore(gameId));
-    const teams=data.playerByGameStats;
-    if(!teams)throw new Error('No stats');
-    const homeAbbr=data.homeTeam?.abbrev;
-    const carSide=homeAbbr===CAR?teams.homeTeam:teams.awayTeam;
-    if(!carSide)throw new Error('No CAR stats');
+    const teams=data.playerByGameStats;if(!teams)throw new Error();
+    const homeAbbr=data.homeTeam?.abbrev,carSide=homeAbbr===CAR?teams.homeTeam:teams.awayTeam;if(!carSide)throw new Error();
     const skaters=[...(carSide.forwards||[]),...(carSide.defense||[])].filter(p=>(p.goals||0)+(p.assists||0)>0).sort((a,b)=>(b.goals+b.assists)-(a.goals+a.assists)).slice(0,5);
     const goalies=(carSide.goalies||[]).slice(0,1);
     if(!skaters.length&&!goalies.length){el.querySelector('.r-players-inner').innerHTML='<p class="r-player-loading">No scoring data</p>';return;}
@@ -726,64 +649,51 @@ async function loadPlayerStats(gameId,containerId){
 }
 
 let expandedRow=null;
-function toggleResult(row,gameId,playersId){
-  const panel=document.getElementById(playersId);
-  const isOpen=row.classList.contains('expanded');
+function toggleResult(row,gameId,pid){
+  const panel=document.getElementById(pid),isOpen=row.classList.contains('expanded');
   if(expandedRow&&expandedRow!==row){expandedRow.classList.remove('expanded');const prev=expandedRow.nextElementSibling;if(prev)prev.classList.remove('open');}
   if(isOpen){row.classList.remove('expanded');panel.classList.remove('open');expandedRow=null;}
-  else{row.classList.add('expanded');panel.classList.add('open');expandedRow=row;loadPlayerStats(gameId,playersId);}
+  else{row.classList.add('expanded');panel.classList.add('open');expandedRow=row;loadPlayerStats(gameId,pid);}
 }
 
 async function loadSchedule(){
-  const data=await fj(API.schedule(CAR));
-  const games=data.games||[];
+  const data=await fj(API.schedule(CAR)),games=data.games||[];
   const past=games.filter(g=>['OFF','FINAL'].includes(g.gameState)).sort((a,b)=>new Date(b.gameDate)-new Date(a.gameDate)).slice(0,8);
   const upcoming=games.filter(g=>['FUT','PRE'].includes(g.gameState)).sort((a,b)=>new Date(a.gameDate)-new Date(b.gameDate)).slice(0,4);
 
-  let streak=0,streakType='';
+  let streak=0,st='';
   for(const g of past){
-    const home=g.homeTeam?.abbrev===CAR;
-    const carS=home?g.homeTeam?.score:g.awayTeam?.score;
-    const oppS=home?g.awayTeam?.score:g.homeTeam?.score;
-    const win=carS>oppS;
-    if(!streakType)streakType=win?'W':'L';
-    if((win&&streakType==='W')||(!win&&streakType==='L'))streak++;else break;
+    const home=g.homeTeam?.abbrev===CAR,cS=home?g.homeTeam?.score:g.awayTeam?.score,oS=home?g.awayTeam?.score:g.homeTeam?.score,win=cS>oS;
+    if(!st)st=win?'W':'L';
+    if((win&&st==='W')||(!win&&st==='L'))streak++;else break;
   }
   const sb=$('streak-badge');
-  if(streak>0){sb.textContent=`${streakType}${streak}`;sb.style.cssText=`background:${streakType==='W'?'rgba(0,180,60,0.16)':'rgba(204,0,0,0.16)'};color:${streakType==='W'?'var(--green)':'var(--red)'};border:1px solid ${streakType==='W'?'rgba(0,180,60,0.3)':'rgba(204,0,0,0.3)'};`;}
+  if(streak>0){sb.textContent=`${st}${streak}`;sb.style.cssText=`background:${st==='W'?'rgba(0,180,60,0.16)':'rgba(204,0,0,0.16)'};color:${st==='W'?'var(--green)':'var(--red)'};border:1px solid ${st==='W'?'rgba(0,180,60,0.3)':'rgba(204,0,0,0.3)'};`;}
 
   let w=0,l=0;
   $('results-body').innerHTML=past.map((g,idx)=>{
-    const home=g.homeTeam?.abbrev===CAR;
-    const carS=home?g.homeTeam?.score:g.awayTeam?.score;
-    const oppS=home?g.awayTeam?.score:g.homeTeam?.score;
-    const opp=home?g.awayTeam:g.homeTeam;
-    const win=carS>oppS;
+    const home=g.homeTeam?.abbrev===CAR,cS=home?g.homeTeam?.score:g.awayTeam?.score,oS=home?g.awayTeam?.score:g.homeTeam?.score,opp=home?g.awayTeam:g.homeTeam,win=cS>oS;
     if(win)w++;else l++;
     const pp=g.gameType===3,pid=`players-${idx}`;
     return `<div class="r-row" onclick="toggleResult(this,'${g.id}','${pid}')">
       <div class="r-badge ${win?'W':'L'}">${win?'W':'L'}</div>
       <div class="r-opp"><span class="loc">${pp?'🏒 ':''}${home?'vs':'@'} ${opp?.abbrev||'?'}</span>${opp?.name?.default||opp?.abbrev||'?'}</div>
-      <div class="r-score">${carS}–${oppS}</div>
+      <div class="r-score">${cS}–${oS}</div>
       <div class="r-date">${fmtDate(g.gameDate)}</div>
       <div class="r-chevron">▼</div>
-    </div>
-    <div class="r-players" id="${pid}"><div class="r-players-inner"></div></div>`;
+    </div><div class="r-players" id="${pid}"><div class="r-players-inner"></div></div>`;
   }).join('')||'<p class="api-error">No recent games found</p>';
   $('results-record').textContent=`${w}-${l}`;
   $('results-label').textContent=`Last ${past.length} Games`;
 
   $('upcoming-body').innerHTML=upcoming.map(g=>{
-    const home=g.homeTeam?.abbrev===CAR;
-    const opp=home?g.awayTeam:g.homeTeam;
-    const pp=g.gameType===3;
+    const home=g.homeTeam?.abbrev===CAR,opp=home?g.awayTeam:g.homeTeam,pp=g.gameType===3;
     return `<div class="u-row">
       <div class="u-date"><span class="u-mo">${fmtMo(g.startTimeUTC)}</span><span class="u-day">${fmtDay(g.startTimeUTC)}</span></div>
       <div class="u-vs">${home?'vs':'@'} ${opp?.name?.default||opp?.abbrev||'?'} ${g.gameLabel?'· '+g.gameLabel:''}<span class="u-time">${fmtTime(g.startTimeUTC)}</span></div>
       <div class="u-type ${pp?'playoff':'regular'}">${pp?'🏒 Playoff':'Regular'}</div>
     </div>`;
   }).join('')||'<p class="api-error">No upcoming games found</p>';
-
   return{past,upcoming};
 }
 
@@ -794,89 +704,36 @@ async function loadScoreboard(){
 
 function renderGame(game,upcoming,past){
   if(game){
-    const home=game.homeTeam?.abbrev===CAR;
-    const carT=home?game.homeTeam:game.awayTeam;
-    const oppT=home?game.awayTeam:game.homeTeam;
-    const carS=carT?.score??0,oppS=oppT?.score??0;
-    const state=game.gameState;
-    const live=state==='LIVE'||state==='CRIT';
-    const final=state==='OFF'||state==='FINAL';
-    const per=game.periodDescriptor?.number||1;
-    const perLbl=PERIOD_LABEL[per]||(per+'P');
-    const clock=game.clock?.timeRemaining||'';
+    const home=game.homeTeam?.abbrev===CAR,carT=home?game.homeTeam:game.awayTeam,oppT=home?game.awayTeam:game.homeTeam;
+    const cS=carT?.score??0,oS=oppT?.score??0,state=game.gameState;
+    const live=state==='LIVE'||state==='CRIT',final=state==='OFF'||state==='FINAL';
+    const per=game.periodDescriptor?.number||1,perLbl=PERIOD_LABEL[per]||(per+'P'),clock=game.clock?.timeRemaining||'';
     const pp=game.gameType===3,ss=game.seriesStatus;
-
     $('game-label').textContent=pp?`🏒 ${game.gameLabel||'Playoff'} · Eastern Conf`:live?'⚡ In Progress':final?'Final':'Today';
     $('game-title').textContent=home?`CAR vs ${oppT?.abbrev}`:`${oppT?.abbrev} vs CAR`;
     $('game-badge').innerHTML=live?`<div class="live-pill"><div class="live-dot"></div>Live</div>`:final?`<span style="font-family:'Barlow Condensed',sans-serif;font-size:0.78rem;letter-spacing:2px;color:var(--silver);text-transform:uppercase;">Final</span>`:'';
-
     let seriesHTML='';
-    if(pp){
-      const apiCarW=ss?(home?ss.homeTeamWins||0:ss.awayTeamWins||0):0;
-      const apiOppW=ss?(home?ss.awayTeamWins||0:ss.homeTeamWins||0):0;
-      const{dots,cW,oW}=buildDotsFromHistory(past,oppT?.abbrev,apiCarW,apiOppW,live);
-      seriesHTML=`<div class="series-info">Series: <strong>CAR ${cW} – ${oW} ${oppT?.abbrev}</strong> · Best of 7<div class="series-dots">${dots}</div></div>`;
-    }
-
-    const carGoals=(game.goals||[]).filter(g=>g.teamAbbrev===CAR).slice(0,4);
-    const oppGoals=(game.goals||[]).filter(g=>g.teamAbbrev!==CAR).slice(0,4);
+    if(pp){const apiCW=ss?(home?ss.homeTeamWins||0:ss.awayTeamWins||0):0,apiOW=ss?(home?ss.awayTeamWins||0:ss.homeTeamWins||0):0,{dots,cW,oW}=buildDots(past,oppT?.abbrev,apiCW,apiOW,live);seriesHTML=`<div class="series-info">Series: <strong>CAR ${cW} – ${oW} ${oppT?.abbrev}</strong> · Best of 7<div class="series-dots">${dots}</div></div>`;}
+    const cG=(game.goals||[]).filter(g=>g.teamAbbrev===CAR).slice(0,4),oG=(game.goals||[]).filter(g=>g.teamAbbrev!==CAR).slice(0,4);
     let scorersHTML='';
-    if(carGoals.length||oppGoals.length){
-      scorersHTML=`<div class="scorers-wrap">
-        <div class="scorers-col"><div class="scorers-label" style="color:var(--red)">CAR Goals</div>
-          ${carGoals.map(g=>`<div class="scorer-row"><span class="scorer-name">${g.name?.default||'—'}</span><span class="scorer-detail">${g.periodDescriptor?.number||''}P ${g.timeInPeriod||''}</span></div>`).join('')}
-          ${!carGoals.length?'<div class="scorer-row" style="color:var(--silver)">—</div>':''}
-        </div>
-        <div class="scorers-col"><div class="scorers-label">${oppT?.abbrev} Goals</div>
-          ${oppGoals.map(g=>`<div class="scorer-row"><span class="scorer-name">${g.name?.default||'—'}</span><span class="scorer-detail">${g.periodDescriptor?.number||''}P ${g.timeInPeriod||''}</span></div>`).join('')}
-          ${!oppGoals.length?'<div class="scorer-row" style="color:var(--silver)">—</div>':''}
-        </div>
-      </div>`;
-    }
-
-    $('game-body').innerHTML=`
-      <div class="game-matchup">
-        <div class="g-team">
-          <div class="g-abbr ${home?'car':''}">${home?CAR:oppT?.abbrev||'?'}</div>
-          <div class="g-name">${home?'Carolina Hurricanes':(oppT?.name?.default||oppT?.abbrev||'?')}</div>
-          ${(home?carT:oppT)?.seed?`<div class="g-seed">SEED #${(home?carT:oppT).seed}</div>`:''}
-        </div>
-        <div class="g-center">
-          <div class="g-score">${home?carS:oppS} — ${home?oppS:carS}</div>
-          <div class="g-status">${live?perLbl+' · '+clock:final?'Final':fmtDate(game.startTimeUTC)+' · '+fmtTime(game.startTimeUTC)}</div>
-        </div>
-        <div class="g-team">
-          <div class="g-abbr ${!home?'car':''}">${!home?CAR:oppT?.abbrev||'?'}</div>
-          <div class="g-name">${!home?'Carolina Hurricanes':(oppT?.name?.default||oppT?.abbrev||'?')}</div>
-          ${(!home?carT:oppT)?.seed?`<div class="g-seed">SEED #${(!home?carT:oppT).seed}</div>`:''}
-        </div>
-      </div>
-      ${seriesHTML}${scorersHTML}`;
-
+    if(cG.length||oG.length){scorersHTML=`<div class="scorers-wrap"><div class="scorers-col"><div class="scorers-label" style="color:var(--red)">CAR Goals</div>${cG.map(g=>`<div class="scorer-row"><span class="scorer-name">${g.name?.default||'—'}</span><span class="scorer-detail">${g.periodDescriptor?.number||''}P ${g.timeInPeriod||''}</span></div>`).join('')}${!cG.length?'<div class="scorer-row" style="color:var(--silver)">—</div>':''}</div><div class="scorers-col"><div class="scorers-label">${oppT?.abbrev} Goals</div>${oG.map(g=>`<div class="scorer-row"><span class="scorer-name">${g.name?.default||'—'}</span><span class="scorer-detail">${g.periodDescriptor?.number||''}P ${g.timeInPeriod||''}</span></div>`).join('')}${!oG.length?'<div class="scorer-row" style="color:var(--silver)">—</div>':''}</div></div>`;}
+    $('game-body').innerHTML=`<div class="game-matchup">
+      <div class="g-team"><div class="g-abbr ${home?'car':''}">${home?CAR:oppT?.abbrev||'?'}</div><div class="g-name">${home?'Carolina Hurricanes':(oppT?.name?.default||oppT?.abbrev||'?')}</div>${(home?carT:oppT)?.seed?`<div class="g-seed">SEED #${(home?carT:oppT).seed}</div>`:''}</div>
+      <div class="g-center"><div class="g-score">${home?cS:oS} — ${home?oS:cS}</div><div class="g-status">${live?perLbl+' · '+clock:final?'Final':fmtDate(game.startTimeUTC)+' · '+fmtTime(game.startTimeUTC)}</div></div>
+      <div class="g-team"><div class="g-abbr ${!home?'car':''}">${!home?CAR:oppT?.abbrev||'?'}</div><div class="g-name">${!home?'Carolina Hurricanes':(oppT?.name?.default||oppT?.abbrev||'?')}</div>${(!home?carT:oppT)?.seed?`<div class="g-seed">SEED #${(!home?carT:oppT).seed}</div>`:''}</div>
+    </div>${seriesHTML}${scorersHTML}`;
   }else if(upcoming?.length){
-    const next=upcoming[0];
-    const home=next.homeTeam?.abbrev===CAR;
-    const opp=home?next.awayTeam:next.homeTeam;
-    const pp=next.gameType===3;
+    const next=upcoming[0],home=next.homeTeam?.abbrev===CAR,opp=home?next.awayTeam:next.homeTeam,pp=next.gameType===3;
     $('game-label').textContent=pp?`🏒 ${next.gameLabel||'Playoff'} · Up Next`:'Next Game';
     $('game-title').textContent=`${home?'vs':'@'} ${opp?.abbrev||'?'}`;
     $('game-badge').innerHTML='';
-    let seriesHTML=`<div class="series-info">${fmtDate(next.startTimeUTC)} · ${fmtTime(next.startTimeUTC)}</div>`;
-    if(pp){
-      const{dots,cW,oW}=buildDotsFromHistory(past,opp?.abbrev,0,0,false);
-      if(cW>0||oW>0)seriesHTML=`<div class="series-info">Series: <strong>CAR ${cW} – ${oW} ${opp?.abbrev}</strong> · Best of 7<div class="series-dots">${dots}</div></div>`;
-    }
-    $('game-body').innerHTML=`
-      <div class="game-matchup">
-        <div class="g-team"><div class="g-abbr car">${CAR}</div><div class="g-name">Carolina Hurricanes</div></div>
-        <div class="g-center">
-          <div class="g-score" style="font-size:2rem;color:var(--silver);">VS</div>
-          <div class="g-status">${fmtDate(next.startTimeUTC)} · ${fmtTime(next.startTimeUTC)}</div>
-        </div>
-        <div class="g-team"><div class="g-abbr">${opp?.abbrev||'?'}</div><div class="g-name">${opp?.name?.default||opp?.abbrev||'?'}</div></div>
-      </div>
-      ${seriesHTML}
-      <div class="countdown-wrap"><div class="countdown-label">Time until puck drop</div><div class="countdown-timer" id="game-countdown">—</div></div>`;
+    let sH=`<div class="series-info">${fmtDate(next.startTimeUTC)} · ${fmtTime(next.startTimeUTC)}</div>`;
+    if(pp){const{dots,cW,oW}=buildDots(past,opp?.abbrev,0,0,false);if(cW>0||oW>0)sH=`<div class="series-info">Series: <strong>CAR ${cW} – ${oW} ${opp?.abbrev}</strong> · Best of 7<div class="series-dots">${dots}</div></div>`;}
+    $('game-body').innerHTML=`<div class="game-matchup">
+      <div class="g-team"><div class="g-abbr car">${CAR}</div><div class="g-name">Carolina Hurricanes</div></div>
+      <div class="g-center"><div class="g-score" style="font-size:2rem;color:var(--silver);">VS</div><div class="g-status">${fmtDate(next.startTimeUTC)} · ${fmtTime(next.startTimeUTC)}</div></div>
+      <div class="g-team"><div class="g-abbr">${opp?.abbrev||'?'}</div><div class="g-name">${opp?.name?.default||opp?.abbrev||'?'}</div></div>
+    </div>${sH}<div class="countdown-wrap"><div class="countdown-label">Time until puck drop</div><div class="countdown-timer" id="game-countdown">—</div></div>`;
     startCountdown(next.startTimeUTC);
   }else{
     $('game-body').innerHTML='<div class="card-body"><p class="api-error">No game data</p></div>';
@@ -886,36 +743,24 @@ function renderGame(game,upcoming,past){
 function renderStats(car,ppW,ppL){
   if(!car){$('stats-body').innerHTML='<p class="api-error">No stats</p>';return;}
   const pct=car.pointPctg?car.pointPctg.toFixed(3):'—';
-  $('stats-body').innerHTML=`
-    <div class="stat-grid">
-      <div class="stat-block"><div class="stat-num">${car.wins||0}</div><div class="stat-lbl">Wins</div><div class="stat-sub">Regular season</div></div>
-      <div class="stat-block"><div class="stat-num">${car.points||0}</div><div class="stat-lbl">Points</div><div class="stat-sub">${pct} pt%</div></div>
-      <div class="stat-block"><div class="stat-num">#${car.divisionSequence||'?'}</div><div class="stat-lbl">Div Rank</div><div class="stat-sub">Metropolitan</div></div>
-      <div class="stat-block"><div class="stat-num">${car.wins||0}-${car.losses||0}${car.otLosses?'-'+car.otLosses:''}</div><div class="stat-lbl">Record</div><div class="stat-sub">W-L${car.otLosses?'-OTL':''}</div></div>
-      <div class="stat-block"><div class="stat-num">${ppW}-${ppL}</div><div class="stat-lbl">Playoffs</div><div class="stat-sub">W-L this year</div></div>
-      <div class="stat-block"><div class="stat-num">#${car.conferenceSequence||'?'}</div><div class="stat-lbl">Conf Seed</div><div class="stat-sub">Eastern Conf</div></div>
-    </div>`;
+  $('stats-body').innerHTML=`<div class="stat-grid">
+    <div class="stat-block"><div class="stat-num">${car.wins||0}</div><div class="stat-lbl">Wins</div><div class="stat-sub">Regular season</div></div>
+    <div class="stat-block"><div class="stat-num">${car.points||0}</div><div class="stat-lbl">Points</div><div class="stat-sub">${pct} pt%</div></div>
+    <div class="stat-block"><div class="stat-num">#${car.divisionSequence||'?'}</div><div class="stat-lbl">Div Rank</div><div class="stat-sub">Metropolitan</div></div>
+    <div class="stat-block"><div class="stat-num">${car.wins||0}-${car.losses||0}${car.otLosses?'-'+car.otLosses:''}</div><div class="stat-lbl">Record</div><div class="stat-sub">W-L${car.otLosses?'-OTL':''}</div></div>
+    <div class="stat-block"><div class="stat-num">${ppW}-${ppL}</div><div class="stat-lbl">Playoffs</div><div class="stat-sub">W-L this year</div></div>
+    <div class="stat-block"><div class="stat-num">#${car.conferenceSequence||'?'}</div><div class="stat-lbl">Conf Seed</div><div class="stat-sub">Eastern Conf</div></div>
+  </div>`;
 }
 
 async function init(){
   document.body.classList.add('loading');
   try{
-    await loadBracket().catch(()=>{
-      $('bracket-body').innerHTML='<div class="card-body" style="padding:16px 18px"><p class="api-error">Bracket unavailable</p></div>';
-    });
-    const[scoreboard,sched,car]=await Promise.all([
-      loadScoreboard().catch(()=>null),
-      loadSchedule().catch(()=>({past:[],upcoming:[]})),
-      loadStandings().catch(()=>null),
-    ]);
+    await loadBracket().catch(()=>{$('bracket-body').innerHTML='<div class="card-body" style="padding:16px 18px"><p class="api-error">Bracket unavailable</p></div>';});
+    const[scoreboard,sched,car]=await Promise.all([loadScoreboard().catch(()=>null),loadSchedule().catch(()=>({past:[],upcoming:[]})),loadStandings().catch(()=>null)]);
     const{upcoming,past}=sched;
     let ppW=0,ppL=0;
-    (past||[]).filter(g=>g.gameType===3).forEach(g=>{
-      const home=g.homeTeam?.abbrev===CAR;
-      const cS=home?g.homeTeam?.score:g.awayTeam?.score;
-      const oS=home?g.awayTeam?.score:g.homeTeam?.score;
-      if(cS>oS)ppW++;else ppL++;
-    });
+    (past||[]).filter(g=>g.gameType===3).forEach(g=>{const home=g.homeTeam?.abbrev===CAR,cS=home?g.homeTeam?.score:g.awayTeam?.score,oS=home?g.awayTeam?.score:g.homeTeam?.score;if(cS>oS)ppW++;else ppL++;});
     renderGame(scoreboard,upcoming,past);
     renderStats(car,ppW,ppL);
     if(car)setSurge(car.wins||0,car.losses||0,car.conferenceSequence||4,ppW,ppL);
@@ -923,12 +768,9 @@ async function init(){
   }catch(e){console.error(e);}
   finally{
     document.body.classList.remove('loading');
-    const loader=$('loader');
-    loader.classList.add('hidden');
-    setTimeout(()=>loader.style.display='none',600);
+    const loader=$('loader');loader.classList.add('hidden');setTimeout(()=>loader.style.display='none',600);
   }
 }
-
 init();
 setInterval(init,60000);
 </script>
