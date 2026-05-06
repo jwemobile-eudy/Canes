@@ -71,7 +71,9 @@
   .card-body{padding:13px 18px;}
   .api-error{font-family:'Barlow Condensed',sans-serif;font-size:0.8rem;color:var(--silver);padding:8px 0;letter-spacing:1px;}
 
-  .game-card{grid-column:1/3;background:linear-gradient(135deg,#160000,#1a0000 50%,#1c1c1c);border-color:var(--red);position:relative;}
+  /* GAME CARD */
+  .game-card{grid-column:1/3;}
+  .game-card{background:linear-gradient(135deg,#160000,#1a0000 50%,#1c1c1c);border-color:var(--red);position:relative;}
   .game-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--red),transparent);animation:scan 2.5s ease-in-out infinite;}
   @keyframes scan{0%,100%{opacity:0.3}50%{opacity:1}}
   .game-matchup{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 22px 8px;}
@@ -100,29 +102,12 @@
   .scorer-name{flex:1;}
   .scorer-detail{color:var(--silver);font-size:0.72rem;}
 
-  .countdown-wrap{text-align:center;padding:10px 22px 14px;}
-  .countdown-label{font-family:'Barlow Condensed',sans-serif;font-size:0.65rem;letter-spacing:3px;text-transform:uppercase;color:var(--silver);margin-bottom:6px;}
-  .countdown-timer{font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:4px;color:var(--red);text-shadow:0 0 12px var(--red-glow);}
+  .countdown-wrap{text-align:center;padding:8px 22px 14px;}
+  .countdown-label{font-family:'Barlow Condensed',sans-serif;font-size:0.65rem;letter-spacing:3px;text-transform:uppercase;color:var(--silver);margin-bottom:4px;}
+  .countdown-timer{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:3px;color:var(--red);text-shadow:0 0 12px var(--red-glow);white-space:nowrap;}
 
-  .bracket-card{grid-column:1/4;}
-  .bracket-rounds{display:flex;overflow-x:auto;}
-  .bracket-round{flex:1;min-width:160px;border-right:1px solid var(--gray-border);padding:14px 16px;}
-  .bracket-round:last-child{border-right:none;}
-  .round-title{font-family:'Barlow Condensed',sans-serif;font-size:0.62rem;letter-spacing:3px;text-transform:uppercase;color:var(--silver);margin-bottom:12px;text-align:center;}
-  .b-series{background:var(--gray-dark);border:1px solid var(--gray-border);border-radius:3px;overflow:hidden;margin-bottom:8px;}
-  .b-series.active{border-color:var(--red);box-shadow:0 0 10px rgba(204,0,0,0.2);}
-  .b-series.tbd{opacity:0.35;}
-  .b-team{display:flex;align-items:center;padding:6px 10px;border-bottom:1px solid rgba(255,255,255,0.05);gap:7px;}
-  .b-team:last-child{border-bottom:none;}
-  .b-team.winner{background:rgba(204,0,0,0.08);}
-  .b-seed{font-family:'Barlow Condensed',sans-serif;font-size:0.65rem;color:var(--silver);width:12px;flex-shrink:0;}
-  .b-name{flex:1;font-family:'Barlow Condensed',sans-serif;font-size:0.82rem;font-weight:600;}
-  .b-name.car{color:var(--red);}
-  .b-wins{font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:1px;}
-  .b-wins.lead{color:var(--green);}
-  .b-status{font-family:'Barlow Condensed',sans-serif;font-size:0.6rem;letter-spacing:2px;text-transform:uppercase;color:var(--red);text-align:center;padding:3px 0 5px;}
-
-  .stats-card{grid-column:1/2;}
+  /* STATS */
+  .stats-card{grid-column:3/4;grid-row:1/3;}
   .stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;}
   .stat-block{background:var(--gray-dark);border:1px solid var(--gray-border);border-radius:3px;padding:11px 11px 7px;position:relative;overflow:hidden;}
   .stat-block::after{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:var(--red);}
@@ -130,7 +115,8 @@
   .stat-lbl{font-family:'Barlow Condensed',sans-serif;font-size:0.66rem;letter-spacing:2px;text-transform:uppercase;color:var(--silver);margin-top:1px;}
   .stat-sub{font-family:'Barlow Condensed',sans-serif;font-size:0.68rem;color:var(--ice-dim);margin-top:2px;}
 
-  .upcoming-card{grid-column:2/4;}
+  /* UPCOMING */
+  .upcoming-card{grid-column:1/3;}
   .u-row{display:flex;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.05);gap:11px;}
   .u-row:last-child{border-bottom:none;}
   .u-date{text-align:center;flex-shrink:0;width:30px;}
@@ -142,7 +128,8 @@
   .u-type.playoff{color:var(--red);background:rgba(204,0,0,0.09);border:1px solid rgba(204,0,0,0.18);}
   .u-type.regular{color:var(--ice-dim);background:rgba(208,232,245,0.06);border:1px solid rgba(208,232,245,0.09);}
 
-  .results-card{grid-column:1/2;grid-row:auto;}
+  /* RESULTS */
+  .results-card{grid-column:1/2;}
   .r-row{display:flex;align-items:center;padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.05);gap:7px;cursor:pointer;transition:background 0.15s ease;}
   .r-row:hover{background:rgba(255,255,255,0.03);}
   .r-row:last-child{border-bottom:none;}
@@ -167,6 +154,7 @@
   .r-player-stat{font-family:'Barlow Condensed',sans-serif;font-size:0.75rem;color:var(--ice-dim);}
   .r-player-loading{font-family:'Barlow Condensed',sans-serif;font-size:0.75rem;color:var(--silver);letter-spacing:2px;text-transform:uppercase;padding:6px 0;}
 
+  /* STANDINGS */
   .standings-card{grid-column:2/3;}
   .s-row{display:flex;align-items:center;padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.05);gap:7px;}
   .s-row:last-child{border-bottom:none;}
@@ -179,6 +167,7 @@
   .s-rec{font-family:'Barlow Condensed',sans-serif;font-size:0.75rem;color:var(--silver);width:50px;text-align:right;}
   .clinched{font-family:'Barlow Condensed',sans-serif;font-size:0.56rem;letter-spacing:1px;text-transform:uppercase;background:var(--red);color:white;padding:1px 4px;border-radius:2px;flex-shrink:0;}
 
+  /* RIVALS */
   .rival-card{grid-column:3/4;}
   .rv-row{display:flex;align-items:center;padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.05);gap:8px;}
   .rv-row:last-child{border-bottom:none;}
@@ -187,25 +176,51 @@
   .rv-tag.elim{background:rgba(0,200,0,0.09);color:var(--green);border:1px solid rgba(0,200,0,0.18);}
   .rv-tag.alive{background:rgba(204,0,0,0.09);color:var(--red);border:1px solid rgba(204,0,0,0.18);}
 
-  footer{border-top:1px solid var(--gray-border);padding:14px 40px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;}
-  .footer-left{font-family:'Barlow Condensed',sans-serif;font-size:0.7rem;letter-spacing:2px;text-transform:uppercase;color:var(--silver);}
-  #last-updated{color:var(--ice-dim);}
-  .canes-motto{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:3px;color:var(--red);text-shadow:0 0 14px var(--red-glow);}
+  /* BRACKET */
+  .bracket-card{grid-column:1/4;}
+  .bracket-rounds{display:flex;overflow-x:auto;}
+  .bracket-round{flex:1;min-width:160px;border-right:1px solid var(--gray-border);padding:14px 16px;}
+  .bracket-round:last-child{border-right:none;}
+  .round-title{font-family:'Barlow Condensed',sans-serif;font-size:0.62rem;letter-spacing:3px;text-transform:uppercase;color:var(--silver);margin-bottom:12px;text-align:center;}
+  .b-series{background:var(--gray-dark);border:1px solid var(--gray-border);border-radius:3px;overflow:hidden;margin-bottom:8px;}
+  .b-series.active{border-color:var(--red);box-shadow:0 0 10px rgba(204,0,0,0.2);}
+  .b-series.tbd{opacity:0.35;}
+  .b-team{display:flex;align-items:center;padding:6px 10px;border-bottom:1px solid rgba(255,255,255,0.05);gap:7px;}
+  .b-team:last-child{border-bottom:none;}
+  .b-team.winner{background:rgba(204,0,0,0.08);}
+  .b-seed{font-family:'Barlow Condensed',sans-serif;font-size:0.65rem;color:var(--silver);width:12px;flex-shrink:0;}
+  .b-name{flex:1;font-family:'Barlow Condensed',sans-serif;font-size:0.82rem;font-weight:600;}
+  .b-name.car{color:var(--red);}
+  .b-wins{font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:1px;}
+  .b-wins.lead{color:var(--green);}
+  .b-status{font-family:'Barlow Condensed',sans-serif;font-size:0.6rem;letter-spacing:2px;text-transform:uppercase;color:var(--red);text-align:center;padding:3px 0 5px;}
+
   .live-pill{display:inline-flex;align-items:center;gap:6px;background:var(--red);color:white;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:0.7rem;letter-spacing:2px;text-transform:uppercase;padding:4px 12px;border-radius:2px;}
   .live-dot{width:7px;height:7px;background:white;border-radius:50%;animation:blink 1.2s ease-in-out infinite;}
   @keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
 
+  footer{border-top:1px solid var(--gray-border);padding:14px 40px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+  .footer-left{font-family:'Barlow Condensed',sans-serif;font-size:0.7rem;letter-spacing:2px;text-transform:uppercase;color:var(--silver);}
+  #last-updated{color:var(--ice-dim);}
+  .canes-motto{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:3px;color:var(--red);text-shadow:0 0 14px var(--red-glow);}
+
+  /* TABLET */
   @media(max-width:900px){
     .main{grid-template-columns:1fr 1fr;padding:14px;gap:12px;}
-    .game-card,.bracket-card{grid-column:1/3;}
+    .game-card{grid-column:1/3;}
+    .stats-card{grid-column:1/3;grid-row:auto;}
     .upcoming-card{grid-column:1/3;}
-    .stats-card,.results-card,.standings-card,.rival-card{grid-column:1/2;grid-row:auto;}
-    .standings-card,.rival-card{grid-column:2/3;}
+    .results-card{grid-column:1/2;grid-row:auto;}
+    .standings-card{grid-column:2/3;grid-row:auto;}
+    .rival-card{grid-column:1/3;}
+    .bracket-card{grid-column:1/3;}
     .surge-section{padding:16px 18px;}
     .surge-explainer{margin:12px -18px -16px;}
     .header-inner{padding:18px 18px 14px;}
     footer{padding:12px 18px;}
   }
+
+  /* MOBILE */
   @media(max-width:560px){
     .header-inner{padding:16px 16px 14px;}
     .logo-block{gap:12px;}
@@ -215,7 +230,7 @@
     .surge-explainer{margin:12px -16px -14px;}
     .surge-ends span:nth-child(2){display:none;}
     .main{grid-template-columns:1fr;padding:10px;gap:10px;}
-    .game-card,.bracket-card,.stats-card,.upcoming-card,.results-card,.standings-card,.rival-card{grid-column:1/2;grid-row:auto;}
+    .game-card,.stats-card,.upcoming-card,.results-card,.standings-card,.rival-card,.bracket-card{grid-column:1/2;grid-row:auto;}
     .game-matchup{padding:14px 14px 6px;gap:6px;}
     .g-abbr{font-size:2rem;letter-spacing:2px;}
     .g-score{font-size:2.8rem;letter-spacing:3px;}
@@ -308,6 +323,7 @@
 
 <div class="main">
 
+  <!-- GAME CARD -->
   <div class="card game-card" id="game-card">
     <div class="card-header">
       <div>
@@ -319,7 +335,8 @@
     <div id="game-body"><div class="card-body"><p class="api-error">Fetching game data…</p></div></div>
   </div>
 
-  <div class="card" style="grid-column:3/4;grid-row:1/3;background:var(--gray-mid);">
+  <!-- TEAM STATS -->
+  <div class="card stats-card">
     <div class="card-header">
       <div>
         <div class="card-label">2025–26 Season</div>
@@ -329,17 +346,18 @@
     <div class="card-body" id="stats-body"><p class="api-error">Loading…</p></div>
   </div>
 
+  <!-- UPCOMING -->
   <div class="card upcoming-card">
     <div class="card-header">
       <div>
         <div class="card-label">Schedule</div>
         <div class="card-title">Upcoming Games</div>
       </div>
-      <div id="countdown-badge" style="font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:2px;color:var(--red);"></div>
     </div>
     <div class="card-body" id="upcoming-body"><p class="api-error">Loading…</p></div>
   </div>
 
+  <!-- RESULTS -->
   <div class="card results-card">
     <div class="card-header">
       <div>
@@ -354,6 +372,7 @@
     <div class="card-body" id="results-body"><p class="api-error">Loading…</p></div>
   </div>
 
+  <!-- STANDINGS -->
   <div class="card standings-card">
     <div class="card-header">
       <div>
@@ -365,6 +384,7 @@
     <div class="card-body" id="standings-body"><p class="api-error">Loading…</p></div>
   </div>
 
+  <!-- RIVALS -->
   <div class="card rival-card">
     <div class="card-header">
       <div>
@@ -375,6 +395,7 @@
     <div class="card-body" id="rival-body"><p class="api-error">Loading…</p></div>
   </div>
 
+  <!-- BRACKET -->
   <div class="card bracket-card">
     <div class="card-header">
       <div>
@@ -482,7 +503,7 @@ let countdownInterval = null;
 function startCountdown(targetISO) {
   if (countdownInterval) clearInterval(countdownInterval);
   function tick() {
-    const el  = $('game-countdown');
+    const el   = $('game-countdown');
     const diff = new Date(targetISO) - new Date();
     if (!el) { clearInterval(countdownInterval); return; }
     if (diff <= 0) { el.textContent = 'PUCK DROP!'; clearInterval(countdownInterval); return; }
@@ -498,34 +519,25 @@ function startCountdown(targetISO) {
 async function loadBracket() {
   const urls = [API.bracket, API.carousel];
   let rounds = null;
-
   for (const url of urls) {
     try {
       const data = await fj(url);
-      if (data?.rounds?.length)         { rounds = data.rounds; break; }
-      if (data?.bracket?.rounds?.length){ rounds = data.bracket.rounds; break; }
+      if (data?.rounds?.length)          { rounds = data.rounds; break; }
+      if (data?.bracket?.rounds?.length) { rounds = data.bracket.rounds; break; }
     } catch(e) { continue; }
   }
-
   if (!rounds) {
     $('bracket-body').innerHTML = '<div class="card-body" style="padding:16px 18px"><p class="api-error">Bracket data unavailable — try again later</p></div>';
     return;
   }
-
   const roundNames = ['First Round','Second Round','Conf Finals','Stanley Cup Final'];
   let html = '';
-
   rounds.slice(0,4).forEach((round, ri) => {
     html += `<div class="bracket-round"><div class="round-title">${roundNames[ri]||'Round '+(ri+1)}</div>`;
     const series = round.series || round.matchups || [];
-
     if (!series.length) {
-      html += `<div class="b-series tbd">
-        <div class="b-team"><div class="b-seed">—</div><div class="b-name">TBD</div><div class="b-wins">—</div></div>
-        <div class="b-team"><div class="b-seed">—</div><div class="b-name">TBD</div><div class="b-wins">—</div></div>
-      </div>`;
+      html += `<div class="b-series tbd"><div class="b-team"><div class="b-seed">—</div><div class="b-name">TBD</div><div class="b-wins">—</div></div><div class="b-team"><div class="b-seed">—</div><div class="b-name">TBD</div><div class="b-wins">—</div></div></div>`;
     }
-
     series.forEach(s => {
       const t1  = s.topSeedTeam    || s.team1 || s.homeTeam || {};
       const t2  = s.bottomSeedTeam || s.team2 || s.awayTeam || {};
@@ -535,9 +547,7 @@ async function loadBracket() {
       const t2car = t2.abbrev === CAR;
       const carIn = t1car || t2car;
       const done  = t1w === 4 || t2w === 4;
-      const active= !done && (t1w > 0 || t2w > 0);
       const tbd   = !t1.abbrev && !t2.abbrev;
-
       html += `<div class="b-series ${tbd?'tbd':carIn&&!done?'active':''}">
         <div class="b-team ${done&&t1w>t2w?'winner':''}">
           <div class="b-seed">${t1.seed??''}</div>
@@ -552,10 +562,8 @@ async function loadBracket() {
         ${carIn&&!done?'<div class="b-status">⚡ Active</div>':''}
       </div>`;
     });
-
     html += `</div>`;
   });
-
   $('bracket-body').innerHTML = html;
 }
 
@@ -579,7 +587,6 @@ async function loadStandings() {
       ${cl?`<div class="clinched">${cl}</div>`:''}
     </div>`;
   }).join('') || '<p class="api-error">No data</p>';
-
   const all = data.standings || [];
   $('rival-body').innerHTML = METRO_RIVALS.map(({abbr,name}) => {
     const t    = all.find(x => (x.teamAbbrev?.default||'') === abbr);
@@ -670,7 +677,7 @@ async function loadSchedule() {
     const oppS = home ? g.awayTeam?.score : g.homeTeam?.score;
     const win  = carS > oppS;
     if (!streakType) streakType = win ? 'W' : 'L';
-    if ((win && streakType==='W')||(!win && streakType==='L')) streak++;
+    if ((win&&streakType==='W')||(!win&&streakType==='L')) streak++;
     else break;
   }
   const sb = $('streak-badge');
@@ -761,10 +768,9 @@ function renderGame(game, upcoming, past) {
       </div>`;
     }
 
-    // Goal scorers
-    let scorersHTML = '';
     const carGoals = (game.goals||[]).filter(g => g.teamAbbrev === CAR).slice(0,4);
     const oppGoals = (game.goals||[]).filter(g => g.teamAbbrev !== CAR).slice(0,4);
+    let scorersHTML = '';
     if (carGoals.length || oppGoals.length) {
       scorersHTML = `<div class="scorers-wrap">
         <div class="scorers-col">
