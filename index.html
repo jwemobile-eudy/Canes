@@ -387,7 +387,7 @@
 
 <footer>
   <div class="footer-left">NHL Stats API · <span id="last-updated">Updating…</span> · Auto-refreshes every 60s</div>
-  <div class="canes-motto">LET'S GO CANES 🌀</div>
+  <div class="canes-motto">LET'S GO CANES <span style="color:var(--red);">🌀</span></div>
 </footer>
 
 <script>
@@ -639,7 +639,7 @@ async function loadStandings(){
     const elim=regElim||ppElim;
     // Status icon: 🌀 for CAR (red), ⚠️ for playoff alive opponents, 🗑️ for eliminated
     let icon='';
-    if(isCar) icon=`<div class="s-icon" style="color:var(--red);">🌀</div>`;
+    if(isCar) icon=`<div class="s-icon" style="color:var(--green);">🌀</div>`;
     else if(elim) icon=`<div class="s-icon">🗑️</div>`;
     else icon=`<div class="s-icon">⚠️</div>`;
 
