@@ -104,6 +104,31 @@
   .countdown-label{font-family:'Barlow Condensed',sans-serif;font-size:0.65rem;letter-spacing:3px;text-transform:uppercase;color:var(--silver);margin-bottom:4px;}
   .countdown-timer{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:3px;color:var(--red);text-shadow:0 0 12px var(--red-glow);white-space:nowrap;}
 
+  /* BRACKET COLLAPSIBLE */
+  .bracket-card{grid-column:1/3;}
+  .bracket-toggle{cursor:pointer;user-select:none;display:flex;align-items:center;justify-content:space-between;}
+  .bracket-chevron{font-size:0.7rem;color:var(--silver);transition:transform 0.3s ease;margin-left:8px;}
+  .bracket-chevron.open{transform:rotate(180deg);}
+  .bracket-collapse{overflow:hidden;max-height:0;transition:max-height 0.45s cubic-bezier(0.4,0,0.2,1);}
+  .bracket-collapse.open{max-height:800px;}
+  .bracket-rounds{display:flex;overflow-x:auto;border-top:1px solid var(--gray-border);}
+  .bracket-round{flex:1;min-width:160px;border-right:1px solid var(--gray-border);padding:14px 16px;}
+  .bracket-round:last-child{border-right:none;}
+  .round-title{font-family:'Barlow Condensed',sans-serif;font-size:0.62rem;letter-spacing:3px;text-transform:uppercase;color:var(--silver);margin-bottom:12px;text-align:center;}
+  .b-series{background:var(--gray-dark);border:1px solid var(--gray-border);border-radius:3px;overflow:hidden;margin-bottom:8px;}
+  .b-series:last-child{margin-bottom:0;}
+  .b-series.active{border-color:var(--red);box-shadow:0 0 10px rgba(204,0,0,0.2);}
+  .b-series.tbd{opacity:0.35;}
+  .b-team{display:flex;align-items:center;padding:6px 10px;border-bottom:1px solid rgba(255,255,255,0.05);gap:7px;}
+  .b-team:last-child{border-bottom:none;}
+  .b-team.winner{background:rgba(204,0,0,0.08);}
+  .b-seed{font-family:'Barlow Condensed',sans-serif;font-size:0.65rem;color:var(--silver);width:12px;flex-shrink:0;}
+  .b-name{flex:1;font-family:'Barlow Condensed',sans-serif;font-size:0.82rem;font-weight:600;}
+  .b-name.car{color:var(--red);}
+  .b-wins{font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:1px;}
+  .b-wins.lead{color:var(--green);}
+  .b-status{font-family:'Barlow Condensed',sans-serif;font-size:0.6rem;letter-spacing:2px;text-transform:uppercase;color:var(--red);text-align:center;padding:3px 0 5px;}
+
   .stats-card{grid-column:3/4;grid-row:1/3;}
   .stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;}
   .stat-block{background:var(--gray-dark);border:1px solid var(--gray-border);border-radius:3px;padding:11px 11px 7px;position:relative;overflow:hidden;}
@@ -169,26 +194,6 @@
   .rv-tag.elim{background:rgba(0,200,0,0.09);color:var(--green);border:1px solid rgba(0,200,0,0.18);}
   .rv-tag.alive{background:rgba(204,0,0,0.09);color:var(--red);border:1px solid rgba(204,0,0,0.18);}
 
-  .bracket-card{grid-column:1/4;}
-  .bracket-rounds{display:flex;overflow-x:auto;}
-  .bracket-round{flex:1;min-width:160px;border-right:1px solid var(--gray-border);padding:14px 16px;}
-  .bracket-round:last-child{border-right:none;}
-  .round-title{font-family:'Barlow Condensed',sans-serif;font-size:0.62rem;letter-spacing:3px;text-transform:uppercase;color:var(--silver);margin-bottom:12px;text-align:center;}
-  .b-series{background:var(--gray-dark);border:1px solid var(--gray-border);border-radius:3px;overflow:hidden;margin-bottom:8px;}
-  .b-series:last-child{margin-bottom:0;}
-  .b-series.active{border-color:var(--red);box-shadow:0 0 10px rgba(204,0,0,0.2);}
-  .b-series.tbd{opacity:0.35;}
-  .b-team{display:flex;align-items:center;padding:6px 10px;border-bottom:1px solid rgba(255,255,255,0.05);gap:7px;}
-  .b-team:last-child{border-bottom:none;}
-  .b-team.winner{background:rgba(204,0,0,0.08);}
-  .b-seed{font-family:'Barlow Condensed',sans-serif;font-size:0.65rem;color:var(--silver);width:12px;flex-shrink:0;}
-  .b-name{flex:1;font-family:'Barlow Condensed',sans-serif;font-size:0.82rem;font-weight:600;}
-  .b-name.car{color:var(--red);}
-  .b-wins{font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:1px;}
-  .b-wins.lead{color:var(--green);}
-  .b-status{font-family:'Barlow Condensed',sans-serif;font-size:0.6rem;letter-spacing:2px;text-transform:uppercase;color:var(--red);text-align:center;padding:3px 0 5px;}
-  .bracket-source{font-family:'Barlow Condensed',sans-serif;font-size:0.6rem;letter-spacing:1px;color:var(--silver);opacity:0.5;text-align:right;padding:6px 16px 10px;}
-
   .live-pill{display:inline-flex;align-items:center;gap:6px;background:var(--red);color:white;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:0.7rem;letter-spacing:2px;text-transform:uppercase;padding:4px 12px;border-radius:2px;}
   .live-dot{width:7px;height:7px;background:white;border-radius:50%;animation:blink 1.2s ease-in-out infinite;}
   @keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
@@ -201,12 +206,12 @@
   @media(max-width:900px){
     .main{grid-template-columns:1fr 1fr;padding:14px;gap:12px;}
     .game-card{grid-column:1/3;}
+    .bracket-card{grid-column:1/3;}
     .stats-card{grid-column:1/3;grid-row:auto;}
     .upcoming-card{grid-column:1/3;}
     .results-card{grid-column:1/2;grid-row:auto;}
     .standings-card{grid-column:2/3;grid-row:auto;}
     .rival-card{grid-column:1/3;}
-    .bracket-card{grid-column:1/3;}
     .surge-section{padding:16px 18px;}
     .surge-explainer{margin:12px -18px -16px;}
     .header-inner{padding:18px 18px 14px;}
@@ -221,7 +226,7 @@
     .surge-explainer{margin:12px -16px -14px;}
     .surge-ends span:nth-child(2){display:none;}
     .main{grid-template-columns:1fr;padding:10px;gap:10px;}
-    .game-card,.stats-card,.upcoming-card,.results-card,.standings-card,.rival-card,.bracket-card{grid-column:1/2;grid-row:auto;}
+    .game-card,.bracket-card,.stats-card,.upcoming-card,.results-card,.standings-card,.rival-card{grid-column:1/2;grid-row:auto;}
     .game-matchup{padding:14px 14px 6px;gap:6px;}
     .g-abbr{font-size:2rem;letter-spacing:2px;}
     .g-score{font-size:2.8rem;letter-spacing:3px;}
@@ -314,6 +319,7 @@
 
 <div class="main">
 
+  <!-- GAME CARD -->
   <div class="card game-card" id="game-card">
     <div class="card-header">
       <div>
@@ -325,6 +331,7 @@
     <div id="game-body"><div class="card-body"><p class="api-error">Fetching game data…</p></div></div>
   </div>
 
+  <!-- TEAM STATS spans rows 1-2 col 3 -->
   <div class="card stats-card">
     <div class="card-header">
       <div>
@@ -335,6 +342,23 @@
     <div class="card-body" id="stats-body"><p class="api-error">Loading…</p></div>
   </div>
 
+  <!-- BRACKET — collapsible, col 1-2 -->
+  <div class="card bracket-card">
+    <div class="card-header bracket-toggle" id="bracket-toggle">
+      <div>
+        <div class="card-label">2026 Stanley Cup Playoffs</div>
+        <div class="card-title">Playoff Bracket <span class="bracket-chevron" id="bracket-chevron">▼</span></div>
+      </div>
+      <div id="bracket-summary" style="font-family:'Barlow Condensed',sans-serif;font-size:0.78rem;letter-spacing:1px;color:var(--silver);text-align:right;"></div>
+    </div>
+    <div class="bracket-collapse" id="bracket-collapse">
+      <div class="bracket-rounds" id="bracket-body">
+        <div class="card-body"><p class="api-error">Loading bracket…</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- UPCOMING -->
   <div class="card upcoming-card">
     <div class="card-header">
       <div>
@@ -345,6 +369,7 @@
     <div class="card-body" id="upcoming-body"><p class="api-error">Loading…</p></div>
   </div>
 
+  <!-- RESULTS -->
   <div class="card results-card">
     <div class="card-header">
       <div>
@@ -359,6 +384,7 @@
     <div class="card-body" id="results-body"><p class="api-error">Loading…</p></div>
   </div>
 
+  <!-- STANDINGS -->
   <div class="card standings-card">
     <div class="card-header">
       <div>
@@ -370,6 +396,7 @@
     <div class="card-body" id="standings-body"><p class="api-error">Loading…</p></div>
   </div>
 
+  <!-- RIVALS -->
   <div class="card rival-card">
     <div class="card-header">
       <div>
@@ -378,18 +405,6 @@
       </div>
     </div>
     <div class="card-body" id="rival-body"><p class="api-error">Loading…</p></div>
-  </div>
-
-  <div class="card bracket-card">
-    <div class="card-header">
-      <div>
-        <div class="card-label">2026 Stanley Cup Playoffs</div>
-        <div class="card-title" id="bracket-title">Playoff Bracket</div>
-      </div>
-    </div>
-    <div class="bracket-rounds" id="bracket-body">
-      <div class="card-body"><p class="api-error">Loading bracket…</p></div>
-    </div>
   </div>
 
 </div>
@@ -404,15 +419,6 @@ const CAR    = 'CAR';
 const SEASON = '20252026';
 const TZ     = 'America/Chicago';
 
-const METRO_RIVALS = [
-  {abbr:'NYR',name:'NY Rangers'},{abbr:'NYI',name:'NY Islanders'},
-  {abbr:'NJD',name:'New Jersey'},{abbr:'WSH',name:'Washington'},
-  {abbr:'CBJ',name:'Columbus'},{abbr:'PIT',name:'Pittsburgh'},
-  {abbr:'PHI',name:'Philadelphia'},
-];
-
-// All 16 playoff teams with their conference/seeds for bracket building
-// These are seeded by conference finish — updated by the schedule data live
 const EAST_TEAMS = ['CAR','BUF','TB','MTL','BOS','OTT','PHI','PIT'];
 const WEST_TEAMS = ['COL','DAL','VGK','ANA','MIN','EDM','UTA','LAK'];
 
@@ -421,7 +427,6 @@ const API = {
   schedule:   team => `https://api-web.nhle.com/v1/club-schedule-season/${team}/${SEASON}`,
   scoreboard: `https://api-web.nhle.com/v1/score/now`,
   boxscore:   id   => `https://api-web.nhle.com/v1/gamecenter/${id}/boxscore`,
-  // ESPN free bracket endpoint — no key needed
   espnBracket:`https://site.api.espn.com/apis/v2/sports/hockey/nhl/playoffs`,
 };
 
@@ -430,9 +435,11 @@ const PROXIES = [
   u => `https://api.allorigins.win/raw?url=${encodeURIComponent(u)}`,
   u => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(u)}`,
 ];
-
 const PERIOD_LABEL = ['','1st','2nd','3rd','OT','OT2'];
 const $ = id => document.getElementById(id);
+
+// Teams eliminated from playoffs — populated from bracket data
+let playoffEliminatedTeams = new Set();
 
 async function fj(url) {
   for (const proxy of PROXIES) {
@@ -444,13 +451,11 @@ async function fj(url) {
   throw new Error('All proxies failed');
 }
 
-// ESPN — direct fetch, no proxy needed (CORS open)
 async function fjDirect(url) {
   try {
     const r = await fetch(url, {signal: AbortSignal.timeout(8000)});
     if (r.ok) return r.json();
   } catch(e) {}
-  // fallback through proxies
   return fj(url);
 }
 
@@ -459,10 +464,19 @@ function fmtMo(iso)  { return new Date(iso).toLocaleDateString('en-US',{month:'s
 function fmtDay(iso) { return new Date(iso).toLocaleDateString('en-US',{day:'numeric',timeZone:TZ}); }
 function fmtTime(iso){ return new Date(iso).toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit',timeZoneName:'short',timeZone:TZ}); }
 
+// Surge toggle
 document.getElementById('surge-section').addEventListener('click', () => {
   const ex = document.getElementById('surge-explainer');
   ex.classList.toggle('open');
   document.querySelector('.surge-tap-hint').textContent = ex.classList.contains('open') ? 'Tap to close' : 'Tap to learn more';
+});
+
+// Bracket toggle
+document.getElementById('bracket-toggle').addEventListener('click', () => {
+  const collapse = $('bracket-collapse');
+  const chevron  = $('bracket-chevron');
+  collapse.classList.toggle('open');
+  chevron.classList.toggle('open');
 });
 
 function setSurge(wins, losses, seed, ppW, ppL) {
@@ -517,21 +531,29 @@ function startCountdown(targetISO) {
 }
 
 // ── BRACKET ──────────────────────────────────────────────────────────────────
-// Strategy:
-// 1. Try ESPN bracket API (direct, no proxy needed)
-// 2. Try NHL bracket/carousel endpoints via proxy
-// 3. Build from schedule data by fetching all 16 playoff team schedules
+function extractEliminatedFromSeries(seriesList) {
+  // A team is playoff-eliminated if they lost a series (other team got to 4 wins)
+  const elim = new Set();
+  seriesList.forEach(s => {
+    if (s.w1 === 4 && s.t2 && s.t2 !== 'TBD') elim.add(s.t2);
+    if (s.w2 === 4 && s.t1 && s.t1 !== 'TBD') elim.add(s.t1);
+  });
+  return elim;
+}
 
 function renderBracketFromSeries(eastSeries, westSeries, source) {
-  // Separate by round
-  function buildRound(series, roundNum) {
-    return series.filter(s => s.round === roundNum);
-  }
+  // Extract eliminated teams
+  const allSeries = [...eastSeries, ...westSeries];
+  playoffEliminatedTeams = extractEliminatedFromSeries(allSeries);
 
-  const roundNames = {
-    east: ['Eastern First Round','Eastern Semifinals','Eastern Finals'],
-    west: ['Western First Round','Western Semifinals','Western Finals'],
-  };
+  // Find CAR's current series record for summary
+  const carSeries = allSeries.find(s => (s.t1===CAR||s.t2===CAR) && s.w1<4 && s.w2<4);
+  const carW = carSeries ? (carSeries.t1===CAR ? carSeries.w1 : carSeries.w2) : null;
+  const carL = carSeries ? (carSeries.t1===CAR ? carSeries.w2 : carSeries.w1) : null;
+  const opp  = carSeries ? (carSeries.t1===CAR ? carSeries.t2 : carSeries.t1) : null;
+  if (opp) {
+    $('bracket-summary').textContent = `CAR ${carW}–${carL} ${opp}`;
+  }
 
   function seriesHTML(s) {
     const t1car = s.t1 === CAR;
@@ -554,258 +576,198 @@ function renderBracketFromSeries(eastSeries, westSeries, source) {
     </div>`;
   }
 
+  const TBD_SERIES = `<div class="b-series tbd"><div class="b-team"><div class="b-seed">—</div><div class="b-name">TBD</div><div class="b-wins">—</div></div><div class="b-team"><div class="b-seed">—</div><div class="b-name">TBD</div><div class="b-wins">—</div></div></div>`;
+
   let html = '';
 
-  // East rounds 1-3
+  // East R1, R2, R3
   for (let r=1;r<=3;r++) {
-    const rd = buildRound(eastSeries, r);
-    html += `<div class="bracket-round"><div class="round-title">${roundNames.east[r-1]||'East R'+r}</div>`;
-    if (!rd.length) {
-      html += `<div class="b-series tbd"><div class="b-team"><div class="b-seed">—</div><div class="b-name">TBD</div><div class="b-wins">—</div></div><div class="b-team"><div class="b-seed">—</div><div class="b-name">TBD</div><div class="b-wins">—</div></div></div>`;
-    }
-    rd.forEach(s => { html += seriesHTML(s); });
+    const rd = eastSeries.filter(s=>s.round===r);
+    const names = ['Eastern First Round','Eastern Semifinals','Eastern Finals'];
+    html += `<div class="bracket-round"><div class="round-title">${names[r-1]}</div>`;
+    html += rd.length ? rd.map(seriesHTML).join('') : TBD_SERIES;
     html += `</div>`;
   }
 
-  // Stanley Cup Final
-  const cupSeries = [...eastSeries,...westSeries].find(s => s.round === 4) || {t1:'TBD',t2:'TBD',w1:0,w2:0,s1:'',s2:'',round:4};
-  html += `<div class="bracket-round"><div class="round-title">Stanley Cup Final</div>${seriesHTML(cupSeries)}</div>`;
+  // Cup Final
+  const cup = allSeries.find(s=>s.round===4)||{t1:'TBD',t2:'TBD',w1:0,w2:0,s1:'',s2:'',round:4};
+  html += `<div class="bracket-round"><div class="round-title">Stanley Cup Final</div>${seriesHTML(cup)}</div>`;
 
-  // West rounds 3-1 (reversed so it mirrors real bracket)
+  // West R3, R2, R1 (mirrored)
   for (let r=3;r>=1;r--) {
-    const rd = buildRound(westSeries, r);
-    html += `<div class="bracket-round"><div class="round-title">${roundNames.west[r-1]||'West R'+r}</div>`;
-    if (!rd.length) {
-      html += `<div class="b-series tbd"><div class="b-team"><div class="b-seed">—</div><div class="b-name">TBD</div><div class="b-wins">—</div></div><div class="b-team"><div class="b-seed">—</div><div class="b-name">TBD</div><div class="b-wins">—</div></div></div>`;
-    }
-    rd.forEach(s => { html += seriesHTML(s); });
+    const rd = westSeries.filter(s=>s.round===r);
+    const names = ['Western Finals','Western Semifinals','Western First Round'];
+    html += `<div class="bracket-round"><div class="round-title">${names[3-r-1]||'West R'+r}</div>`;
+    html += rd.length ? rd.map(seriesHTML).join('') : TBD_SERIES;
     html += `</div>`;
   }
 
-  $('bracket-body').innerHTML = html + `<div class="bracket-source" style="position:absolute;bottom:4px;right:12px;font-family:'Barlow Condensed',sans-serif;font-size:0.58rem;color:var(--silver);opacity:0.4;letter-spacing:1px;">via ${source}</div>`;
-  $('bracket-body').style.position = 'relative';
+  $('bracket-body').innerHTML = html;
 }
 
-// Parse ESPN bracket response
-function parseESPN(data) {
-  const series = [];
-  const brackets = data?.brackets || [];
-  for (const bracket of brackets) {
-    const conf = bracket.name?.toLowerCase().includes('west') ? 'west' : 'east';
-    const rounds = bracket.rounds || [];
-    rounds.forEach((round, ri) => {
-      const roundNum = ri + 1;
-      (round.series || round.matchups || []).forEach(s => {
-        const comps = s.competitors || s.teams || [];
-        const t1 = comps[0] || {};
-        const t2 = comps[1] || {};
-        series.push({
-          conf,
-          round: roundNum,
-          t1: t1.abbreviation || t1.abbrev || t1.team?.abbreviation || 'TBD',
-          t2: t2.abbreviation || t2.abbrev || t2.team?.abbreviation || 'TBD',
-          s1: t1.seed || t1.curatedRank?.current || '',
-          s2: t2.seed || t2.curatedRank?.current || '',
-          w1: t1.wins || t1.record || 0,
-          w2: t2.wins || t2.record || 0,
-        });
-      });
-    });
-  }
-  // Stanley Cup Final if present
-  const final = data?.final || data?.championship;
-  if (final) {
-    const comps = final.competitors || final.teams || [];
-    const t1 = comps[0] || {};
-    const t2 = comps[1] || {};
-    series.push({
-      conf:'final', round:4,
-      t1: t1.abbreviation||'TBD', t2: t2.abbreviation||'TBD',
-      s1:'', s2:'',
-      w1: t1.wins||0, w2: t2.wins||0,
-    });
-  }
-  return series;
-}
-
-// Build bracket from fetched playoff schedule data across all teams
 function buildBracketFromSchedules(allGames) {
-  // allGames: array of all playoff (gameType=3) games from all team schedules
-  // Deduplicate by game id
   const seen = new Set();
   const games = allGames.filter(g => {
     if (seen.has(g.id)) return false;
     seen.add(g.id); return true;
-  }).filter(g => ['OFF','FINAL','LIVE','CRIT'].includes(g.gameState) || g.gameState);
+  }).filter(g => g.gameType === 3);
 
-  // Group by series — use sorted team pair as key
   const seriesMap = {};
-  games.filter(g => g.gameType === 3).forEach(g => {
-    const ha = g.homeTeam?.abbrev || '?';
-    const aa = g.awayTeam?.abbrev || '?';
+  games.forEach(g => {
+    const ha = g.homeTeam?.abbrev||'?';
+    const aa = g.awayTeam?.abbrev||'?';
     const key = [ha,aa].sort().join('-');
     if (!seriesMap[key]) {
       seriesMap[key] = {
-        teams: [ha, aa],
-        hs: g.homeTeam?.seed, as: g.awayTeam?.seed,
-        wins: {[ha]:0, [aa]:0},
-        games: [],
-        seriesLetter: g.seriesCode || '',
+        teams:[ha,aa],
+        homeSeed: g.homeTeam?.seed,
+        awaySeed: g.awayTeam?.seed,
+        wins:{[ha]:0,[aa]:0},
+        games:[],
       };
     }
     const s = seriesMap[key];
-    const done = ['OFF','FINAL'].includes(g.gameState);
-    if (done) {
-      const hs = g.homeTeam?.score || 0;
-      const as = g.awayTeam?.score || 0;
-      if (hs > as) s.wins[ha]++;
-      else s.wins[aa]++;
+    if (['OFF','FINAL'].includes(g.gameState)) {
+      const hs = g.homeTeam?.score||0;
+      const as = g.awayTeam?.score||0;
+      if (hs>as) s.wins[ha]++; else s.wins[aa]++;
     }
     s.games.push(g);
   });
 
-  // Determine round from max game number played
-  const series = Object.values(seriesMap).map(s => {
-    const maxGame = s.games.length;
-    // Round heuristic: R1 teams are known, R2 winners of R1, etc.
-    // Use series letter if available, else estimate from teams
-    const [ta, tb] = s.teams;
-    const isEast = [...EAST_TEAMS, 'OTT','BOS','MTL','TB','PIT','PHI','BUF'].some(t => t===ta||t===tb);
-    const conf = isEast ? 'east' : 'west';
-    const wa = s.wins[ta] || 0;
-    const wb = s.wins[tb] || 0;
-    // Determine which is top seed
-    const seedA = s.hs === s.games[0]?.homeTeam?.abbrev ? (s.games[0]?.homeTeam?.seed||9) : (s.games[0]?.awayTeam?.seed||9);
-    const seedB = s.hs === s.games[0]?.homeTeam?.abbrev ? (s.games[0]?.awayTeam?.seed||9) : (s.games[0]?.homeTeam?.seed||9);
-    const topSeed  = (s.games[0]?.homeTeam?.seed||9) <= (s.games[0]?.awayTeam?.seed||9) ? s.games[0]?.homeTeam?.abbrev : s.games[0]?.awayTeam?.abbrev;
-    const botSeed  = topSeed === ta ? tb : ta;
-    const topW = s.wins[topSeed] || 0;
-    const botW = s.wins[botSeed] || 0;
-    const topS = topSeed === s.games[0]?.homeTeam?.abbrev ? s.games[0]?.homeTeam?.seed : s.games[0]?.awayTeam?.seed;
-    const botS = botSeed === s.games[0]?.homeTeam?.abbrev ? s.games[0]?.homeTeam?.seed : s.games[0]?.awayTeam?.seed;
-
-    // Round: seeds 1v8,2v7,3v6,4v5 = R1; winners play = R2; etc.
-    const minSeed = Math.min(topS||9, botS||9);
+  return Object.values(seriesMap).map(s => {
+    const sorted = s.games.sort((a,b)=>new Date(a.startTimeUTC||a.gameDate)-new Date(b.startTimeUTC||b.gameDate));
+    const first  = sorted[0];
+    const startDate = first ? new Date(first.startTimeUTC||first.gameDate) : new Date();
     let round = 1;
-    if (minSeed > 4) round = 1;       // 5v4,6v3,7v2,8v1
-    else if (minSeed <= 4) round = 2; // rough heuristic
-    // Better: use game count & date — R2 starts after R1 ends ~Apr 18+
-    const firstGame = s.games.sort((a,b)=>new Date(a.gameDate)-new Date(b.gameDate))[0];
-    const startDate = firstGame ? new Date(firstGame.startTimeUTC || firstGame.gameDate) : new Date();
     if (startDate >= new Date('2026-05-01')) round = 2;
     else if (startDate >= new Date('2026-04-11')) round = 1;
 
-    return { conf, round, t1:topSeed||ta, t2:botSeed||tb, s1:topS||'', s2:botS||'', w1:topW, w2:botW };
-  });
+    const hSeed = s.homeSeed || 9;
+    const aSeed = s.awaySeed || 9;
+    const [ha,aa] = s.teams;
+    const topTeam = hSeed <= aSeed ? ha : aa;
+    const botTeam = hSeed <= aSeed ? aa : ha;
+    const topSeed = hSeed <= aSeed ? hSeed : aSeed;
+    const botSeed = hSeed <= aSeed ? aSeed : hSeed;
 
-  return series;
+    const isEast = EAST_TEAMS.includes(topTeam)||['OTT','BOS','MTL','TB','PIT','PHI','BUF'].includes(topTeam);
+    return {
+      conf: isEast?'east':'west',
+      round,
+      t1: topTeam, t2: botTeam,
+      s1: topSeed, s2: botSeed,
+      w1: s.wins[topTeam]||0,
+      w2: s.wins[botTeam]||0,
+    };
+  });
 }
 
 async function loadBracket() {
   let series = null;
-  let source = '';
 
-  // 1. Try ESPN
+  // 1. ESPN
   try {
     const data = await fjDirect(API.espnBracket);
-    const parsed = parseESPN(data);
-    if (parsed.length >= 4) {
-      series = parsed;
-      source = 'ESPN';
-    }
+    const parsed = [];
+    (data?.brackets||[]).forEach(bracket => {
+      const conf = bracket.name?.toLowerCase().includes('west') ? 'west' : 'east';
+      (bracket.rounds||[]).forEach((round, ri) => {
+        (round.series||round.matchups||[]).forEach(s => {
+          const comps = s.competitors||s.teams||[];
+          const t1 = comps[0]||{};
+          const t2 = comps[1]||{};
+          parsed.push({
+            conf, round: ri+1,
+            t1: t1.abbreviation||t1.abbrev||t1.team?.abbreviation||'TBD',
+            t2: t2.abbreviation||t2.abbrev||t2.team?.abbreviation||'TBD',
+            s1: t1.seed||'', s2: t2.seed||'',
+            w1: t1.wins||0, w2: t2.wins||0,
+          });
+        });
+      });
+    });
+    if (parsed.length >= 4) { series = parsed; }
   } catch(e) {}
 
-  // 2. Try NHL bracket/carousel endpoints
+  // 2. NHL bracket/carousel
   if (!series) {
-    const nhlUrls = [
+    for (const url of [
       `https://api-web.nhle.com/v1/playoff-bracket/2026`,
       `https://api-web.nhle.com/v1/playoff-carousel/${SEASON}`,
-    ];
-    for (const url of nhlUrls) {
+    ]) {
       try {
         const data = await fj(url);
         const rounds = data?.rounds || data?.bracket?.rounds || [];
         if (rounds.length) {
-          series = [];
+          const parsed = [];
           rounds.forEach((round, ri) => {
-            (round.series || round.matchups || []).forEach(s => {
-              const t1  = s.topSeedTeam    || s.team1 || {};
-              const t2  = s.bottomSeedTeam || s.team2 || {};
-              const t1w = s.topSeedWins    ?? s.team1Wins ?? 0;
-              const t2w = s.bottomSeedWins ?? s.team2Wins ?? 0;
-              const confRaw = s.conference || round.conference || '';
-              const conf = confRaw.toLowerCase().includes('west') ? 'west' : 'east';
-              series.push({
-                conf, round: ri+1,
+            (round.series||round.matchups||[]).forEach(s => {
+              const t1  = s.topSeedTeam||s.team1||{};
+              const t2  = s.bottomSeedTeam||s.team2||{};
+              const confRaw = s.conference||round.conference||'';
+              parsed.push({
+                conf: confRaw.toLowerCase().includes('west')?'west':'east',
+                round: ri+1,
                 t1: t1.abbrev||'TBD', t2: t2.abbrev||'TBD',
                 s1: t1.seed||'', s2: t2.seed||'',
-                w1: t1w, w2: t2w,
+                w1: s.topSeedWins??s.team1Wins??0,
+                w2: s.bottomSeedWins??s.team2Wins??0,
               });
             });
           });
-          if (series.length >= 4) { source = 'NHL API'; break; }
-          series = null;
+          if (parsed.length >= 4) { series = parsed; break; }
         }
       } catch(e) { continue; }
     }
   }
 
-  // 3. Build from schedule data — fetch all 16 playoff team schedules in parallel
+  // 3. Build from all 16 team schedules
   if (!series) {
     try {
       const allTeams = [...EAST_TEAMS, ...WEST_TEAMS];
-      const schedules = await Promise.allSettled(
-        allTeams.map(team => fj(API.schedule(team)))
-      );
+      const results  = await Promise.allSettled(allTeams.map(t => fj(API.schedule(t))));
       const allGames = [];
-      schedules.forEach(result => {
-        if (result.status === 'fulfilled') {
-          (result.value?.games || [])
-            .filter(g => g.gameType === 3)
-            .forEach(g => allGames.push(g));
+      results.forEach(r => {
+        if (r.status==='fulfilled') {
+          (r.value?.games||[]).filter(g=>g.gameType===3).forEach(g=>allGames.push(g));
         }
       });
-      if (allGames.length > 0) {
-        series = buildBracketFromSchedules(allGames);
-        source = 'NHL Schedule';
-      }
+      if (allGames.length) series = buildBracketFromSchedules(allGames);
     } catch(e) {}
   }
 
-  if (!series || series.length === 0) {
-    $('bracket-body').innerHTML = '<div class="card-body" style="padding:16px 18px"><p class="api-error">Bracket data unavailable — try again later</p></div>';
+  if (!series?.length) {
+    $('bracket-body').innerHTML = '<div class="card-body" style="padding:16px 18px"><p class="api-error">Bracket unavailable — try again later</p></div>';
     return;
   }
 
-  const eastSeries = series.filter(s => s.conf === 'east' || s.conf === 'final' ? false : s.conf !== 'west');
-  const westSeries = series.filter(s => s.conf === 'west');
-
-  // Handle case where conf isn't set — distribute by team membership
-  const fixedEast = series.filter(s => {
-    if (s.conf === 'east') return true;
-    if (s.conf === 'west') return false;
-    return EAST_TEAMS.includes(s.t1) || EAST_TEAMS.includes(s.t2) ||
-           ['OTT','BOS','MTL','TB','PIT','PHI','BUF','CAR'].includes(s.t1);
+  const eastSeries = series.filter(s => {
+    if (s.conf==='east') return true;
+    if (s.conf==='west') return false;
+    return EAST_TEAMS.includes(s.t1)||['OTT','BOS','MTL','TB','PIT','PHI','BUF','CAR'].includes(s.t1);
   });
-  const fixedWest = series.filter(s => {
-    if (s.conf === 'west') return true;
-    if (s.conf === 'east') return false;
-    return WEST_TEAMS.includes(s.t1) || WEST_TEAMS.includes(s.t2) ||
-           ['COL','DAL','VGK','ANA','MIN','EDM','UTA','LAK'].includes(s.t1);
+  const westSeries = series.filter(s => {
+    if (s.conf==='west') return true;
+    if (s.conf==='east') return false;
+    return WEST_TEAMS.includes(s.t1)||['COL','DAL','VGK','ANA','MIN','EDM','UTA','LAK'].includes(s.t1);
   });
 
-  renderBracketFromSeries(fixedEast.length ? fixedEast : eastSeries,
-                          fixedWest.length ? fixedWest : westSeries,
-                          source);
+  renderBracketFromSeries(eastSeries, westSeries, '');
 }
 
 async function loadStandings() {
   const data  = await fj(API.standings);
-  const metro = (data.standings || [])
+  const all   = data.standings || [];
+
+  // Metro division sorted by points
+  const metro = all
     .filter(t => t.divisionName === 'Metropolitan')
     .sort((a,b) => b.points - a.points);
+
   let carData = null;
   const clinchMap = {e:'ELIM',x:'PLAYOFF',y:'DIV',z:'PRES',p:'PLAYOFF'};
+
   $('standings-body').innerHTML = metro.map((t,i) => {
     const abbr  = t.teamAbbrev?.default || '';
     const isCar = abbr === CAR;
@@ -820,15 +782,23 @@ async function loadStandings() {
     </div>`;
   }).join('') || '<p class="api-error">No data</p>';
 
-  const all = data.standings || [];
-  $('rival-body').innerHTML = METRO_RIVALS.map(({abbr,name}) => {
-    const t    = all.find(x => (x.teamAbbrev?.default||'') === abbr);
-    const elim = t && (t.clinchIndicator === 'e' || t.eliminationNumber === 0);
-    return `<div class="rv-row">
-      <div class="rv-name">${name}</div>
-      <div class="rv-tag ${elim?'elim':'alive'}">${elim?'🗑 Eliminated':'⚠ Still Alive'}</div>
-    </div>`;
-  }).join('');
+  // Rivals — sorted by division standing, excluding CAR
+  // Use bracket data to determine playoff elimination
+  $('rival-body').innerHTML = metro
+    .filter(t => (t.teamAbbrev?.default||'') !== CAR)
+    .map(t => {
+      const abbr = t.teamAbbrev?.default || '';
+      const name = t.teamName?.default || abbr;
+      // Eliminated if: regular season clinch=e, OR eliminated in playoffs via bracket data
+      const regElim  = t.clinchIndicator === 'e' || t.eliminationNumber === 0;
+      const ppElim   = playoffEliminatedTeams.has(abbr);
+      const elim     = regElim || ppElim;
+      return `<div class="rv-row">
+        <div class="rv-name">${name}</div>
+        <div class="rv-tag ${elim?'elim':'alive'}">${elim?'🗑 Eliminated':'⚠ Still Alive'}</div>
+      </div>`;
+    }).join('');
+
   return carData;
 }
 
@@ -841,34 +811,34 @@ async function loadPlayerStats(gameId, containerId) {
     const teams   = data.playerByGameStats;
     if (!teams) throw new Error('No stats');
     const homeAbbr = data.homeTeam?.abbrev;
-    const carSide  = homeAbbr === CAR ? teams.homeTeam : teams.awayTeam;
+    const carSide  = homeAbbr===CAR ? teams.homeTeam : teams.awayTeam;
     if (!carSide) throw new Error('No CAR stats');
     const skaters = [...(carSide.forwards||[]),...(carSide.defense||[])]
-      .filter(p => (p.goals||0)+(p.assists||0) > 0)
+      .filter(p=>(p.goals||0)+(p.assists||0)>0)
       .sort((a,b)=>(b.goals+b.assists)-(a.goals+a.assists)).slice(0,5);
     const goalies = (carSide.goalies||[]).slice(0,1);
-    if (!skaters.length && !goalies.length) {
-      el.querySelector('.r-players-inner').innerHTML = '<p class="r-player-loading">No scoring data</p>';
+    if (!skaters.length&&!goalies.length) {
+      el.querySelector('.r-players-inner').innerHTML='<p class="r-player-loading">No scoring data</p>';
       return;
     }
-    let html = '';
-    skaters.forEach(p => {
-      html += `<div class="r-player-row">
+    let html='';
+    skaters.forEach(p=>{
+      html+=`<div class="r-player-row">
         <div class="r-player-pos">${p.position||''}</div>
         <div class="r-player-name">${p.name?.default||'—'}</div>
         <div class="r-player-stat">${p.goals||0}G ${p.assists||0}A · ${(p.goals||0)+(p.assists||0)}PTS</div>
       </div>`;
     });
-    goalies.forEach(g => {
-      html += `<div class="r-player-row">
+    goalies.forEach(g=>{
+      html+=`<div class="r-player-row">
         <div class="r-player-pos">G</div>
         <div class="r-player-name">${g.name?.default||'—'}</div>
         <div class="r-player-stat">${g.savePctg?Math.round(g.savePctg*100)+'% SV':''} ${g.shotsAgainst||0} shots</div>
       </div>`;
     });
-    el.querySelector('.r-players-inner').innerHTML = `<div class="r-players-label">CAR Top Performers</div>${html}`;
+    el.querySelector('.r-players-inner').innerHTML=`<div class="r-players-label">CAR Top Performers</div>${html}`;
   } catch(e) {
-    el.querySelector('.r-players-inner').innerHTML = '<p class="r-player-loading">Stats unavailable</p>';
+    el.querySelector('.r-players-inner').innerHTML='<p class="r-player-loading">Stats unavailable</p>';
   }
 }
 
@@ -876,7 +846,7 @@ let expandedRow = null;
 function toggleResult(row, gameId, playersId) {
   const panel  = document.getElementById(playersId);
   const isOpen = row.classList.contains('expanded');
-  if (expandedRow && expandedRow !== row) {
+  if (expandedRow&&expandedRow!==row) {
     expandedRow.classList.remove('expanded');
     const prev = expandedRow.nextElementSibling;
     if (prev) prev.classList.remove('open');
@@ -896,36 +866,36 @@ function toggleResult(row, gameId, playersId) {
 async function loadSchedule() {
   const data     = await fj(API.schedule(CAR));
   const games    = data.games || [];
-  const past     = games.filter(g => ['OFF','FINAL'].includes(g.gameState))
+  const past     = games.filter(g=>['OFF','FINAL'].includes(g.gameState))
                         .sort((a,b)=>new Date(b.gameDate)-new Date(a.gameDate)).slice(0,8);
-  const upcoming = games.filter(g => ['FUT','PRE'].includes(g.gameState))
+  const upcoming = games.filter(g=>['FUT','PRE'].includes(g.gameState))
                         .sort((a,b)=>new Date(a.gameDate)-new Date(b.gameDate)).slice(0,4);
 
   // Streak
-  let streak=0, streakType='';
+  let streak=0,streakType='';
   for (const g of past) {
-    const home = g.homeTeam?.abbrev === CAR;
-    const carS = home ? g.homeTeam?.score : g.awayTeam?.score;
-    const oppS = home ? g.awayTeam?.score : g.homeTeam?.score;
-    const win  = carS > oppS;
-    if (!streakType) streakType = win?'W':'L';
+    const home=g.homeTeam?.abbrev===CAR;
+    const carS=home?g.homeTeam?.score:g.awayTeam?.score;
+    const oppS=home?g.awayTeam?.score:g.homeTeam?.score;
+    const win=carS>oppS;
+    if (!streakType) streakType=win?'W':'L';
     if ((win&&streakType==='W')||(!win&&streakType==='L')) streak++;
     else break;
   }
-  const sb = $('streak-badge');
-  if (streak>0) {
-    sb.textContent = `${streakType}${streak}`;
-    sb.style.cssText = `background:${streakType==='W'?'rgba(0,180,60,0.16)':'rgba(204,0,0,0.16)'};color:${streakType==='W'?'var(--green)':'var(--red)'};border:1px solid ${streakType==='W'?'rgba(0,180,60,0.3)':'rgba(204,0,0,0.3)'};`;
+  const sb=$('streak-badge');
+  if (streak>0){
+    sb.textContent=`${streakType}${streak}`;
+    sb.style.cssText=`background:${streakType==='W'?'rgba(0,180,60,0.16)':'rgba(204,0,0,0.16)'};color:${streakType==='W'?'var(--green)':'var(--red)'};border:1px solid ${streakType==='W'?'rgba(0,180,60,0.3)':'rgba(204,0,0,0.3)'};`;
   }
 
-  let w=0, l=0;
-  $('results-body').innerHTML = past.map((g,idx)=>{
-    const home = g.homeTeam?.abbrev === CAR;
-    const carS = home?g.homeTeam?.score:g.awayTeam?.score;
-    const oppS = home?g.awayTeam?.score:g.homeTeam?.score;
-    const opp  = home?g.awayTeam:g.homeTeam;
-    const win  = carS>oppS;
-    if (win) w++; else l++;
+  let w=0,l=0;
+  $('results-body').innerHTML=past.map((g,idx)=>{
+    const home=g.homeTeam?.abbrev===CAR;
+    const carS=home?g.homeTeam?.score:g.awayTeam?.score;
+    const oppS=home?g.awayTeam?.score:g.homeTeam?.score;
+    const opp=home?g.awayTeam:g.homeTeam;
+    const win=carS>oppS;
+    if(win)w++;else l++;
     const pp=g.gameType===3;
     const pid=`players-${idx}`;
     return `<div class="r-row" onclick="toggleResult(this,'${g.id}','${pid}')">
@@ -940,10 +910,10 @@ async function loadSchedule() {
     </div>
     <div class="r-players" id="${pid}"><div class="r-players-inner"></div></div>`;
   }).join('')||'<p class="api-error">No recent games found</p>';
-  $('results-record').textContent = `${w}-${l}`;
-  $('results-label').textContent  = `Last ${past.length} Games`;
+  $('results-record').textContent=`${w}-${l}`;
+  $('results-label').textContent=`Last ${past.length} Games`;
 
-  $('upcoming-body').innerHTML = upcoming.map(g=>{
+  $('upcoming-body').innerHTML=upcoming.map(g=>{
     const home=g.homeTeam?.abbrev===CAR;
     const opp=home?g.awayTeam:g.homeTeam;
     const pp=g.gameType===3;
@@ -957,35 +927,35 @@ async function loadSchedule() {
     </div>`;
   }).join('')||'<p class="api-error">No upcoming games found</p>';
 
-  return {past, upcoming};
+  return {past,upcoming};
 }
 
 async function loadScoreboard() {
-  const data = await fj(API.scoreboard);
+  const data=await fj(API.scoreboard);
   return (data.games||[]).find(g=>g.homeTeam?.abbrev===CAR||g.awayTeam?.abbrev===CAR)||null;
 }
 
-function renderGame(game, upcoming, past) {
+function renderGame(game,upcoming,past) {
   if (game) {
-    const home  = game.homeTeam?.abbrev===CAR;
-    const carT  = home?game.homeTeam:game.awayTeam;
-    const oppT  = home?game.awayTeam:game.homeTeam;
-    const carS  = carT?.score??0;
-    const oppS  = oppT?.score??0;
-    const state = game.gameState;
-    const live  = state==='LIVE'||state==='CRIT';
-    const final = state==='OFF'||state==='FINAL';
-    const per   = game.periodDescriptor?.number||1;
-    const perLbl= PERIOD_LABEL[per]||(per+'P');
-    const clock = game.clock?.timeRemaining||'';
-    const pp    = game.gameType===3;
-    const ss    = game.seriesStatus;
+    const home=game.homeTeam?.abbrev===CAR;
+    const carT=home?game.homeTeam:game.awayTeam;
+    const oppT=home?game.awayTeam:game.homeTeam;
+    const carS=carT?.score??0;
+    const oppS=oppT?.score??0;
+    const state=game.gameState;
+    const live=state==='LIVE'||state==='CRIT';
+    const final=state==='OFF'||state==='FINAL';
+    const per=game.periodDescriptor?.number||1;
+    const perLbl=PERIOD_LABEL[per]||(per+'P');
+    const clock=game.clock?.timeRemaining||'';
+    const pp=game.gameType===3;
+    const ss=game.seriesStatus;
 
-    $('game-label').textContent = pp?`🏒 ${game.gameLabel||'Playoff'} · Eastern Conf`:live?'⚡ In Progress':final?'Final':'Today';
-    $('game-title').textContent = home?`CAR vs ${oppT?.abbrev}`:`${oppT?.abbrev} vs CAR`;
-    $('game-badge').innerHTML   = live
-      ? `<div class="live-pill"><div class="live-dot"></div>Live</div>`
-      : final?`<span style="font-family:'Barlow Condensed',sans-serif;font-size:0.78rem;letter-spacing:2px;color:var(--silver);text-transform:uppercase;">Final</span>`:'';
+    $('game-label').textContent=pp?`🏒 ${game.gameLabel||'Playoff'} · Eastern Conf`:live?'⚡ In Progress':final?'Final':'Today';
+    $('game-title').textContent=home?`CAR vs ${oppT?.abbrev}`:`${oppT?.abbrev} vs CAR`;
+    $('game-badge').innerHTML=live
+      ?`<div class="live-pill"><div class="live-dot"></div>Live</div>`
+      :final?`<span style="font-family:'Barlow Condensed',sans-serif;font-size:0.78rem;letter-spacing:2px;color:var(--silver);text-transform:uppercase;">Final</span>`:'';
 
     let seriesHTML='';
     if (pp) {
@@ -1070,8 +1040,8 @@ function renderGame(game, upcoming, past) {
   }
 }
 
-function renderStats(car, ppW, ppL) {
-  if (!car) { $('stats-body').innerHTML='<p class="api-error">No stats</p>'; return; }
+function renderStats(car,ppW,ppL) {
+  if (!car){$('stats-body').innerHTML='<p class="api-error">No stats</p>';return;}
   const pct=car.pointPctg?car.pointPctg.toFixed(3):'—';
   $('stats-body').innerHTML=`
     <div class="stat-grid">
@@ -1087,14 +1057,17 @@ function renderStats(car, ppW, ppL) {
 async function init() {
   document.body.classList.add('loading');
   try {
-    const [scoreboard, sched, car] = await Promise.all([
+    // Load bracket first so elimination data is ready for standings render
+    await loadBracket().catch(()=>{
+      $('bracket-body').innerHTML='<div class="card-body" style="padding:16px 18px"><p class="api-error">Bracket unavailable</p></div>';
+    });
+
+    const [scoreboard,sched,car] = await Promise.all([
       loadScoreboard().catch(()=>null),
       loadSchedule().catch(()=>({past:[],upcoming:[]})),
       loadStandings().catch(()=>null),
     ]);
-    loadBracket().catch(()=>{
-      $('bracket-body').innerHTML='<div class="card-body" style="padding:16px 18px"><p class="api-error">Bracket unavailable</p></div>';
-    });
+
     const {upcoming,past}=sched;
     let ppW=0,ppL=0;
     (past||[]).filter(g=>g.gameType===3).forEach(g=>{
