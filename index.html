@@ -46,7 +46,7 @@
   .card-body{padding:13px 18px;}
   .api-error{font-family:'Barlow Condensed',sans-serif;font-size:0.8rem;color:var(--silver);padding:8px 0;letter-spacing:1px;}
 
-  /* GAME CARD — row 1, full width */
+  /* GAME CARD — row 1 full width */
   .game-card{grid-column:1/4;background:linear-gradient(135deg,#160000,#1a0000 50%,#1c1c1c);border:1px solid var(--red);border-radius:4px;overflow:hidden;position:relative;animation:fadein 0.5s ease both;}
   .game-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--red),transparent);animation:scan 2.5s ease-in-out infinite;}
   @keyframes scan{0%,100%{opacity:0.3}50%{opacity:1}}
@@ -81,7 +81,7 @@
   .live-dot{width:7px;height:7px;background:white;border-radius:50%;animation:blink 1.2s ease-in-out infinite;}
   @keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
 
-  /* BRACKET — row 2, full width */
+  /* BRACKET — row 2 full width */
   .bracket-card{grid-column:1/4;background:var(--gray-mid);border:1px solid var(--gray-border);border-radius:4px;overflow:hidden;animation:fadein 0.5s ease both;}
   .bracket-toggle{cursor:pointer;user-select:none;}
   .bracket-chevron{font-size:0.7rem;color:var(--silver);transition:transform 0.3s ease;margin-left:8px;display:inline-block;}
@@ -104,10 +104,11 @@
   .b-name.car{color:var(--red);}
   .b-wins{font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:1px;}
   .b-wins.lead{color:var(--green);}
-  .b-status{font-family:'Barlow Condensed',sans-serif;font-size:0.6rem;letter-spacing:2px;text-transform:uppercase;color:var(--red);text-align:center;padding:3px 0 5px;display:flex;align-items:center;justify-content:center;gap:6px;}
-  .b-live-score{font-family:'Bebas Neue',sans-serif;font-size:0.85rem;letter-spacing:1px;color:var(--white);}
+  .b-live{display:flex;align-items:center;justify-content:center;gap:6px;padding:3px 10px 5px;font-family:'Barlow Condensed',sans-serif;font-size:0.6rem;letter-spacing:2px;text-transform:uppercase;color:var(--red);border-top:1px solid rgba(204,0,0,0.2);}
+  .b-live-score{font-family:'Bebas Neue',sans-serif;font-size:0.9rem;letter-spacing:1px;color:var(--white);}
+  .b-live-dot{width:6px;height:6px;background:var(--red);border-radius:50%;animation:blink 1.2s ease-in-out infinite;flex-shrink:0;}
 
-  /* SURGE — row 3, full width */
+  /* SURGE — row 3 full width */
   .surge-card{grid-column:1/4;background:linear-gradient(135deg,#100000,var(--gray-dark));border:1px solid var(--gray-border);border-radius:4px;overflow:hidden;cursor:pointer;user-select:none;animation:fadein 0.5s ease both;}
   .surge-inner{padding:16px 18px 14px;}
   .surge-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:5px;}
@@ -131,7 +132,7 @@
   .surge-bullet-text{font-family:'Barlow Condensed',sans-serif;font-size:0.8rem;color:var(--silver);letter-spacing:0.5px;line-height:1.4;}
   .surge-bullet-text strong{color:var(--white);}
 
-  /* STATS — row 4, full width */
+  /* STATS — row 4 full width */
   .stats-card{grid-column:1/4;background:var(--gray-mid);border:1px solid var(--gray-border);border-radius:4px;overflow:hidden;animation:fadein 0.5s ease both;}
   .stat-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:9px;}
   .stat-block{background:var(--gray-dark);border:1px solid var(--gray-border);border-radius:3px;padding:11px 11px 7px;position:relative;overflow:hidden;}
@@ -140,7 +141,7 @@
   .stat-lbl{font-family:'Barlow Condensed',sans-serif;font-size:0.66rem;letter-spacing:2px;text-transform:uppercase;color:var(--silver);margin-top:1px;}
   .stat-sub{font-family:'Barlow Condensed',sans-serif;font-size:0.68rem;color:var(--ice-dim);margin-top:2px;}
 
-  /* UPCOMING — row 5, full width */
+  /* UPCOMING — row 5 full width */
   .upcoming-card{grid-column:1/4;background:var(--gray-mid);border:1px solid var(--gray-border);border-radius:4px;overflow:hidden;animation:fadein 0.5s ease both;}
   .u-row{display:flex;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.05);gap:11px;}
   .u-row:last-child{border-bottom:none;}
@@ -153,7 +154,7 @@
   .u-type.playoff{color:var(--red);background:rgba(204,0,0,0.09);border:1px solid rgba(204,0,0,0.18);}
   .u-type.regular{color:var(--ice-dim);background:rgba(208,232,245,0.06);border:1px solid rgba(208,232,245,0.09);}
 
-  /* RESULTS col1 | STANDINGS col2 | RIVALS col3 — row 6 */
+  /* RESULTS col1 — row 6 */
   .results-card{grid-column:1/2;}
   .r-row{display:flex;align-items:center;padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.05);gap:7px;cursor:pointer;transition:background 0.15s ease;}
   .r-row:hover{background:rgba(255,255,255,0.03);}
@@ -179,7 +180,8 @@
   .r-player-stat{font-family:'Barlow Condensed',sans-serif;font-size:0.75rem;color:var(--ice-dim);}
   .r-player-loading{font-family:'Barlow Condensed',sans-serif;font-size:0.75rem;color:var(--silver);letter-spacing:2px;text-transform:uppercase;padding:6px 0;}
 
-  .standings-card{grid-column:2/3;}
+  /* STANDINGS col2 — row 6, now includes status icon, no rivals card */
+  .standings-card{grid-column:2/4;}
   .s-row{display:flex;align-items:center;padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.05);gap:7px;}
   .s-row:last-child{border-bottom:none;}
   .s-row.hl{background:rgba(204,0,0,0.08);margin:0 -18px;padding:6px 18px;border-left:3px solid var(--red);}
@@ -187,19 +189,11 @@
   .s-rank.top{color:var(--red);}
   .s-name{flex:1;font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:0.85rem;}
   .s-name.hl-name{color:var(--red);}
-  .s-pts{font-family:'Barlow Condensed',sans-serif;font-size:0.8rem;color:var(--silver);}
-  .s-rec{font-family:'Barlow Condensed',sans-serif;font-size:0.75rem;color:var(--silver);width:50px;text-align:right;}
-  .clinched{font-family:'Barlow Condensed',sans-serif;font-size:0.56rem;letter-spacing:1px;text-transform:uppercase;background:var(--red);color:white;padding:1px 4px;border-radius:2px;flex-shrink:0;}
+  .s-rec{font-family:'Barlow Condensed',sans-serif;font-size:0.75rem;color:var(--silver);width:70px;}
+  .s-pts{font-family:'Barlow Condensed',sans-serif;font-size:0.8rem;color:var(--silver);width:34px;text-align:right;}
+  .s-icon{font-size:1rem;flex-shrink:0;width:22px;text-align:center;}
 
-  .rival-card{grid-column:3/4;}
-  .rv-row{display:flex;align-items:center;padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.05);gap:8px;}
-  .rv-row:last-child{border-bottom:none;}
-  .rv-name{flex:1;font-family:'Barlow Condensed',sans-serif;font-size:0.86rem;font-weight:600;}
-  .rv-tag{font-family:'Barlow Condensed',sans-serif;font-size:0.68rem;letter-spacing:1px;text-transform:uppercase;padding:2px 7px;border-radius:2px;}
-  .rv-tag.elim{background:rgba(0,200,0,0.09);color:var(--green);border:1px solid rgba(0,200,0,0.18);}
-  .rv-tag.alive{background:rgba(204,0,0,0.09);color:var(--red);border:1px solid rgba(204,0,0,0.18);}
-
-  /* ALL TEAMS STANDINGS — row 7, full width */
+  /* ALL TEAMS — row 7 full width */
   .allteams-card{grid-column:1/4;background:var(--gray-mid);border:1px solid var(--gray-border);border-radius:4px;overflow:hidden;animation:fadein 0.5s ease both;}
   .allteams-toggle{cursor:pointer;user-select:none;}
   .allteams-chevron{font-size:0.7rem;color:var(--silver);transition:transform 0.3s ease;margin-left:8px;display:inline-block;}
@@ -211,6 +205,7 @@
   .div-header{display:flex;align-items:center;gap:10px;margin-bottom:6px;padding-bottom:4px;border-bottom:1px solid var(--gray-border);}
   .div-name{font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:2px;color:var(--silver);}
   .div-conf{font-family:'Barlow Condensed',sans-serif;font-size:0.65rem;letter-spacing:2px;text-transform:uppercase;color:var(--red);}
+  .at-col-header{display:flex;align-items:center;padding:3px 0 5px;gap:8px;font-family:'Barlow Condensed',sans-serif;font-size:0.6rem;letter-spacing:2px;text-transform:uppercase;color:var(--silver);border-bottom:1px solid var(--gray-border);margin-bottom:2px;}
   .at-row{display:flex;align-items:center;padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.04);gap:8px;}
   .at-row:last-child{border-bottom:none;}
   .at-row.car-row{background:rgba(204,0,0,0.07);margin:0 -18px;padding:5px 18px;border-left:3px solid var(--red);}
@@ -219,29 +214,25 @@
   .at-name.car-name{color:var(--red);}
   .at-rec{font-family:'Barlow Condensed',sans-serif;font-size:0.75rem;color:var(--silver);width:58px;}
   .at-pts{font-family:'Bebas Neue',sans-serif;font-size:0.95rem;letter-spacing:1px;color:var(--silver);width:36px;text-align:right;}
-  .at-pct{font-family:'Barlow Condensed',sans-serif;font-size:0.72rem;color:var(--silver);width:36px;text-align:right;}
+  .at-pct{font-family:'Barlow Condensed',sans-serif;font-size:0.72rem;color:var(--silver);width:38px;text-align:right;}
   .at-badge{font-family:'Barlow Condensed',sans-serif;font-size:0.54rem;letter-spacing:1px;text-transform:uppercase;padding:1px 4px;border-radius:2px;flex-shrink:0;}
   .at-badge.pp{background:rgba(204,0,0,0.2);color:var(--red);border:1px solid rgba(204,0,0,0.3);}
-  .at-badge.el{background:rgba(100,100,100,0.2);color:var(--silver);border:1px solid var(--gray-border);}
-  .at-col-header{display:flex;align-items:center;padding:3px 0 5px;gap:8px;font-family:'Barlow Condensed',sans-serif;font-size:0.6rem;letter-spacing:2px;text-transform:uppercase;color:var(--silver);border-bottom:1px solid var(--gray-border);margin-bottom:2px;}
+  .at-badge.el{background:rgba(100,100,100,0.15);color:var(--silver);border:1px solid var(--gray-border);}
 
   footer{border-top:1px solid var(--gray-border);padding:14px 40px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-top:10px;}
   .footer-left{font-family:'Barlow Condensed',sans-serif;font-size:0.7rem;letter-spacing:2px;text-transform:uppercase;color:var(--silver);}
   #last-updated{color:var(--ice-dim);}
   .canes-motto{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:3px;color:var(--red);text-shadow:0 0 14px var(--red-glow);}
 
-  /* TABLET */
   @media(max-width:900px){
     .main{grid-template-columns:1fr 1fr;padding:14px;gap:12px;}
     .game-card,.bracket-card,.surge-card,.stats-card,.upcoming-card,.allteams-card{grid-column:1/3;}
     .results-card{grid-column:1/2;}
     .standings-card{grid-column:2/3;}
-    .rival-card{grid-column:1/3;}
     .stat-grid{grid-template-columns:repeat(3,1fr);}
     .header-inner{padding:18px 18px 14px;}
     footer{padding:12px 18px;}
   }
-  /* MOBILE */
   @media(max-width:560px){
     .header-inner{padding:16px 16px 14px;}
     .logo-block{gap:12px;}
@@ -249,7 +240,7 @@
     .site-title p{font-size:0.7rem;letter-spacing:2px;}
     .surge-ends span:nth-child(2){display:none;}
     .main{grid-template-columns:1fr;padding:10px;gap:10px;}
-    .game-card,.bracket-card,.surge-card,.stats-card,.upcoming-card,.results-card,.standings-card,.rival-card,.allteams-card{grid-column:1/2;}
+    .game-card,.bracket-card,.surge-card,.stats-card,.upcoming-card,.results-card,.standings-card,.allteams-card{grid-column:1/2;}
     .stat-grid{grid-template-columns:repeat(2,1fr);}
     .game-matchup{padding:14px 14px 6px;gap:6px;}
     .g-abbr{font-size:2rem;letter-spacing:2px;}
@@ -257,16 +248,16 @@
     .g-name{font-size:0.6rem;letter-spacing:1px;}
     .g-seed{display:none;}
     .series-info{padding:6px 14px 8px;font-size:0.72rem;letter-spacing:1px;}
-    .card-header,.surge-inner{padding:10px 14px 8px;}
-    .card-body,.allteams-inner{padding:10px 14px;}
-    .card-title,.surge-title{font-size:1.1rem;}
+    .card-header{padding:10px 14px 8px;}
+    .card-body{padding:10px 14px;}
+    .card-title{font-size:1.1rem;}
     .stat-num{font-size:1.7rem;}
     .stat-block{padding:9px 9px 6px;}
     .u-type{display:none;}
     .bracket-round{min-width:130px;padding:10px;}
+    .at-pct{display:none;}
     footer{flex-direction:column;align-items:center;text-align:center;padding:12px 16px;gap:6px;}
     .footer-left{font-size:0.65rem;}
-    .at-pct{display:none;}
   }
 </style>
 </head>
@@ -313,10 +304,7 @@
   <!-- ROW 1: GAME CARD -->
   <div class="game-card" id="game-card">
     <div class="card-header">
-      <div>
-        <div class="card-label" id="game-label">Loading…</div>
-        <div class="card-title" id="game-title">GAME CENTER</div>
-      </div>
+      <div><div class="card-label" id="game-label">Loading…</div><div class="card-title" id="game-title">GAME CENTER</div></div>
       <div id="game-badge"></div>
     </div>
     <div id="game-body"><div class="card-body"><p class="api-error">Fetching game data…</p></div></div>
@@ -325,10 +313,7 @@
   <!-- ROW 2: BRACKET -->
   <div class="bracket-card">
     <div class="card-header bracket-toggle" id="bracket-toggle">
-      <div>
-        <div class="card-label">2026 Stanley Cup Playoffs</div>
-        <div class="card-title">Playoff Bracket <span class="bracket-chevron" id="bracket-chevron">▼</span></div>
-      </div>
+      <div><div class="card-label">2026 Stanley Cup Playoffs</div><div class="card-title">Playoff Bracket <span class="bracket-chevron" id="bracket-chevron">▼</span></div></div>
       <div id="bracket-summary" style="font-family:'Barlow Condensed',sans-serif;font-size:0.78rem;letter-spacing:1px;color:var(--silver);text-align:right;"></div>
     </div>
     <div class="bracket-collapse" id="bracket-collapse">
@@ -341,20 +326,10 @@
   <!-- ROW 3: SURGE -->
   <div class="surge-card" id="surge-card">
     <div class="surge-inner">
-      <div class="surge-top">
-        <div class="surge-label">⚡ Storm Surge Rating</div>
-        <div class="surge-tap-hint">Tap to learn more</div>
-      </div>
+      <div class="surge-top"><div class="surge-label">⚡ Storm Surge Rating</div><div class="surge-tap-hint">Tap to learn more</div></div>
       <div class="surge-title">SEASON DOMINANCE METER</div>
-      <div class="surge-bar-wrap">
-        <div class="surge-fill" id="surge-fill"></div>
-        <div class="surge-num" id="surge-num">—</div>
-      </div>
-      <div class="surge-ends">
-        <span>🌧 Mild</span>
-        <span>Based on W%, Conference Seed, Playoff Record</span>
-        <span>⚡ Category 5</span>
-      </div>
+      <div class="surge-bar-wrap"><div class="surge-fill" id="surge-fill"></div><div class="surge-num" id="surge-num">—</div></div>
+      <div class="surge-ends"><span>🌧 Mild</span><span>Based on W%, Conference Seed, Playoff Record</span><span>⚡ Category 5</span></div>
     </div>
     <div class="surge-explainer" id="surge-explainer">
       <div class="surge-explainer-inner">
@@ -367,21 +342,17 @@
 
   <!-- ROW 4: TEAM STATS -->
   <div class="stats-card">
-    <div class="card-header">
-      <div><div class="card-label">2025–26 Season</div><div class="card-title">Team Stats</div></div>
-    </div>
+    <div class="card-header"><div><div class="card-label">2025–26 Season</div><div class="card-title">Team Stats</div></div></div>
     <div class="card-body" id="stats-body"><p class="api-error">Loading…</p></div>
   </div>
 
   <!-- ROW 5: UPCOMING -->
   <div class="upcoming-card">
-    <div class="card-header">
-      <div><div class="card-label">Schedule</div><div class="card-title">Upcoming Games</div></div>
-    </div>
+    <div class="card-header"><div><div class="card-label">Schedule</div><div class="card-title">Upcoming Games</div></div></div>
     <div class="card-body" id="upcoming-body"><p class="api-error">Loading…</p></div>
   </div>
 
-  <!-- ROW 6: RESULTS | STANDINGS | RIVALS -->
+  <!-- ROW 6: RESULTS col1 | STANDINGS col2-3 (no rivals card) -->
   <div class="card results-card">
     <div class="card-header">
       <div><div class="card-label" id="results-label">Recent Games</div><div class="card-title">Results</div></div>
@@ -396,16 +367,9 @@
   <div class="card standings-card">
     <div class="card-header">
       <div><div class="card-label">Eastern Conference</div><div class="card-title">Metro Standings</div></div>
-      <div style="font-family:'Barlow Condensed',sans-serif;font-size:0.65rem;letter-spacing:2px;color:var(--silver);text-transform:uppercase;">Points</div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:0.65rem;letter-spacing:2px;color:var(--silver);text-transform:uppercase;">W-L-OT · PTS</div>
     </div>
     <div class="card-body" id="standings-body"><p class="api-error">Loading…</p></div>
-  </div>
-
-  <div class="card rival-card">
-    <div class="card-header">
-      <div><div class="card-label">😈 Rivalry Watch</div><div class="card-title">Metro Rivals</div></div>
-    </div>
-    <div class="card-body" id="rival-body"><p class="api-error">Loading…</p></div>
   </div>
 
   <!-- ROW 7: ALL TEAMS -->
@@ -445,8 +409,9 @@ const PROXIES=[
 const PERIOD_LABEL=['','1st','2nd','3rd','OT','OT2'];
 const $=id=>document.getElementById(id);
 let playoffEliminatedTeams=new Set();
-// Store live scoreboard games for bracket score display
 let liveGames=[];
+// Store bracket series so we can re-render with fresh live scores
+let cachedEast=[], cachedWest=[];
 
 async function fj(url){
   for(const p of PROXIES){try{const r=await fetch(p(url),{signal:AbortSignal.timeout(8000)});if(r.ok)return r.json();}catch(e){continue;}}
@@ -461,7 +426,6 @@ function fmtMo(iso){return new Date(iso).toLocaleDateString('en-US',{month:'shor
 function fmtDay(iso){return new Date(iso).toLocaleDateString('en-US',{day:'numeric',timeZone:TZ});}
 function fmtTime(iso){return new Date(iso).toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit',timeZoneName:'short',timeZone:TZ});}
 
-// Toggle handlers
 $('surge-card').addEventListener('click',()=>{
   const ex=$('surge-explainer');ex.classList.toggle('open');
   document.querySelector('.surge-tap-hint').textContent=ex.classList.contains('open')?'Tap to close':'Tap to learn more';
@@ -513,7 +477,6 @@ function extractElim(series){
   return e;
 }
 
-// Find live game score for a series pair from scoreboard data
 function getLiveScore(t1,t2){
   const g=liveGames.find(g=>{
     const ha=g.homeTeam?.abbrev,aa=g.awayTeam?.abbrev;
@@ -523,12 +486,17 @@ function getLiveScore(t1,t2){
   const live=g.gameState==='LIVE'||g.gameState==='CRIT';
   if(!live)return null;
   const per=g.periodDescriptor?.number||1;
-  const perLbl=PERIOD_LABEL[per]||(per+'P');
-  const clock=g.clock?.timeRemaining||'';
-  return{hs:g.homeTeam?.score||0,as:g.awayTeam?.score||0,ha:g.homeTeam?.abbrev,aa:g.awayTeam?.abbrev,perLbl,clock};
+  return{
+    hs:g.homeTeam?.score||0,as:g.awayTeam?.score||0,
+    ha:g.homeTeam?.abbrev,aa:g.awayTeam?.abbrev,
+    perLbl:PERIOD_LABEL[per]||(per+'P'),
+    clock:g.clock?.timeRemaining||''
+  };
 }
 
 function renderBracket(east,west){
+  // Cache for re-renders
+  cachedEast=east;cachedWest=west;
   const all=[...east,...west];
   playoffEliminatedTeams=extractElim(all);
   const carS=all.find(s=>(s.t1===CAR||s.t2===CAR)&&s.w1<4&&s.w2<4);
@@ -537,14 +505,11 @@ function renderBracket(east,west){
 
   function sH(s){
     const t1c=s.t1===CAR,t2c=s.t2===CAR,carIn=t1c||t2c,done=s.w1===4||s.w2===4,tbd=!s.t1||s.t1==='TBD';
-    // Look for a live game for this series
     const ls=(!tbd&&!done)?getLiveScore(s.t1,s.t2):null;
-    // Determine which team is home in the live game to display score correctly
     let liveHTML='';
     if(ls){
-      const t1score=ls.ha===s.t1?ls.hs:ls.as;
-      const t2score=ls.ha===s.t1?ls.as:ls.hs;
-      liveHTML=`<div class="b-status"><span style="color:var(--red);animation:blink 1.2s ease-in-out infinite;">●</span> LIVE <span class="b-live-score">${s.t1} ${t1score} – ${t2score} ${s.t2}</span> <span style="color:var(--silver);font-size:0.58rem;">${ls.perLbl} ${ls.clock}</span></div>`;
+      const t1score=ls.ha===s.t1?ls.hs:ls.as,t2score=ls.ha===s.t1?ls.as:ls.hs;
+      liveHTML=`<div class="b-live"><div class="b-live-dot"></div>LIVE <span class="b-live-score">${s.t1} ${t1score}–${t2score} ${s.t2}</span> <span style="color:var(--silver);font-size:0.58rem;">${ls.perLbl} ${ls.clock}</span></div>`;
     }
     return `<div class="b-series ${tbd?'tbd':carIn&&!done?'active':''}">
       <div class="b-team ${done&&s.w1>s.w2?'winner':''}">
@@ -587,12 +552,12 @@ function buildFromSchedules(allGames){
     const sd=first?new Date(first.startTimeUTC||first.gameDate):new Date();
     const round=sd>=new Date('2026-05-01')?2:1;
     const[ha,aa]=s.teams,hS=s.hSeed||9,aS=s.aSeed||9;
-    const top=hS<=aS?ha:aa,bot=hS<=aS?aa:ha,topS=hS<=aS?hS:aS,botS=hS<=aS?aS:hS;
+    const top=hS<=aS?ha:aa,bot=hS<=aS?aa:ha;
+    const topS=top===ha?hS:aS,botS=bot===ha?hS:aS;
     const isEast=EAST_TEAMS.includes(top)||['OTT','BOS','MTL','TB','PIT','PHI','BUF'].includes(top);
-    // Use actual seeds from API game data, not the fallback 9
-    const actualTopSeed=top===ha?hS:aS;
-    const actualBotSeed=bot===ha?hS:aS;
-    return{conf:isEast?'east':'west',round,t1:top,t2:bot,s1:actualTopSeed<9?actualTopSeed:'',s2:actualBotSeed<9?actualBotSeed:'',w1:s.wins[top]||0,w2:s.wins[bot]||0};
+    return{conf:isEast?'east':'west',round,t1:top,t2:bot,
+      s1:topS<9?topS:'',s2:botS<9?botS:'',
+      w1:s.wins[top]||0,w2:s.wins[bot]||0};
   });
 }
 
@@ -604,18 +569,15 @@ async function loadBracket(){
     const p=[];
     (data?.brackets||[]).forEach(b=>{
       const conf=b.name?.toLowerCase().includes('west')?'west':'east';
-      (b.rounds||[]).forEach((r,ri)=>{
-        (r.series||r.matchups||[]).forEach(s=>{
-          const c=s.competitors||s.teams||[],t1=c[0]||{},t2=c[1]||{};
-          // ESPN seed comes from curatedRank or seed field
-          const s1=t1.seed||t1.curatedRank?.current||'';
-          const s2=t2.seed||t2.curatedRank?.current||'';
-          p.push({conf,round:ri+1,
-            t1:t1.abbreviation||t1.abbrev||t1.team?.abbreviation||'TBD',
-            t2:t2.abbreviation||t2.abbrev||t2.team?.abbreviation||'TBD',
-            s1,s2,w1:t1.wins||0,w2:t2.wins||0});
-        });
-      });
+      (b.rounds||[]).forEach((r,ri)=>(r.series||r.matchups||[]).forEach(s=>{
+        const c=s.competitors||s.teams||[],t1=c[0]||{},t2=c[1]||{};
+        p.push({conf,round:ri+1,
+          t1:t1.abbreviation||t1.abbrev||t1.team?.abbreviation||'TBD',
+          t2:t2.abbreviation||t2.abbrev||t2.team?.abbreviation||'TBD',
+          s1:t1.seed||t1.curatedRank?.current||'',
+          s2:t2.seed||t2.curatedRank?.current||'',
+          w1:t1.wins||0,w2:t2.wins||0});
+      }));
     });
     if(p.length>=4)series=p;
   }catch(e){}
@@ -642,7 +604,7 @@ async function loadBracket(){
     }
   }
 
-  // 3. Build from schedules — seeds come from game data
+  // 3. Build from schedules
   if(!series){
     try{
       const results=await Promise.allSettled([...EAST_TEAMS,...WEST_TEAMS].map(t=>fj(API.schedule(t))));
@@ -668,46 +630,43 @@ async function loadStandings(){
   let carData=null;
   const cm={e:'ELIM',x:'PLAYOFF',y:'DIV',z:'PRES',p:'PLAYOFF'};
 
+  // Metro standings with inline status icon — no rivals card
   $('standings-body').innerHTML=metro.map((t,i)=>{
     const abbr=t.teamAbbrev?.default||'',isCar=abbr===CAR;
     if(isCar)carData=t;
-    const cl=cm[(t.clinchIndicator||'').toLowerCase()]||'';
+    const regElim=t.clinchIndicator==='e'||t.eliminationNumber===0;
+    const ppElim=playoffEliminatedTeams.has(abbr);
+    const elim=regElim||ppElim;
+    // Status icon: 🌀 for CAR (red), ⚠️ for playoff alive opponents, 🗑️ for eliminated
+    let icon='';
+    if(isCar) icon=`<div class="s-icon" style="color:var(--red);">🌀</div>`;
+    else if(elim) icon=`<div class="s-icon">🗑️</div>`;
+    else icon=`<div class="s-icon">⚠️</div>`;
+
     return `<div class="s-row ${isCar?'hl':''}">
       <div class="s-rank ${i===0?'top':''}">${i+1}</div>
       <div class="s-name ${isCar?'hl-name':''}">${t.teamName?.default||abbr}</div>
-      <div class="s-pts">${t.points}pt</div>
       <div class="s-rec">${t.wins}-${t.losses}${t.otLosses?'-'+t.otLosses:''}</div>
-      ${cl?`<div class="clinched">${cl}</div>`:''}
+      <div class="s-pts">${t.points}pt</div>
+      ${icon}
     </div>`;
   }).join('')||'<p class="api-error">No data</p>';
 
-  // Rivals sorted by division standing
-  $('rival-body').innerHTML=metro.filter(t=>(t.teamAbbrev?.default||'')!==CAR).map(t=>{
-    const abbr=t.teamAbbrev?.default||'',name=t.teamName?.default||abbr;
-    const elim=(t.clinchIndicator==='e'||t.eliminationNumber===0)||playoffEliminatedTeams.has(abbr);
-    return `<div class="rv-row"><div class="rv-name">${name}</div><div class="rv-tag ${elim?'elim':'alive'}">${elim?'🗑 Eliminated':'⚠ Still Alive'}</div></div>`;
-  }).join('');
-
-  // All teams standings — grouped by division
+  // All teams standings
   const divisions={
     'Metropolitan':{conf:'EASTERN',teams:[]},
     'Atlantic':{conf:'EASTERN',teams:[]},
     'Central':{conf:'WESTERN',teams:[]},
     'Pacific':{conf:'WESTERN',teams:[]},
   };
-  all.forEach(t=>{
-    const div=t.divisionName;
-    if(divisions[div])divisions[div].teams.push(t);
-  });
+  all.forEach(t=>{const div=t.divisionName;if(divisions[div])divisions[div].teams.push(t);});
   Object.values(divisions).forEach(d=>d.teams.sort((a,b)=>b.points-a.points));
-
   const clinchLabel={conference:'CONF',presidents_trophy:'PRES',division:'DIV',playoff_spot:'PO',eliminated:'ELIM'};
-
   let atHtml='';
   for(const[divName,divData]of Object.entries(divisions)){
     atHtml+=`<div class="div-section">
       <div class="div-header"><div class="div-conf">${divData.conf}</div><div class="div-name">${divName}</div></div>
-      <div class="at-col-header"><div style="width:18px"></div><div style="flex:1">Team</div><div style="width:58px">W-L-OT</div><div style="width:36px;text-align:right">PTS</div><div style="width:36px;text-align:right">PCT</div><div style="width:40px"></div></div>`;
+      <div class="at-col-header"><div style="width:18px"></div><div style="flex:1">Team</div><div style="width:58px">W-L-OT</div><div style="width:36px;text-align:right">PTS</div><div style="width:38px;text-align:right">PCT</div><div style="width:36px"></div></div>`;
     divData.teams.forEach((t,i)=>{
       const abbr=t.teamAbbrev?.default||'',isCar=abbr===CAR;
       const cl=t.clinchIndicator?clinchLabel[t.clinchIndicator]||'':'';
@@ -719,13 +678,12 @@ async function loadStandings(){
         <div class="at-rec">${t.wins}-${t.losses}${t.otLosses?'-'+t.otLosses:''}</div>
         <div class="at-pts">${t.points}</div>
         <div class="at-pct">${pct}</div>
-        ${cl?`<div class="at-badge ${isElim?'el':'pp'}">${cl}</div>`:'<div style="width:40px"></div>'}
+        ${cl?`<div class="at-badge ${isElim?'el':'pp'}">${cl}</div>`:'<div style="width:36px"></div>'}
       </div>`;
     });
     atHtml+=`</div>`;
   }
   $('allteams-body').innerHTML=atHtml;
-
   return carData;
 }
 
@@ -798,6 +756,10 @@ async function loadSchedule(){
 async function loadScoreboard(){
   const data=await fj(API.scoreboard);
   liveGames=data.games||[];
+  // Re-render bracket with fresh live scores if we have cached series
+  if(cachedEast.length||cachedWest.length){
+    renderBracket(cachedEast,cachedWest);
+  }
   return liveGames.find(g=>g.homeTeam?.abbrev===CAR||g.awayTeam?.abbrev===CAR)||null;
 }
 
@@ -854,7 +816,6 @@ function renderStats(car,ppW,ppL){
 
 async function init(){
   document.body.classList.add('loading');
-  // Scroll to top on load — no centering on surge meter
   window.scrollTo(0,0);
   try{
     await loadBracket().catch(()=>{$('bracket-body').innerHTML='<div class="card-body" style="padding:16px 18px"><p class="api-error">Bracket unavailable</p></div>';});
@@ -878,6 +839,7 @@ async function init(){
     setTimeout(()=>loader.style.display='none',600);
   }
 }
+
 init();
 setInterval(init,60000);
 </script>
