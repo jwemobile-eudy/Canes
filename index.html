@@ -817,7 +817,6 @@ function renderStats(car,ppW,ppL){
 
 async function init(){
   document.body.classList.add('loading');
-  window.scrollTo(0,0);
   try{
     await loadBracket().catch(()=>{$('bracket-body').innerHTML='<div class="card-body" style="padding:16px 18px"><p class="api-error">Bracket unavailable</p></div>';});
     const[scoreboard,sched,car]=await Promise.all([
@@ -846,7 +845,21 @@ async function manualRefresh(){
   btn.textContent='↻ Updating…';
   btn.style.color='var(--red)';
   btn.style.borderColor='var(--red)';
-  await init();
+  try{
+    await loadBracket().catch(()=>{});
+    const[scoreboard,sched,car]=await Promise.all([
+      loadScoreboard().catch(()=>null),
+      loadSchedule().catch(()=>({past:[],upcoming:[]})),
+      loadStandings().catch(()=>null),
+    ]);
+    const{upcoming,past}=sched;
+    let ppW=0,ppL=0;
+    (past||[]).filter(g=>g.gameType===3).forEach(g=>{const home=g.homeTeam?.abbrev===CAR,cS=home?g.homeTeam?.score:g.awayTeam?.score,oS=home?g.awayTeam?.score:g.homeTeam?.score;if(cS>oS)ppW++;else ppL++;});
+    renderGame(scoreboard,upcoming,past);
+    renderStats(car,ppW,ppL);
+    if(car)setSurge(car.wins||0,car.losses||0,car.conferenceSequence||4,ppW,ppL);
+    $('last-updated').textContent='Updated '+new Date().toLocaleTimeString();
+  }catch(e){console.error(e);}
   btn.textContent='↻ Refresh';
   btn.style.color='var(--silver)';
   btn.style.borderColor='var(--gray-border)';
