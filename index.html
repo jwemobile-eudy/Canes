@@ -295,7 +295,8 @@
         <h1>LET'S GO <span>CANES</span></h1>
         <p>Carolina Hurricanes · Live Dashboard</p>
       </div>
-    </div>
+       </div>
+    <button onclick="manualRefresh()" id="refresh-btn" style="margin-left:auto;font-family:'Barlow Condensed',sans-serif;font-size:0.7rem;letter-spacing:2px;text-transform:uppercase;background:transparent;border:1px solid var(--gray-border);color:var(--silver);padding:6px 14px;border-radius:3px;cursor:pointer;flex-shrink:0;transition:all 0.2s ease;">↻ Refresh</button>
   </div>
 </header>
 
@@ -840,8 +841,19 @@ async function init(){
   }
 }
 
+async function manualRefresh(){
+845    const btn=$('refresh-btn');
+846    btn.textContent='↻ Updating…';
+847    btn.style.color='var(--red)';
+848    btn.style.borderColor='var(--red)';
+849    await init();
+850    btn.textContent='↻ Refresh';
+851    btn.style.color='var(--silver)';
+852    btn.style.borderColor='var(--gray-border)';
+853  }
+  
 init();
-setInterval(init,60000);
+setInterval(()=>{init().catch(console.error);},60000);
 </script>
 </body>
 </html>
