@@ -842,16 +842,16 @@ async function init(){
 }
 
 async function manualRefresh(){
-845    const btn=$('refresh-btn');
-846    btn.textContent='↻ Updating…';
-847    btn.style.color='var(--red)';
-848    btn.style.borderColor='var(--red)';
-849    await init();
-850    btn.textContent='↻ Refresh';
-851    btn.style.color='var(--silver)';
-852    btn.style.borderColor='var(--gray-border)';
-853  }
-  
+  const btn=$('refresh-btn');
+  btn.textContent='↻ Updating…';
+  btn.style.color='var(--red)';
+  btn.style.borderColor='var(--red)';
+  await init();
+  btn.textContent='↻ Refresh';
+  btn.style.color='var(--silver)';
+  btn.style.borderColor='var(--gray-border)';
+}
+ 
 init();
 setInterval(()=>{init().catch(console.error);},60000);
 </script>
