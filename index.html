@@ -372,7 +372,7 @@
 </div>
 
 <footer>
-  <div class="footer-left">NHL Stats API · <span id="last-updated">Updating…</span> · Auto-refreshes every 60s</div>
+  <div class="footer-left">NHL Stats API · <span id="last-updated">Updating…</span> · Auto-refreshes every 20s</div>
   <div class="canes-motto">LET'S GO CANES <span style="color:var(--red);">🌀</span></div>
 </footer>
 
@@ -387,8 +387,9 @@ const API={
   boxscore:id=>`https://api-web.nhle.com/v1/gamecenter/${id}/boxscore`,
   espn:`https://site.api.espn.com/apis/v2/sports/hockey/nhl/playoffs`,
 };
+// BACKLOG FIX 1: cache-busting proxies so stale data is never served
 const PROXIES=[
-  u=>`https://corsproxy.io/?url=${encodeURIComponent(u)}`,
+  u=>`https://corsproxy.io/?url=${encodeURIComponent(u)}&_cb=${Date.now()}`,
   u=>`https://api.allorigins.win/raw?url=${encodeURIComponent(u)}`,
   u=>`https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(u)}`,
 ];
@@ -398,7 +399,6 @@ let playoffEliminatedTeams=new Set();
 let liveGames=[];
 let cachedEast=[],cachedWest=[];
 
-// Safe timeout for all iOS versions
 function mkSignal(ms){
   try{return AbortSignal.timeout(ms);}catch(e){
     const c=new AbortController();
@@ -407,19 +407,21 @@ function mkSignal(ms){
   }
 }
 
+// BACKLOG FIX 1: cache:'no-store' on all fetches
 async function fj(url){
   for(const p of PROXIES){
-    try{const r=await fetch(p(url),{signal:mkSignal(8000)});if(r.ok)return r.json();}
+    try{const r=await fetch(p(url),{signal:mkSignal(8000),cache:'no-store'});if(r.ok)return r.json();}
     catch(e){continue;}
   }
   throw new Error('All proxies failed');
 }
+
+// BACKLOG FIX 1: try direct first (no proxy caching) then fall back
 async function fjD(url){
-  try{const r=await fetch(url,{signal:mkSignal(8000)});if(r.ok)return r.json();}catch(e){}
+  try{const r=await fetch(url,{signal:mkSignal(5000),cache:'no-store'});if(r.ok)return r.json();}catch(e){}
   return fj(url);
 }
 
-// Loader — always hides after 15s max no matter what
 function hideLoader(){
   const l=$('loader');
   l.classList.add('hidden');
@@ -438,6 +440,14 @@ $('surge-card').addEventListener('click',()=>{
 });
 $('bracket-toggle').addEventListener('click',()=>{$('bracket-collapse').classList.toggle('open');$('bracket-chevron').classList.toggle('open');});
 $('allteams-toggle').addEventListener('click',()=>{$('allteams-collapse').classList.toggle('open');$('allteams-chevron').classList.toggle('open');});
+
+// BACKLOG FIX 3: refresh on foreground restore (mobile Safari)
+let lastFetch=0;
+document.addEventListener('visibilitychange',()=>{
+  if(document.visibilityState==='visible'&&Date.now()-lastFetch>20000){
+    fetchAndRender().catch(console.error);
+  }
+});
 
 function setSurge(w,l,seed,ppW,ppL){
   const gp=w+l,pct=gp?w/gp:0,ss=Math.max(0,(9-seed)/8),ppGP=ppW+ppL,ppS=ppGP?ppW/ppGP:0.5;
@@ -522,13 +532,20 @@ function renderBracket(east,west){
   $('bracket-body').innerHTML=html;
 }
 
+// BACKLOG FIX 2: improved seed extraction from schedule data
 function buildFromSchedules(allGames){
   const seen=new Set();
   const games=allGames.filter(g=>{if(seen.has(g.id))return false;seen.add(g.id);return true;}).filter(g=>g.gameType===3);
   const sm={};
+  // Build a seed lookup from all games — later games may have seed data even if earlier ones don't
+  const seedLookup={};
+  games.forEach(g=>{
+    if(g.homeTeam?.abbrev&&g.homeTeam?.seed)seedLookup[g.homeTeam.abbrev]=g.homeTeam.seed;
+    if(g.awayTeam?.abbrev&&g.awayTeam?.seed)seedLookup[g.awayTeam.abbrev]=g.awayTeam.seed;
+  });
   games.forEach(g=>{
     const ha=g.homeTeam?.abbrev||'?',aa=g.awayTeam?.abbrev||'?',key=[ha,aa].sort().join('-');
-    if(!sm[key])sm[key]={teams:[ha,aa],hSeed:g.homeTeam?.seed,aSeed:g.awayTeam?.seed,wins:{[ha]:0,[aa]:0},games:[]};
+    if(!sm[key])sm[key]={teams:[ha,aa],wins:{[ha]:0,[aa]:0},games:[]};
     const s=sm[key];
     if(['OFF','FINAL'].includes(g.gameState)){const hs=g.homeTeam?.score||0,as=g.awayTeam?.score||0;if(hs>as)s.wins[ha]++;else s.wins[aa]++;}
     s.games.push(g);
@@ -537,11 +554,15 @@ function buildFromSchedules(allGames){
     const first=s.games.sort((a,b)=>new Date(a.startTimeUTC||a.gameDate)-new Date(b.startTimeUTC||b.gameDate))[0];
     const sd=first?new Date(first.startTimeUTC||first.gameDate):new Date();
     const round=sd>=new Date('2026-05-01')?2:1;
-    const[ha,aa]=s.teams,hS=s.hSeed||9,aS=s.aSeed||9;
+    const[ha,aa]=s.teams;
+    // Use seedLookup which aggregates seeds from all games
+    const hS=seedLookup[ha]||9,aS=seedLookup[aa]||9;
     const top=hS<=aS?ha:aa,bot=hS<=aS?aa:ha;
-    const topS=top===ha?hS:aS,botS=bot===ha?hS:aS;
+    const topS=seedLookup[top]||9,botS=seedLookup[bot]||9;
     const isEast=EAST_TEAMS.includes(top)||['OTT','BOS','MTL','TB','PIT','PHI','BUF'].includes(top);
-    return{conf:isEast?'east':'west',round,t1:top,t2:bot,s1:topS<9?topS:'',s2:botS<9?botS:'',w1:s.wins[top]||0,w2:s.wins[bot]||0};
+    return{conf:isEast?'east':'west',round,t1:top,t2:bot,
+      s1:topS<9?topS:'',s2:botS<9?botS:'',
+      w1:s.wins[top]||0,w2:s.wins[bot]||0};
   });
 }
 
@@ -690,9 +711,15 @@ async function loadSchedule(){
   return{past,upcoming};
 }
 
+// BACKLOG FIX 1: scoreboard tries direct first, bypassing proxy cache
 async function loadScoreboard(){
-  const data=await fj(API.scoreboard);
-  liveGames=data.games||[];
+  let data=null;
+  try{
+    const r=await fetch(API.scoreboard,{signal:mkSignal(5000),cache:'no-store'});
+    if(r.ok)data=await r.json();
+  }catch(e){}
+  if(!data)data=await fj(API.scoreboard);
+  liveGames=data?.games||[];
   if(cachedEast.length||cachedWest.length)renderBracket(cachedEast,cachedWest);
   return liveGames.find(g=>g.homeTeam?.abbrev===CAR||g.awayTeam?.abbrev===CAR)||null;
 }
@@ -749,6 +776,7 @@ function renderStats(car,ppW,ppL){
 }
 
 async function fetchAndRender(){
+  lastFetch=Date.now();
   try{
     await loadBracket().catch(()=>{$('bracket-body').innerHTML='<div class="card-body" style="padding:16px 18px"><p class="api-error">Bracket unavailable</p></div>';});
     const[scoreboard,sched,car]=await Promise.all([
@@ -782,7 +810,8 @@ async function manualRefresh(){
 }
 
 init();
-setInterval(()=>{fetchAndRender().catch(console.error);},60000);
+// BACKLOG FIX 1: 20s interval instead of 60s
+setInterval(()=>{fetchAndRender().catch(console.error);},20000);
 </script>
 </body>
 </html>
