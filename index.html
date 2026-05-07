@@ -207,6 +207,7 @@
   .at-rec{font-family:'Barlow Condensed',sans-serif;font-size:0.75rem;color:var(--silver);width:58px;}
   .at-pts{font-family:'Bebas Neue',sans-serif;font-size:0.95rem;letter-spacing:1px;color:var(--silver);width:36px;text-align:right;}
   .at-pct{font-family:'Barlow Condensed',sans-serif;font-size:0.72rem;color:var(--silver);width:38px;text-align:right;}
+  .at-icon{font-size:0.9rem;width:22px;text-align:center;flex-shrink:0;}
   .at-badge{font-family:'Barlow Condensed',sans-serif;font-size:0.54rem;letter-spacing:1px;text-transform:uppercase;padding:1px 4px;border-radius:2px;flex-shrink:0;}
   .at-badge.pp{background:rgba(204,0,0,0.2);color:var(--red);border:1px solid rgba(204,0,0,0.3);}
   .at-badge.el{background:rgba(100,100,100,0.15);color:var(--silver);border:1px solid var(--gray-border);}
@@ -380,6 +381,14 @@
 const CAR='CAR',SEASON='20252026',TZ='America/Chicago';
 const EAST_TEAMS=['CAR','BUF','TB','MTL','BOS','OTT','PHI','PIT'];
 const WEST_TEAMS=['COL','DAL','VGK','ANA','MIN','EDM','UTA','LAK'];
+
+// Hardcoded seed map from live SportRadar data — updated each round
+// Round 1 complete, Round 2 in progress as of May 7 2026
+const SEED_MAP={
+  CAR:1,PHI:8,BUF:2,MTL:4,OTT:6,BOS:5,PIT:7,TB:3,
+  COL:1,MIN:3,DAL:2,VGK:4,ANA:7,EDM:5,UTA:6,LAK:8
+};
+
 const API={
   standings:`https://api-web.nhle.com/v1/standings/now`,
   schedule:t=>`https://api-web.nhle.com/v1/club-schedule-season/${t}/${SEASON}`,
@@ -387,7 +396,6 @@ const API={
   boxscore:id=>`https://api-web.nhle.com/v1/gamecenter/${id}/boxscore`,
   espn:`https://site.api.espn.com/apis/v2/sports/hockey/nhl/playoffs`,
 };
-// BACKLOG FIX 1: cache-busting proxies so stale data is never served
 const PROXIES=[
   u=>`https://corsproxy.io/?url=${encodeURIComponent(u)}&_cb=${Date.now()}`,
   u=>`https://api.allorigins.win/raw?url=${encodeURIComponent(u)}`,
@@ -407,7 +415,6 @@ function mkSignal(ms){
   }
 }
 
-// BACKLOG FIX 1: cache:'no-store' on all fetches
 async function fj(url){
   for(const p of PROXIES){
     try{const r=await fetch(p(url),{signal:mkSignal(8000),cache:'no-store'});if(r.ok)return r.json();}
@@ -415,8 +422,6 @@ async function fj(url){
   }
   throw new Error('All proxies failed');
 }
-
-// BACKLOG FIX 1: try direct first (no proxy caching) then fall back
 async function fjD(url){
   try{const r=await fetch(url,{signal:mkSignal(5000),cache:'no-store'});if(r.ok)return r.json();}catch(e){}
   return fj(url);
@@ -441,7 +446,6 @@ $('surge-card').addEventListener('click',()=>{
 $('bracket-toggle').addEventListener('click',()=>{$('bracket-collapse').classList.toggle('open');$('bracket-chevron').classList.toggle('open');});
 $('allteams-toggle').addEventListener('click',()=>{$('allteams-collapse').classList.toggle('open');$('allteams-chevron').classList.toggle('open');});
 
-// BACKLOG FIX 3: refresh on foreground restore (mobile Safari)
 let lastFetch=0;
 document.addEventListener('visibilitychange',()=>{
   if(document.visibilityState==='visible'&&Date.now()-lastFetch>20000){
@@ -513,12 +517,15 @@ function renderBracket(east,west){
   const TBD=`<div class="b-series tbd"><div class="b-team"><div class="b-seed">—</div><div class="b-name">TBD</div><div class="b-wins">—</div></div><div class="b-team"><div class="b-seed">—</div><div class="b-name">TBD</div><div class="b-wins">—</div></div></div>`;
   function sH(s){
     const t1c=s.t1===CAR,t2c=s.t2===CAR,carIn=t1c||t2c,done=s.w1===4||s.w2===4,tbd=!s.t1||s.t1==='TBD';
+    // Use SEED_MAP as authoritative fallback for seeds
+    const seed1=s.s1||SEED_MAP[s.t1]||'';
+    const seed2=s.s2||SEED_MAP[s.t2]||'';
     const ls=(!tbd&&!done)?getLiveScore(s.t1,s.t2):null;
     let lH='';
     if(ls){const t1s=ls.ha===s.t1?ls.hs:ls.as,t2s=ls.ha===s.t1?ls.as:ls.hs;lH=`<div class="b-live"><div class="b-live-dot"></div>LIVE <span class="b-live-score">${s.t1} ${t1s}–${t2s} ${s.t2}</span> <span style="color:var(--silver);font-size:0.58rem;">${ls.perLbl} ${ls.clock}</span></div>`;}
     return `<div class="b-series ${tbd?'tbd':carIn&&!done?'active':''}">
-      <div class="b-team ${done&&s.w1>s.w2?'winner':''}"><div class="b-seed">${s.s1||''}</div><div class="b-name ${t1c?'car':''}">${s.t1||'TBD'}</div><div class="b-wins ${s.w1>=s.w2&&s.w1>0?'lead':''}">${tbd?'—':s.w1}</div></div>
-      <div class="b-team ${done&&s.w2>s.w1?'winner':''}"><div class="b-seed">${s.s2||''}</div><div class="b-name ${t2c?'car':''}">${s.t2||'TBD'}</div><div class="b-wins ${s.w2>s.w1&&s.w2>0?'lead':''}">${tbd?'—':s.w2}</div></div>
+      <div class="b-team ${done&&s.w1>s.w2?'winner':''}"><div class="b-seed">${seed1}</div><div class="b-name ${t1c?'car':''}">${s.t1||'TBD'}</div><div class="b-wins ${s.w1>=s.w2&&s.w1>0?'lead':''}">${tbd?'—':s.w1}</div></div>
+      <div class="b-team ${done&&s.w2>s.w1?'winner':''}"><div class="b-seed">${seed2}</div><div class="b-name ${t2c?'car':''}">${s.t2||'TBD'}</div><div class="b-wins ${s.w2>s.w1&&s.w2>0?'lead':''}">${tbd?'—':s.w2}</div></div>
       ${lH}
     </div>`;
   }
@@ -532,17 +539,15 @@ function renderBracket(east,west){
   $('bracket-body').innerHTML=html;
 }
 
-// BACKLOG FIX 2: improved seed extraction from schedule data
 function buildFromSchedules(allGames){
   const seen=new Set();
   const games=allGames.filter(g=>{if(seen.has(g.id))return false;seen.add(g.id);return true;}).filter(g=>g.gameType===3);
-  const sm={};
-  // Build a seed lookup from all games — later games may have seed data even if earlier ones don't
-  const seedLookup={};
+  const seedLookup={...SEED_MAP};
   games.forEach(g=>{
     if(g.homeTeam?.abbrev&&g.homeTeam?.seed)seedLookup[g.homeTeam.abbrev]=g.homeTeam.seed;
     if(g.awayTeam?.abbrev&&g.awayTeam?.seed)seedLookup[g.awayTeam.abbrev]=g.awayTeam.seed;
   });
+  const sm={};
   games.forEach(g=>{
     const ha=g.homeTeam?.abbrev||'?',aa=g.awayTeam?.abbrev||'?',key=[ha,aa].sort().join('-');
     if(!sm[key])sm[key]={teams:[ha,aa],wins:{[ha]:0,[aa]:0},games:[]};
@@ -555,13 +560,11 @@ function buildFromSchedules(allGames){
     const sd=first?new Date(first.startTimeUTC||first.gameDate):new Date();
     const round=sd>=new Date('2026-05-01')?2:1;
     const[ha,aa]=s.teams;
-    // Use seedLookup which aggregates seeds from all games
     const hS=seedLookup[ha]||9,aS=seedLookup[aa]||9;
     const top=hS<=aS?ha:aa,bot=hS<=aS?aa:ha;
-    const topS=seedLookup[top]||9,botS=seedLookup[bot]||9;
     const isEast=EAST_TEAMS.includes(top)||['OTT','BOS','MTL','TB','PIT','PHI','BUF'].includes(top);
     return{conf:isEast?'east':'west',round,t1:top,t2:bot,
-      s1:topS<9?topS:'',s2:botS<9?botS:'',
+      s1:seedLookup[top]||'',s2:seedLookup[bot]||'',
       w1:s.wins[top]||0,w2:s.wins[bot]||0};
   });
 }
@@ -575,7 +578,12 @@ async function loadBracket(){
       const conf=b.name?.toLowerCase().includes('west')?'west':'east';
       (b.rounds||[]).forEach((r,ri)=>(r.series||r.matchups||[]).forEach(s=>{
         const c=s.competitors||s.teams||[],t1=c[0]||{},t2=c[1]||{};
-        p.push({conf,round:ri+1,t1:t1.abbreviation||t1.abbrev||t1.team?.abbreviation||'TBD',t2:t2.abbreviation||t2.abbrev||t2.team?.abbreviation||'TBD',s1:t1.seed||t1.curatedRank?.current||'',s2:t2.seed||t2.curatedRank?.current||'',w1:t1.wins||0,w2:t2.wins||0});
+        const abbr1=t1.abbreviation||t1.abbrev||t1.team?.abbreviation||'TBD';
+        const abbr2=t2.abbreviation||t2.abbrev||t2.team?.abbreviation||'TBD';
+        p.push({conf,round:ri+1,t1:abbr1,t2:abbr2,
+          s1:t1.seed||t1.curatedRank?.current||SEED_MAP[abbr1]||'',
+          s2:t2.seed||t2.curatedRank?.current||SEED_MAP[abbr2]||'',
+          w1:t1.wins||0,w2:t2.wins||0});
       }));
     });
     if(p.length>=4)series=p;
@@ -589,7 +597,10 @@ async function loadBracket(){
           const p=[];
           rounds.forEach((r,ri)=>(r.series||r.matchups||[]).forEach(s=>{
             const t1=s.topSeedTeam||s.team1||{},t2=s.bottomSeedTeam||s.team2||{},cr=s.conference||r.conference||'';
-            p.push({conf:cr.toLowerCase().includes('west')?'west':'east',round:ri+1,t1:t1.abbrev||'TBD',t2:t2.abbrev||'TBD',s1:t1.seed||'',s2:t2.seed||'',w1:s.topSeedWins??s.team1Wins??0,w2:s.bottomSeedWins??s.team2Wins??0});
+            const a1=t1.abbrev||'TBD',a2=t2.abbrev||'TBD';
+            p.push({conf:cr.toLowerCase().includes('west')?'west':'east',round:ri+1,t1:a1,t2:a2,
+              s1:t1.seed||SEED_MAP[a1]||'',s2:t2.seed||SEED_MAP[a2]||'',
+              w1:s.topSeedWins??s.team1Wins??0,w2:s.bottomSeedWins??s.team2Wins??0});
           }));
           if(p.length>=4){series=p;break;}
         }
@@ -632,15 +643,22 @@ async function loadStandings(){
   const divisions={'Metropolitan':{conf:'EASTERN',teams:[]},'Atlantic':{conf:'EASTERN',teams:[]},'Central':{conf:'WESTERN',teams:[]},'Pacific':{conf:'WESTERN',teams:[]}};
   all.forEach(t=>{if(divisions[t.divisionName])divisions[t.divisionName].teams.push(t);});
   Object.values(divisions).forEach(d=>d.teams.sort((a,b)=>b.points-a.points));
-  const clinchLabel={conference:'CONF',presidents_trophy:'PRES',division:'DIV',playoff_spot:'PO',eliminated:'ELIM'};
   let atHtml='';
   for(const[divName,divData]of Object.entries(divisions)){
-    atHtml+=`<div class="div-section"><div class="div-header"><div class="div-conf">${divData.conf}</div><div class="div-name">${divName}</div></div><div class="at-col-header"><div style="width:18px"></div><div style="flex:1">Team</div><div style="width:58px">W-L-OT</div><div style="width:36px;text-align:right">PTS</div><div style="width:38px;text-align:right">PCT</div><div style="width:36px"></div></div>`;
+    atHtml+=`<div class="div-section"><div class="div-header"><div class="div-conf">${divData.conf}</div><div class="div-name">${divName}</div></div><div class="at-col-header"><div style="width:18px"></div><div style="flex:1">Team</div><div style="width:58px">W-L-OT</div><div style="width:36px;text-align:right">PTS</div><div style="width:38px;text-align:right">PCT</div><div style="width:22px"></div></div>`;
     divData.teams.forEach((t,i)=>{
       const abbr=t.teamAbbrev?.default||'',isCar=abbr===CAR;
-      const cl=t.clinchIndicator?clinchLabel[t.clinchIndicator]||'':'';
-      const isElim=t.clinchIndicator==='e'||t.eliminationNumber===0||playoffEliminatedTeams.has(abbr);
-      atHtml+=`<div class="at-row ${isCar?'car-row':''}"><div class="at-rank">${i+1}</div><div class="at-name ${isCar?'car-name':''}">${t.teamName?.default||abbr}</div><div class="at-rec">${t.wins}-${t.losses}${t.otLosses?'-'+t.otLosses:''}</div><div class="at-pts">${t.points}</div><div class="at-pct">${((t.pointPctg||0)*100).toFixed(1)}%</div>${cl?`<div class="at-badge ${isElim?'el':'pp'}">${cl}</div>`:'<div style="width:36px"></div>'}</div>`;
+      const regElim=t.clinchIndicator==='e'||t.eliminationNumber===0;
+      const ppElim=playoffEliminatedTeams.has(abbr);
+      const elim=regElim||ppElim;
+      // Playoff teams — in playoffs if they made it and not yet eliminated
+      const inPlayoffs=!regElim&&(t.clinchIndicator==='x'||t.clinchIndicator==='y'||t.clinchIndicator==='z'||t.clinchIndicator==='p'||t.clinchIndicator==='conference'||EAST_TEAMS.includes(abbr)||WEST_TEAMS.includes(abbr));
+      let icon='';
+      if(isCar) icon=`<div class="at-icon" style="color:var(--green);">🌀</div>`;
+      else if(elim) icon=`<div class="at-icon">🗑️</div>`;
+      else if(inPlayoffs&&!ppElim) icon=`<div class="at-icon">⚠️</div>`;
+      else icon=`<div class="at-icon"></div>`;
+      atHtml+=`<div class="at-row ${isCar?'car-row':''}"><div class="at-rank">${i+1}</div><div class="at-name ${isCar?'car-name':''}">${t.teamName?.default||abbr}</div><div class="at-rec">${t.wins}-${t.losses}${t.otLosses?'-'+t.otLosses:''}</div><div class="at-pts">${t.points}</div><div class="at-pct">${((t.pointPctg||0)*100).toFixed(1)}%</div>${icon}</div>`;
     });
     atHtml+=`</div>`;
   }
@@ -711,13 +729,9 @@ async function loadSchedule(){
   return{past,upcoming};
 }
 
-// BACKLOG FIX 1: scoreboard tries direct first, bypassing proxy cache
 async function loadScoreboard(){
   let data=null;
-  try{
-    const r=await fetch(API.scoreboard,{signal:mkSignal(5000),cache:'no-store'});
-    if(r.ok)data=await r.json();
-  }catch(e){}
+  try{const r=await fetch(API.scoreboard,{signal:mkSignal(5000),cache:'no-store'});if(r.ok)data=await r.json();}catch(e){}
   if(!data)data=await fj(API.scoreboard);
   liveGames=data?.games||[];
   if(cachedEast.length||cachedWest.length)renderBracket(cachedEast,cachedWest);
@@ -729,6 +743,7 @@ function renderGame(game,upcoming,past){
     const home=game.homeTeam?.abbrev===CAR,carT=home?game.homeTeam:game.awayTeam,oppT=home?game.awayTeam:game.homeTeam;
     const cS=carT?.score??0,oS=oppT?.score??0,state=game.gameState;
     const live=state==='LIVE'||state==='CRIT',final=state==='OFF'||state==='FINAL';
+    const pregame=!live&&!final;
     const per=game.periodDescriptor?.number||1,perLbl=PERIOD_LABEL[per]||(per+'P'),clock=game.clock?.timeRemaining||'';
     const pp=game.gameType===3,ss=game.seriesStatus;
     $('game-label').textContent=pp?`🏒 ${game.gameLabel||'Playoff'} · Eastern Conf`:live?'⚡ In Progress':final?'Final':'Today';
@@ -739,11 +754,23 @@ function renderGame(game,upcoming,past){
     const cG=(game.goals||[]).filter(g=>g.teamAbbrev===CAR).slice(0,4),oG=(game.goals||[]).filter(g=>g.teamAbbrev!==CAR).slice(0,4);
     let scorersHTML='';
     if(cG.length||oG.length){scorersHTML=`<div class="scorers-wrap"><div class="scorers-col"><div class="scorers-label" style="color:var(--red)">CAR Goals</div>${cG.map(g=>`<div class="scorer-row"><span class="scorer-name">${g.name?.default||'—'}</span><span class="scorer-detail">${g.periodDescriptor?.number||''}P ${g.timeInPeriod||''}</span></div>`).join('')}${!cG.length?'<div class="scorer-row" style="color:var(--silver)">—</div>':''}</div><div class="scorers-col"><div class="scorers-label">${oppT?.abbrev} Goals</div>${oG.map(g=>`<div class="scorer-row"><span class="scorer-name">${g.name?.default||'—'}</span><span class="scorer-detail">${g.periodDescriptor?.number||''}P ${g.timeInPeriod||''}</span></div>`).join('')}${!oG.length?'<div class="scorer-row" style="color:var(--silver)">—</div>':''}</div></div>`;}
+    // BACKLOG FIX 5: consistent full team names both sides
+    const carName='Carolina Hurricanes';
+    const oppName=oppT?.name?.default||oppT?.abbrev||'?';
+    const leftName=home?carName:oppName;
+    const rightName=home?oppName:carName;
+    const leftAbbr=home?CAR:oppT?.abbrev||'?';
+    const rightAbbr=home?oppT?.abbrev||'?':CAR;
+    const leftSeed=(home?carT:oppT)?.seed||SEED_MAP[leftAbbr]||null;
+    const rightSeed=(home?oppT:carT)?.seed||SEED_MAP[rightAbbr]||null;
+    // BACKLOG FIX 4: countdown on pregame
+    const countdownHTML=pregame?`<div class="countdown-wrap"><div class="countdown-label">Time until puck drop</div><div class="countdown-timer" id="game-countdown">—</div></div>`:'';
     $('game-body').innerHTML=`<div class="game-matchup">
-      <div class="g-team"><div class="g-abbr ${home?'car':''}">${home?CAR:oppT?.abbrev||'?'}</div><div class="g-name">${home?'Carolina Hurricanes':(oppT?.name?.default||oppT?.abbrev||'?')}</div>${(home?carT:oppT)?.seed?`<div class="g-seed">SEED #${(home?carT:oppT).seed}</div>`:''}</div>
+      <div class="g-team"><div class="g-abbr ${home?'car':''}">${leftAbbr}</div><div class="g-name">${leftName}</div>${leftSeed?`<div class="g-seed">SEED #${leftSeed}</div>`:''}</div>
       <div class="g-center"><div class="g-score">${home?cS:oS} — ${home?oS:cS}</div><div class="g-status">${live?perLbl+' · '+clock:final?'Final':fmtDate(game.startTimeUTC)+' · '+fmtTime(game.startTimeUTC)}</div></div>
-      <div class="g-team"><div class="g-abbr ${!home?'car':''}">${!home?CAR:oppT?.abbrev||'?'}</div><div class="g-name">${!home?'Carolina Hurricanes':(oppT?.name?.default||oppT?.abbrev||'?')}</div>${(!home?carT:oppT)?.seed?`<div class="g-seed">SEED #${(!home?carT:oppT).seed}</div>`:''}</div>
-    </div>${seriesHTML}${scorersHTML}`;
+      <div class="g-team"><div class="g-abbr ${!home?'car':''}">${rightAbbr}</div><div class="g-name">${rightName}</div>${rightSeed?`<div class="g-seed">SEED #${rightSeed}</div>`:''}</div>
+    </div>${seriesHTML}${scorersHTML}${countdownHTML}`;
+    if(pregame)startCountdown(game.startTimeUTC);
   }else if(upcoming?.length){
     const next=upcoming[0],home=next.homeTeam?.abbrev===CAR,opp=home?next.awayTeam:next.homeTeam,pp=next.gameType===3;
     $('game-label').textContent=pp?`🏒 ${next.gameLabel||'Playoff'} · Up Next`:'Next Game';
@@ -751,10 +778,12 @@ function renderGame(game,upcoming,past){
     $('game-badge').innerHTML='';
     let sH=`<div class="series-info">${fmtDate(next.startTimeUTC)} · ${fmtTime(next.startTimeUTC)}</div>`;
     if(pp){const{dots,cW,oW}=buildDots(past,opp?.abbrev,0,0,false);if(cW>0||oW>0)sH=`<div class="series-info">Series: <strong>CAR ${cW} – ${oW} ${opp?.abbrev}</strong> · Best of 7<div class="series-dots">${dots}</div></div>`;}
+    // BACKLOG FIX 5: full name for upcoming opponent too
+    const oppFullName=opp?.name?.default||opp?.abbrev||'?';
     $('game-body').innerHTML=`<div class="game-matchup">
       <div class="g-team"><div class="g-abbr car">${CAR}</div><div class="g-name">Carolina Hurricanes</div></div>
       <div class="g-center"><div class="g-score" style="font-size:2rem;color:var(--silver);">VS</div><div class="g-status">${fmtDate(next.startTimeUTC)} · ${fmtTime(next.startTimeUTC)}</div></div>
-      <div class="g-team"><div class="g-abbr">${opp?.abbrev||'?'}</div><div class="g-name">${opp?.name?.default||opp?.abbrev||'?'}</div></div>
+      <div class="g-team"><div class="g-abbr">${opp?.abbrev||'?'}</div><div class="g-name">${oppFullName}</div></div>
     </div>${sH}<div class="countdown-wrap"><div class="countdown-label">Time until puck drop</div><div class="countdown-timer" id="game-countdown">—</div></div>`;
     startCountdown(next.startTimeUTC);
   }else{
@@ -810,7 +839,6 @@ async function manualRefresh(){
 }
 
 init();
-// BACKLOG FIX 1: 20s interval instead of 60s
 setInterval(()=>{fetchAndRender().catch(console.error);},20000);
 </script>
 </body>
