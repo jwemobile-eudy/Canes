@@ -47,6 +47,13 @@
   .ccol{overflow:hidden;max-height:0;transition:max-height 0.45s cubic-bezier(0.4,0,0.2,1);}
   .ccol.open{max-height:3000px;}
 
+  /* Header right-side previews */
+  .hdr-preview{text-align:right;flex-shrink:0;}
+  .hdr-preview-label{font-family:'Barlow Condensed',sans-serif;font-size:0.6rem;letter-spacing:2px;text-transform:uppercase;color:var(--silver);}
+  .hdr-preview-val{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:2px;color:var(--white);}
+  .hdr-preview-sub{font-family:'Barlow Condensed',sans-serif;font-size:0.78rem;font-weight:600;color:var(--white);}
+  .hdr-preview-time{font-family:'Barlow Condensed',sans-serif;font-size:0.7rem;color:var(--silver);}
+
   .game-card{grid-column:1/4;background:linear-gradient(135deg,#160000,#1a0000 50%,#1c1c1c);border:1px solid var(--red);border-radius:4px;overflow:hidden;position:relative;animation:fadein 0.5s ease both;}
   .game-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--red),transparent);animation:scan 2.5s ease-in-out infinite;}
   @keyframes scan{0%,100%{opacity:0.3}50%{opacity:1}}
@@ -88,7 +95,9 @@
   .round-title{font-family:'Barlow Condensed',sans-serif;font-size:0.62rem;letter-spacing:3px;text-transform:uppercase;color:var(--silver);margin-bottom:12px;text-align:center;}
   .b-series{background:var(--gray-dark);border:1px solid var(--gray-border);border-radius:3px;overflow:hidden;margin-bottom:8px;}
   .b-series:last-child{margin-bottom:0;}
-  .b-series.active{border-color:var(--red);box-shadow:0 0 10px rgba(204,0,0,0.2);}
+  /* Backlog #3: today's games get ice border, CAR series gets red */
+  .b-series.car-active{border-color:var(--red);box-shadow:0 0 10px rgba(204,0,0,0.2);}
+  .b-series.today{border-color:var(--ice);box-shadow:0 0 8px rgba(208,232,245,0.15);}
   .b-series.tbd{opacity:0.35;}
   .b-team{display:flex;align-items:center;padding:6px 10px;border-bottom:1px solid rgba(255,255,255,0.05);gap:7px;}
   .b-team:last-child{border-bottom:none;}
@@ -111,10 +120,8 @@
   .ps-row{display:flex;align-items:center;padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.04);gap:6px;}
   .ps-row:last-child{border-bottom:none;}
   .ps-row.ps-car{background:rgba(204,0,0,0.08);margin:0 -18px;padding:6px 18px;border-left:3px solid var(--red);}
+  /* Backlog #2: all rank numbers same silver */
   .ps-rank{font-family:'Bebas Neue',sans-serif;font-size:0.95rem;color:var(--silver);width:18px;flex-shrink:0;}
-  .ps-rank.gold{color:#FFD700;}
-  .ps-rank.silverr{color:#C0C0C0;}
-  .ps-rank.bronze{color:#CD7F32;}
   .ps-name{flex:1;font-family:'Barlow Condensed',sans-serif;font-size:0.85rem;font-weight:600;}
   .ps-name.car-name{color:var(--red);}
   .ps-team{font-family:'Barlow Condensed',sans-serif;font-size:0.7rem;color:var(--silver);width:32px;text-align:right;}
@@ -192,6 +199,7 @@
   .r-player-stat{font-family:'Barlow Condensed',sans-serif;font-size:0.75rem;color:var(--ice-dim);}
   .r-player-loading{font-family:'Barlow Condensed',sans-serif;font-size:0.75rem;color:var(--silver);letter-spacing:2px;text-transform:uppercase;padding:6px 0;}
 
+  /* LEAGUE STANDINGS — backlog #4: W L OT PTS aligned, no PCT */
   .allteams-card{grid-column:1/4;background:var(--gray-mid);border:1px solid var(--gray-border);border-radius:4px;overflow:hidden;animation:fadein 0.5s ease both;}
   .allteams-inner{padding:0 18px 14px;}
   .div-section{margin-top:14px;}
@@ -205,9 +213,8 @@
   .at-rank{font-family:'Bebas Neue',sans-serif;font-size:0.9rem;color:var(--silver);width:16px;flex-shrink:0;}
   .at-name{flex:1;font-family:'Barlow Condensed',sans-serif;font-size:0.82rem;font-weight:600;}
   .at-name.car-name{color:var(--red);}
-  .at-w{font-family:'Barlow Condensed',sans-serif;font-size:0.78rem;color:var(--silver);width:20px;text-align:right;}
-  .at-pts{font-family:'Bebas Neue',sans-serif;font-size:0.95rem;letter-spacing:1px;color:var(--silver);width:26px;text-align:right;}
-  .at-pct{font-family:'Barlow Condensed',sans-serif;font-size:0.72rem;color:var(--silver);width:30px;text-align:right;}
+  .at-w{font-family:'Barlow Condensed',sans-serif;font-size:0.78rem;color:var(--silver);width:24px;text-align:right;}
+  .at-pts{font-family:'Bebas Neue',sans-serif;font-size:0.95rem;letter-spacing:1px;color:var(--silver);width:28px;text-align:right;}
   .at-icon{font-size:0.9rem;width:20px;text-align:center;flex-shrink:0;}
 
   footer{border-top:1px solid var(--gray-border);padding:14px 40px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-top:10px;}
@@ -245,7 +252,6 @@
     .stat-block{padding:9px 9px 6px;}
     .u-type{display:none;}
     .bracket-round{min-width:130px;padding:10px;}
-    .at-pct{display:none;}
     footer{flex-direction:column;align-items:center;text-align:center;padding:12px 16px;gap:6px;}
     .footer-left{font-size:0.65rem;}
   }
@@ -292,6 +298,7 @@
 
 <div class="main">
 
+  <!-- GAME CARD -->
   <div class="game-card" id="game-card">
     <div class="card-header">
       <div><div class="card-label" id="game-label">Loading…</div><div class="card-title" id="game-title">GAME CENTER</div></div>
@@ -300,18 +307,20 @@
     <div id="game-body"><div class="card-body"><p class="api-error">Fetching game data…</p></div></div>
   </div>
 
+  <!-- BRACKET — default closed -->
   <div class="bracket-card">
     <div class="card-header ctoggle" onclick="tog('bkt-col','bkt-chev')">
-      <div><div class="card-label">2026 Stanley Cup Playoffs</div><div class="card-title">Playoff Bracket <span class="cchev open" id="bkt-chev">▼</span></div></div>
+      <div><div class="card-label">2026 Stanley Cup Playoffs</div><div class="card-title">Playoff Bracket <span class="cchev" id="bkt-chev">▼</span></div></div>
       <div id="bracket-summary" style="font-family:'Barlow Condensed',sans-serif;font-size:0.78rem;letter-spacing:1px;color:var(--silver);text-align:right;"></div>
     </div>
-    <div class="ccol open" id="bkt-col">
+    <div class="ccol" id="bkt-col">
       <div class="bracket-rounds" id="bracket-body">
         <div class="card-body"><p class="api-error">Loading bracket…</p></div>
       </div>
     </div>
   </div>
 
+  <!-- PLAYOFF LEADERS — default closed -->
   <div class="leaders-card">
     <div class="card-header ctoggle" onclick="tog('ldr-col','ldr-chev');lazyLeaders()">
       <div><div class="card-label">2026 Playoffs</div><div class="card-title">Playoff Leaders <span class="cchev" id="ldr-chev">▼</span></div></div>
@@ -333,6 +342,7 @@
     </div>
   </div>
 
+  <!-- SURGE -->
   <div class="surge-card" id="surge-card">
     <div class="surge-inner">
       <div class="surge-top"><div class="surge-label">⚡ Storm Surge Rating</div><div class="surge-tap-hint">Tap to learn more</div></div>
@@ -349,37 +359,43 @@
     </div>
   </div>
 
+  <!-- TEAM STATS — default closed, record preview on right -->
   <div class="stats-card">
     <div class="card-header ctoggle" onclick="tog('stats-col','stats-chev')">
-      <div><div class="card-label">2025–26 Season</div><div class="card-title">Team Stats <span class="cchev open" id="stats-chev">▼</span></div></div>
+      <div><div class="card-label">2025–26 Season</div><div class="card-title">Team Stats <span class="cchev" id="stats-chev">▼</span></div></div>
+      <div class="hdr-preview" id="stats-preview"></div>
     </div>
-    <div class="ccol open" id="stats-col">
+    <div class="ccol" id="stats-col">
       <div class="card-body" id="stats-body"><p class="api-error">Loading…</p></div>
     </div>
   </div>
 
+  <!-- UPCOMING — default closed, next game preview on right -->
   <div class="upcoming-card">
     <div class="card-header ctoggle" onclick="tog('upc-col','upc-chev')">
-      <div><div class="card-label">Schedule</div><div class="card-title">Upcoming Games <span class="cchev open" id="upc-chev">▼</span></div></div>
+      <div><div class="card-label">Schedule</div><div class="card-title">Upcoming Games <span class="cchev" id="upc-chev">▼</span></div></div>
+      <div class="hdr-preview" id="upcoming-preview"></div>
     </div>
-    <div class="ccol open" id="upc-col">
+    <div class="ccol" id="upc-col">
       <div class="card-body" id="upcoming-body"><p class="api-error">Loading…</p></div>
     </div>
   </div>
 
+  <!-- RESULTS — default closed -->
   <div class="results-card">
     <div class="card-header ctoggle" onclick="tog('res-col','res-chev')">
-      <div><div class="card-label" id="results-label">Recent Games</div><div class="card-title">Results <span class="cchev open" id="res-chev">▼</span></div></div>
+      <div><div class="card-label" id="results-label">Recent Games</div><div class="card-title">Results <span class="cchev" id="res-chev">▼</span></div></div>
       <div style="display:flex;align-items:center;gap:8px;">
         <div id="streak-badge" style="font-family:'Barlow Condensed',sans-serif;font-size:0.72rem;letter-spacing:2px;text-transform:uppercase;padding:2px 8px;border-radius:2px;"></div>
         <div id="results-record" style="font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:2px;color:var(--green);"></div>
       </div>
     </div>
-    <div class="ccol open" id="res-col">
+    <div class="ccol" id="res-col">
       <div class="card-body" id="results-body"><p class="api-error">Loading…</p></div>
     </div>
   </div>
 
+  <!-- LEAGUE STANDINGS — default closed -->
   <div class="allteams-card">
     <div class="card-header ctoggle" onclick="tog('at-col','at-chev')">
       <div><div class="card-label">2025–26 NHL Season</div><div class="card-title">League Standings <span class="cchev" id="at-chev">▼</span></div></div>
@@ -409,7 +425,6 @@ const API={
   boxscore:id=>`https://api-web.nhle.com/v1/gamecenter/${id}/boxscore`,
   espn:`https://site.api.espn.com/apis/v2/sports/hockey/nhl/playoffs`,
   skatersLeaders:cat=>`https://api-web.nhle.com/v1/skater-stats-leaders/${SEASON}/3?categories=${cat}&limit=10`,
-  // Fetch top 50 for GP lookup so we can cross-reference all displayed players
   skatersGP:`https://api-web.nhle.com/v1/skater-stats-leaders/${SEASON}/3?categories=gamesPlayed&limit=50`,
   goalieLeaders:`https://api-web.nhle.com/v1/goalie-stats-leaders/${SEASON}/3?categories=savePctg&limit=10`,
   goalieGP:`https://api-web.nhle.com/v1/goalie-stats-leaders/${SEASON}/3?categories=gamesPlayed&limit=50`,
@@ -434,6 +449,14 @@ function fmtDate(iso){return new Date(iso).toLocaleDateString('en-US',{month:'sh
 function fmtMo(iso){return new Date(iso).toLocaleDateString('en-US',{month:'short',timeZone:TZ}).toUpperCase();}
 function fmtDay(iso){return new Date(iso).toLocaleDateString('en-US',{day:'numeric',timeZone:TZ});}
 function fmtTime(iso){return new Date(iso).toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit',timeZoneName:'short',timeZone:TZ});}
+
+// Check if an ISO datetime is today in TZ
+function isToday(iso){
+  const d=new Date(iso);
+  const now=new Date();
+  const tz=TZ;
+  return d.toLocaleDateString('en-US',{timeZone:tz})===now.toLocaleDateString('en-US',{timeZone:tz});
+}
 
 function tog(colId,chevId){const c=$(colId),h=$(chevId);c.classList.toggle('open');h.classList.toggle('open');}
 
@@ -488,15 +511,17 @@ function switchTab(tab){
   ['pts','gls','ast','gtg'].forEach(t=>{$('ps-'+t).style.display=t===tab?'block':'none';});
   document.querySelectorAll('.ps-tab').forEach((el,i)=>{el.classList.toggle('active',['pts','gls','ast','gtg'][i]===tab);});
 }
-function rankCls(i){return i===0?'gold':i===1?'silverr':i===2?'bronze':'';}
+// Backlog #2: all silver, no gold/bronze
+function rankCls(){return '';}
 function pName(p){return p.firstName?.default&&p.lastName?.default?`${p.firstName.default[0]}. ${p.lastName.default}`:p.name?.default||'—';}
 function pTeam(p){return p.teamAbbrev||p.teamAbbrevs||'—';}
 function pIsCar(p){const t=pTeam(p);return t===CAR||t.includes(CAR);}
 
-// Build a {playerId: gamesPlayed} map from a gamesPlayed leaders response
+// Backlog #1: try multiple key names for GP map
 function buildGPMap(data){
   const map={};
-  const list=data?.gamesPlayed||[];
+  // Try every possible array key the API might use
+  const list=data?.gamesPlayed||data?.points||data?.goals||data?.assists||data?.savePctg||[];
   list.forEach(p=>{if(p.id!=null)map[p.id]=p.value??0;});
   return map;
 }
@@ -505,10 +530,8 @@ function skaterRows(list,label,gpMap){
   if(!list?.length)return'<p class="ps-msg">No data available yet</p>';
   const hdr=`<div class="ps-col-hdr"><div style="width:18px"></div><div style="flex:1">Player</div><div style="width:32px;text-align:right">Team</div><div style="width:32px;text-align:right">${label}</div><div style="width:24px;text-align:right">GP</div></div>`;
   return hdr+list.slice(0,8).map((p,i)=>{
-    const car=pIsCar(p);
-    const val=p.value??'—';
-    const gp=gpMap&&p.id!=null&&gpMap[p.id]!=null?gpMap[p.id]:'—';
-    return `<div class="ps-row ${car?'ps-car':''}"><div class="ps-rank ${rankCls(i)}">${i+1}</div><div class="ps-name ${car?'car-name':''}">${pName(p)}</div><div class="ps-team ${car?'car-team':''}">${pTeam(p)}</div><div class="ps-val ${i===0?'lead':''}">${val}</div><div class="ps-gp">${gp}</div></div>`;
+    const car=pIsCar(p),val=p.value??'—',gp=gpMap&&p.id!=null&&gpMap[p.id]!=null?gpMap[p.id]:'—';
+    return `<div class="ps-row ${car?'ps-car':''}"><div class="ps-rank">${i+1}</div><div class="ps-name ${car?'car-name':''}">${pName(p)}</div><div class="ps-team ${car?'car-team':''}">${pTeam(p)}</div><div class="ps-val ${i===0?'lead':''}">${val}</div><div class="ps-gp">${gp}</div></div>`;
   }).join('');
 }
 
@@ -516,10 +539,8 @@ function goalieRows(list,gpMap){
   if(!list?.length)return'<p class="ps-msg">No data available yet</p>';
   const hdr=`<div class="ps-col-hdr"><div style="width:18px"></div><div style="flex:1">Goalie</div><div style="width:32px;text-align:right">Team</div><div style="width:36px;text-align:right">SV%</div><div style="width:24px;text-align:right">GP</div></div>`;
   return hdr+list.slice(0,8).map((g,i)=>{
-    const car=pIsCar(g);
-    const sv=g.value!=null?parseFloat(g.value).toFixed(3):'—';
-    const gp=gpMap&&g.id!=null&&gpMap[g.id]!=null?gpMap[g.id]:'—';
-    return `<div class="ps-row ${car?'ps-car':''}"><div class="ps-rank ${rankCls(i)}">${i+1}</div><div class="ps-name ${car?'car-name':''}">${pName(g)}</div><div class="ps-team ${car?'car-team':''}">${pTeam(g)}</div><div class="ps-val ${i===0?'lead':''}" style="width:36px;font-size:0.88rem;">${sv}</div><div class="ps-gp">${gp}</div></div>`;
+    const car=pIsCar(g),sv=g.value!=null?parseFloat(g.value).toFixed(3):'—',gp=gpMap&&g.id!=null&&gpMap[g.id]!=null?gpMap[g.id]:'—';
+    return `<div class="ps-row ${car?'ps-car':''}"><div class="ps-rank">${i+1}</div><div class="ps-name ${car?'car-name':''}">${pName(g)}</div><div class="ps-team ${car?'car-team':''}">${pTeam(g)}</div><div class="ps-val ${i===0?'lead':''}" style="width:36px;font-size:0.88rem;">${sv}</div><div class="ps-gp">${gp}</div></div>`;
   }).join('');
 }
 
@@ -532,7 +553,6 @@ async function loadLeaders(){
   if(leadersLoaded)return;
   leadersLoaded=true;
   try{
-    // Fetch stat leaders + separate GP lookups in parallel
     const[pts,gls,ast,gtg,skaterGP,goalieGP]=await Promise.all([
       fjD(API.skatersLeaders('points')).catch(()=>fj(API.skatersLeaders('points')).catch(()=>null)),
       fjD(API.skatersLeaders('goals')).catch(()=>fj(API.skatersLeaders('goals')).catch(()=>null)),
@@ -555,12 +575,24 @@ async function loadLeaders(){
 
 // ── BRACKET ───────────────────────────────────────────────────────────────────
 function extractElim(series){const e=new Set();series.forEach(s=>{if(s.w1===4&&s.t2&&s.t2!=='TBD')e.add(s.t2);if(s.w2===4&&s.t1&&s.t1!=='TBD')e.add(s.t1);});return e;}
+
 function getLiveScore(t1,t2){
   const g=liveGames.find(g=>{const ha=g.homeTeam?.abbrev,aa=g.awayTeam?.abbrev;return(ha===t1&&aa===t2)||(ha===t2&&aa===t1);});
   if(!g||g.gameState!=='LIVE'&&g.gameState!=='CRIT')return null;
   const per=g.periodDescriptor?.number||1;
   return{hs:g.homeTeam?.score||0,as:g.awayTeam?.score||0,ha:g.homeTeam?.abbrev,aa:g.awayTeam?.abbrev,perLbl:PERIOD_LABEL[per]||(per+'P'),clock:g.clock?.timeRemaining||''};
 }
+
+// Backlog #3: check if a series has a game today
+function seriesHasGameToday(t1,t2){
+  return liveGames.some(g=>{
+    const ha=g.homeTeam?.abbrev,aa=g.awayTeam?.abbrev;
+    const match=(ha===t1&&aa===t2)||(ha===t2&&aa===t1);
+    if(!match)return false;
+    return isToday(g.startTimeUTC||g.gameDate||'');
+  });
+}
+
 function renderBracket(east,west){
   cachedEast=east;cachedWest=west;
   const all=[...east,...west];
@@ -569,12 +601,15 @@ function renderBracket(east,west){
   if(carS){const cW=carS.t1===CAR?carS.w1:carS.w2,oW=carS.t1===CAR?carS.w2:carS.w1,opp=carS.t1===CAR?carS.t2:carS.t1;$('bracket-summary').textContent=`CAR ${cW}–${oW} ${opp}`;}
   const TBD=`<div class="b-series tbd"><div class="b-team"><div class="b-seed">—</div><div class="b-name">TBD</div><div class="b-wins">—</div></div><div class="b-team"><div class="b-seed">—</div><div class="b-name">TBD</div><div class="b-wins">—</div></div></div>`;
   function sH(s){
-    const t1c=s.t1===CAR,t2c=s.t2===CAR,carIn=t1c||t2c,done=s.w1===4||s.w2===4,tbd=!s.t1||s.t1==='TBD';
+    const t1c=s.t1===CAR,t2c=s.t2===CAR,done=s.w1===4||s.w2===4,tbd=!s.t1||s.t1==='TBD';
     const seed1=s.s1||SEED_MAP[s.t1]||'',seed2=s.s2||SEED_MAP[s.t2]||'';
     const ls=(!tbd&&!done)?getLiveScore(s.t1,s.t2):null;
+    // Backlog #3: today highlight takes priority, then CAR red
+    const hasToday=!tbd&&!done&&seriesHasGameToday(s.t1,s.t2);
+    const seriesCls=tbd?'tbd':hasToday?'today':(t1c||t2c)&&!done?'car-active':'';
     let lH='';
     if(ls){const t1s=ls.ha===s.t1?ls.hs:ls.as,t2s=ls.ha===s.t1?ls.as:ls.hs;lH=`<div class="b-live"><div class="b-live-dot"></div>LIVE <span class="b-live-score">${s.t1} ${t1s}–${t2s} ${s.t2}</span> <span style="color:var(--silver);font-size:0.58rem;">${ls.perLbl} ${ls.clock}</span></div>`;}
-    return `<div class="b-series ${tbd?'tbd':carIn&&!done?'active':''}"><div class="b-team ${done&&s.w1>s.w2?'winner':''}"><div class="b-seed">${seed1}</div><div class="b-name ${t1c?'car':''}">${s.t1||'TBD'}</div><div class="b-wins ${s.w1>=s.w2&&s.w1>0?'lead':''}">${tbd?'—':s.w1}</div></div><div class="b-team ${done&&s.w2>s.w1?'winner':''}"><div class="b-seed">${seed2}</div><div class="b-name ${t2c?'car':''}">${s.t2||'TBD'}</div><div class="b-wins ${s.w2>s.w1&&s.w2>0?'lead':''}">${tbd?'—':s.w2}</div></div>${lH}</div>`;
+    return `<div class="b-series ${seriesCls}"><div class="b-team ${done&&s.w1>s.w2?'winner':''}"><div class="b-seed">${seed1}</div><div class="b-name ${t1c?'car':''}">${s.t1||'TBD'}</div><div class="b-wins ${s.w1>=s.w2&&s.w1>0?'lead':''}">${tbd?'—':s.w1}</div></div><div class="b-team ${done&&s.w2>s.w1?'winner':''}"><div class="b-seed">${seed2}</div><div class="b-name ${t2c?'car':''}">${s.t2||'TBD'}</div><div class="b-wins ${s.w2>s.w1&&s.w2>0?'lead':''}">${tbd?'—':s.w2}</div></div>${lH}</div>`;
   }
   const eN=['Eastern First Round','Eastern Semifinals','Eastern Finals'];
   const wN=['Western Finals','Western Semifinals','Western First Round'];
@@ -585,6 +620,7 @@ function renderBracket(east,west){
   for(let r=3;r>=1;r--){const rd=west.filter(s=>s.round===r);html+=`<div class="bracket-round"><div class="round-title">${wN[3-r]}</div>${rd.length?rd.map(sH).join(''):TBD}</div>`;}
   $('bracket-body').innerHTML=html;
 }
+
 function buildFromSchedules(allGames){
   const seen=new Set();
   const games=allGames.filter(g=>{if(seen.has(g.id))return false;seen.add(g.id);return true;}).filter(g=>g.gameType===3);
@@ -607,6 +643,7 @@ function buildFromSchedules(allGames){
     return{conf:isEast?'east':'west',round,t1:top,t2:bot,s1:sl[top]||'',s2:sl[bot]||'',w1:s.wins[top]||0,w2:s.wins[bot]||0};
   });
 }
+
 async function loadBracket(){
   let series=null;
   try{
@@ -660,7 +697,17 @@ async function loadStandings(){
   Object.values(divisions).forEach(d=>d.teams.sort((a,b)=>b.points-a.points));
   let carData=null,atHtml='';
   for(const[divName,divData]of Object.entries(divisions)){
-    atHtml+=`<div class="div-section"><div class="div-header"><div class="div-conf">${divData.conf}</div><div class="div-name">${divName}</div></div><div class="at-col-hdr"><div style="width:16px"></div><div style="flex:1">Team</div><div style="width:20px;text-align:right">W</div><div style="width:20px;text-align:right">L</div><div style="width:20px;text-align:right">OT</div><div style="width:26px;text-align:right">PTS</div><div style="width:30px;text-align:right">PCT</div><div style="width:20px"></div></div>`;
+    // Backlog #4: W L OT PTS aligned above columns, no PCT, no header above icon
+    atHtml+=`<div class="div-section"><div class="div-header"><div class="div-conf">${divData.conf}</div><div class="div-name">${divName}</div></div>
+    <div class="at-col-hdr">
+      <div style="width:16px"></div>
+      <div style="flex:1"></div>
+      <div style="width:24px;text-align:right">W</div>
+      <div style="width:24px;text-align:right">L</div>
+      <div style="width:24px;text-align:right">OT</div>
+      <div style="width:28px;text-align:right">PTS</div>
+      <div style="width:20px"></div>
+    </div>`;
     divData.teams.forEach((t,i)=>{
       const abbr=t.teamAbbrev?.default||'',isCar=abbr===CAR;
       if(isCar)carData=t;
@@ -673,7 +720,15 @@ async function loadStandings(){
       else if(elim)icon=`<div class="at-icon">🗑️</div>`;
       else if(inPO&&!ppElim)icon=`<div class="at-icon">⚠️</div>`;
       else icon=`<div class="at-icon"></div>`;
-      atHtml+=`<div class="at-row ${isCar?'car-row':''}"><div class="at-rank">${i+1}</div><div class="at-name ${isCar?'car-name':''}">${t.teamName?.default||abbr}</div><div class="at-w">${t.wins||0}</div><div class="at-w">${t.losses||0}</div><div class="at-w">${t.otLosses||0}</div><div class="at-pts">${t.points||0}</div><div class="at-pct">${((t.pointPctg||0)*100).toFixed(1)}%</div>${icon}</div>`;
+      atHtml+=`<div class="at-row ${isCar?'car-row':''}">
+        <div class="at-rank">${i+1}</div>
+        <div class="at-name ${isCar?'car-name':''}">${t.teamName?.default||abbr}</div>
+        <div class="at-w">${t.wins||0}</div>
+        <div class="at-w">${t.losses||0}</div>
+        <div class="at-w">${t.otLosses||0}</div>
+        <div class="at-pts">${t.points||0}</div>
+        ${icon}
+      </div>`;
     });
     atHtml+=`</div>`;
   }
@@ -733,6 +788,14 @@ async function loadSchedule(){
     const home=g.homeTeam?.abbrev===CAR,opp=home?g.awayTeam:g.homeTeam,pp=g.gameType===3;
     return `<div class="u-row"><div class="u-date"><span class="u-mo">${fmtMo(g.startTimeUTC)}</span><span class="u-day">${fmtDay(g.startTimeUTC)}</span></div><div class="u-vs">${home?'vs':'@'} ${opp?.name?.default||opp?.abbrev||'?'} ${g.gameLabel?'· '+g.gameLabel:''}<span class="u-time">${fmtTime(g.startTimeUTC)}</span></div><div class="u-type ${pp?'playoff':'regular'}">${pp?'🏒 Playoff':'Regular'}</div></div>`;
   }).join('')||'<p class="api-error">No upcoming games found</p>';
+
+  // Backlog #7: upcoming header preview — next game
+  if(upcoming.length){
+    const next=upcoming[0],home=next.homeTeam?.abbrev===CAR,opp=home?next.awayTeam:next.homeTeam;
+    const oppAbbr=opp?.abbrev||'?',loc=home?'vs':'@';
+    $('upcoming-preview').innerHTML=`<div class="hdr-preview-label">Next · ${fmtDate(next.startTimeUTC)}</div><div class="hdr-preview-sub">${loc} ${oppAbbr} · <span style="color:var(--silver);font-weight:400">${fmtTime(next.startTimeUTC)}</span></div>`;
+  }
+
   return{past,upcoming};
 }
 
@@ -787,6 +850,8 @@ function renderGame(game,upcoming,past){
 function renderStats(car,ppW,ppL){
   if(!car){$('stats-body').innerHTML='<p class="api-error">No stats</p>';return;}
   const pct=car.pointPctg?car.pointPctg.toFixed(3):'—';
+  // Backlog #6: record preview in header
+  $('stats-preview').innerHTML=`<div class="hdr-preview-label">Record</div><div class="hdr-preview-val">${car.wins||0}–${car.losses||0}–${car.otLosses||0}</div>`;
   $('stats-body').innerHTML=`<div class="stat-grid"><div class="stat-block"><div class="stat-num">${car.wins||0}</div><div class="stat-lbl">Wins</div><div class="stat-sub">Regular season</div></div><div class="stat-block"><div class="stat-num">${car.points||0}</div><div class="stat-lbl">Points</div><div class="stat-sub">${pct} pt%</div></div><div class="stat-block"><div class="stat-num">#${car.divisionSequence||'?'}</div><div class="stat-lbl">Div Rank</div><div class="stat-sub">Metropolitan</div></div><div class="stat-block"><div class="stat-num">${car.wins||0}-${car.losses||0}${car.otLosses?'-'+car.otLosses:''}</div><div class="stat-lbl">Record</div><div class="stat-sub">W-L${car.otLosses?'-OTL':''}</div></div><div class="stat-block"><div class="stat-num">${ppW}-${ppL}</div><div class="stat-lbl">Playoffs</div><div class="stat-sub">W-L this year</div></div><div class="stat-block"><div class="stat-num">#${car.conferenceSequence||'?'}</div><div class="stat-lbl">Conf Seed</div><div class="stat-sub">Eastern Conf</div></div></div>`;
 }
 
