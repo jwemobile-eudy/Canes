@@ -123,7 +123,6 @@
   .ps-val.lead{color:var(--green);}
   .ps-gp{font-family:'Barlow Condensed',sans-serif;font-size:0.7rem;color:var(--silver);width:24px;text-align:right;}
   .ps-msg{font-family:'Barlow Condensed',sans-serif;font-size:0.78rem;color:var(--silver);letter-spacing:2px;text-transform:uppercase;padding:14px 0;text-align:center;}
-  .ps-debug{font-family:monospace;font-size:0.65rem;color:#666;padding:8px;background:#111;border-radius:3px;margin-top:8px;word-break:break-all;white-space:pre-wrap;max-height:120px;overflow-y:auto;}
 
   .surge-card{grid-column:1/4;background:linear-gradient(135deg,#100000,var(--gray-dark));border:1px solid var(--gray-border);border-radius:4px;overflow:hidden;cursor:pointer;user-select:none;animation:fadein 0.5s ease both;}
   .surge-inner{padding:16px 18px 14px;}
@@ -330,7 +329,6 @@
         <div id="ps-gls" style="display:none"><p class="ps-msg">Loading…</p></div>
         <div id="ps-ast" style="display:none"><p class="ps-msg">Loading…</p></div>
         <div id="ps-gtg" style="display:none"><p class="ps-msg">Loading…</p></div>
-        <div id="ps-debug" class="ps-debug" style="display:none"></div>
       </div>
     </div>
   </div>
@@ -411,7 +409,10 @@ const API={
   boxscore:id=>`https://api-web.nhle.com/v1/gamecenter/${id}/boxscore`,
   espn:`https://site.api.espn.com/apis/v2/sports/hockey/nhl/playoffs`,
   skatersLeaders:cat=>`https://api-web.nhle.com/v1/skater-stats-leaders/${SEASON}/3?categories=${cat}&limit=10`,
+  // Fetch top 50 for GP lookup so we can cross-reference all displayed players
+  skatersGP:`https://api-web.nhle.com/v1/skater-stats-leaders/${SEASON}/3?categories=gamesPlayed&limit=50`,
   goalieLeaders:`https://api-web.nhle.com/v1/goalie-stats-leaders/${SEASON}/3?categories=savePctg&limit=10`,
+  goalieGP:`https://api-web.nhle.com/v1/goalie-stats-leaders/${SEASON}/3?categories=gamesPlayed&limit=50`,
 };
 const PROXIES=[
   u=>`https://corsproxy.io/?url=${encodeURIComponent(u)}&_cb=${Date.now()}`,
@@ -489,70 +490,37 @@ function switchTab(tab){
 }
 function rankCls(i){return i===0?'gold':i===1?'silverr':i===2?'bronze':'';}
 function pName(p){return p.firstName?.default&&p.lastName?.default?`${p.firstName.default[0]}. ${p.lastName.default}`:p.name?.default||'—';}
-function pTeam(p){return p.teamAbbrevs||p.teamAbbrev||'—';}
+function pTeam(p){return p.teamAbbrev||p.teamAbbrevs||'—';}
 function pIsCar(p){const t=pTeam(p);return t===CAR||t.includes(CAR);}
 
-// Exhaustive field search — tries every known NHL API field name
-function getStatVal(p,key){
-  // Direct key match
-  if(p[key]!=null)return p[key];
-  // Common NHL API alternates
-  const alts={
-    points:['points','pts','point','totalPoints'],
-    goals:['goals','goal','g'],
-    assists:['assists','assist','a'],
-    savePctg:['savePctg','savePercentage','svPct','savePct','savePercent','svp'],
-    gamesPlayed:['gamesPlayed','gp','games','gamesplayedregularseason'],
-  };
-  for(const alt of(alts[key]||[])){if(p[alt]!=null)return p[alt];}
-  // Last resort — value field
-  if(p.value!=null)return p.value;
-  return null;
+// Build a {playerId: gamesPlayed} map from a gamesPlayed leaders response
+function buildGPMap(data){
+  const map={};
+  const list=data?.gamesPlayed||[];
+  list.forEach(p=>{if(p.id!=null)map[p.id]=p.value??0;});
+  return map;
 }
 
-function skaterRows(data,key,label){
-  // The API wraps results under the category key e.g. data.points = [...]
-  const list=data?.[key]||[];
-  if(!list.length)return'<p class="ps-msg">No data available yet</p>';
+function skaterRows(list,label,gpMap){
+  if(!list?.length)return'<p class="ps-msg">No data available yet</p>';
   const hdr=`<div class="ps-col-hdr"><div style="width:18px"></div><div style="flex:1">Player</div><div style="width:32px;text-align:right">Team</div><div style="width:32px;text-align:right">${label}</div><div style="width:24px;text-align:right">GP</div></div>`;
   return hdr+list.slice(0,8).map((p,i)=>{
     const car=pIsCar(p);
-    const rawVal=getStatVal(p,key);
-    const val=rawVal!=null?rawVal:'—';
-    const rawGp=getStatVal(p,'gamesPlayed');
-    const gp=rawGp!=null?rawGp:'—';
+    const val=p.value??'—';
+    const gp=gpMap&&p.id!=null&&gpMap[p.id]!=null?gpMap[p.id]:'—';
     return `<div class="ps-row ${car?'ps-car':''}"><div class="ps-rank ${rankCls(i)}">${i+1}</div><div class="ps-name ${car?'car-name':''}">${pName(p)}</div><div class="ps-team ${car?'car-team':''}">${pTeam(p)}</div><div class="ps-val ${i===0?'lead':''}">${val}</div><div class="ps-gp">${gp}</div></div>`;
   }).join('');
 }
 
-function goalieRows(data){
-  const list=data?.savePctg||[];
-  if(!list.length)return'<p class="ps-msg">No data available yet</p>';
+function goalieRows(list,gpMap){
+  if(!list?.length)return'<p class="ps-msg">No data available yet</p>';
   const hdr=`<div class="ps-col-hdr"><div style="width:18px"></div><div style="flex:1">Goalie</div><div style="width:32px;text-align:right">Team</div><div style="width:36px;text-align:right">SV%</div><div style="width:24px;text-align:right">GP</div></div>`;
   return hdr+list.slice(0,8).map((g,i)=>{
     const car=pIsCar(g);
-    const rawSv=getStatVal(g,'savePctg');
-    const sv=rawSv!=null?parseFloat(rawSv).toFixed(3):'—';
-    const rawGp=getStatVal(g,'gamesPlayed');
-    const gp=rawGp!=null?rawGp:'—';
+    const sv=g.value!=null?parseFloat(g.value).toFixed(3):'—';
+    const gp=gpMap&&g.id!=null&&gpMap[g.id]!=null?gpMap[g.id]:'—';
     return `<div class="ps-row ${car?'ps-car':''}"><div class="ps-rank ${rankCls(i)}">${i+1}</div><div class="ps-name ${car?'car-name':''}">${pName(g)}</div><div class="ps-team ${car?'car-team':''}">${pTeam(g)}</div><div class="ps-val ${i===0?'lead':''}" style="width:36px;font-size:0.88rem;">${sv}</div><div class="ps-gp">${gp}</div></div>`;
   }).join('');
-}
-
-function showDebug(pts,gtg){
-  const dbg=$('ps-debug');
-  if(!dbg)return;
-  const skaterSample=pts?.points?.[0]||pts?.data?.[0]||null;
-  const goalieSample=gtg?.savePctg?.[0]||gtg?.data?.[0]||null;
-  const info={
-    ptsTopLevelKeys:pts?Object.keys(pts):[],
-    skaterSample,
-    gtgTopLevelKeys:gtg?Object.keys(gtg):[],
-    goalieSample,
-  };
-  dbg.style.display='block';
-  dbg.textContent='DEBUG:\n'+JSON.stringify(info,null,2);
-  console.log('LEADERS DEBUG',info);
 }
 
 function lazyLeaders(){
@@ -564,18 +532,21 @@ async function loadLeaders(){
   if(leadersLoaded)return;
   leadersLoaded=true;
   try{
-    const[pts,gls,ast,gtg]=await Promise.all([
+    // Fetch stat leaders + separate GP lookups in parallel
+    const[pts,gls,ast,gtg,skaterGP,goalieGP]=await Promise.all([
       fjD(API.skatersLeaders('points')).catch(()=>fj(API.skatersLeaders('points')).catch(()=>null)),
       fjD(API.skatersLeaders('goals')).catch(()=>fj(API.skatersLeaders('goals')).catch(()=>null)),
       fjD(API.skatersLeaders('assists')).catch(()=>fj(API.skatersLeaders('assists')).catch(()=>null)),
       fjD(API.goalieLeaders).catch(()=>fj(API.goalieLeaders).catch(()=>null)),
+      fjD(API.skatersGP).catch(()=>fj(API.skatersGP).catch(()=>null)),
+      fjD(API.goalieGP).catch(()=>fj(API.goalieGP).catch(()=>null)),
     ]);
-    // Show debug panel so we can see the raw structure
-    showDebug(pts,gtg);
-    $('ps-pts').innerHTML=pts?skaterRows(pts,'points','PTS'):'<p class="ps-msg">Unavailable</p>';
-    $('ps-gls').innerHTML=gls?skaterRows(gls,'goals','G'):'<p class="ps-msg">Unavailable</p>';
-    $('ps-ast').innerHTML=ast?skaterRows(ast,'assists','A'):'<p class="ps-msg">Unavailable</p>';
-    $('ps-gtg').innerHTML=gtg?goalieRows(gtg):'<p class="ps-msg">Unavailable</p>';
+    const sGPMap=buildGPMap(skaterGP);
+    const gGPMap=buildGPMap(goalieGP);
+    $('ps-pts').innerHTML=pts?skaterRows(pts.points,'PTS',sGPMap):'<p class="ps-msg">Unavailable</p>';
+    $('ps-gls').innerHTML=gls?skaterRows(gls.goals,'G',sGPMap):'<p class="ps-msg">Unavailable</p>';
+    $('ps-ast').innerHTML=ast?skaterRows(ast.assists,'A',sGPMap):'<p class="ps-msg">Unavailable</p>';
+    $('ps-gtg').innerHTML=gtg?goalieRows(gtg.savePctg,gGPMap):'<p class="ps-msg">Unavailable</p>';
   }catch(e){
     console.error('Leaders error',e);
     ['pts','gls','ast','gtg'].forEach(t=>{$('ps-'+t).innerHTML='<p class="ps-msg">Stats unavailable</p>';});
