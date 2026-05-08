@@ -47,7 +47,6 @@
   .ccol{overflow:hidden;max-height:0;transition:max-height 0.45s cubic-bezier(0.4,0,0.2,1);}
   .ccol.open{max-height:3000px;}
 
-  /* GAME CARD */
   .game-card{grid-column:1/4;background:linear-gradient(135deg,#160000,#1a0000 50%,#1c1c1c);border:1px solid var(--red);border-radius:4px;overflow:hidden;position:relative;animation:fadein 0.5s ease both;}
   .game-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--red),transparent);animation:scan 2.5s ease-in-out infinite;}
   @keyframes scan{0%,100%{opacity:0.3}50%{opacity:1}}
@@ -82,7 +81,6 @@
   .live-dot{width:7px;height:7px;background:white;border-radius:50%;animation:blink 1.2s ease-in-out infinite;}
   @keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
 
-  /* BRACKET */
   .bracket-card{grid-column:1/4;background:var(--gray-mid);border:1px solid var(--gray-border);border-radius:4px;overflow:hidden;animation:fadein 0.5s ease both;}
   .bracket-rounds{display:flex;overflow-x:auto;border-top:1px solid var(--gray-border);}
   .bracket-round{flex:1;min-width:160px;border-right:1px solid var(--gray-border);padding:14px 16px;}
@@ -104,7 +102,6 @@
   .b-live-score{font-family:'Bebas Neue',sans-serif;font-size:0.9rem;letter-spacing:1px;color:var(--white);}
   .b-live-dot{width:6px;height:6px;background:var(--red);border-radius:50%;animation:blink 1.2s ease-in-out infinite;flex-shrink:0;}
 
-  /* PLAYOFF LEADERS */
   .leaders-card{grid-column:1/4;background:var(--gray-mid);border:1px solid var(--gray-border);border-radius:4px;overflow:hidden;animation:fadein 0.5s ease both;}
   .ps-inner{padding:14px 18px;}
   .ps-tabs{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap;}
@@ -126,8 +123,8 @@
   .ps-val.lead{color:var(--green);}
   .ps-gp{font-family:'Barlow Condensed',sans-serif;font-size:0.7rem;color:var(--silver);width:24px;text-align:right;}
   .ps-msg{font-family:'Barlow Condensed',sans-serif;font-size:0.78rem;color:var(--silver);letter-spacing:2px;text-transform:uppercase;padding:14px 0;text-align:center;}
+  .ps-debug{font-family:monospace;font-size:0.65rem;color:#666;padding:8px;background:#111;border-radius:3px;margin-top:8px;word-break:break-all;white-space:pre-wrap;max-height:120px;overflow-y:auto;}
 
-  /* SURGE */
   .surge-card{grid-column:1/4;background:linear-gradient(135deg,#100000,var(--gray-dark));border:1px solid var(--gray-border);border-radius:4px;overflow:hidden;cursor:pointer;user-select:none;animation:fadein 0.5s ease both;}
   .surge-inner{padding:16px 18px 14px;}
   .surge-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:5px;}
@@ -151,7 +148,6 @@
   .surge-bullet-text{font-family:'Barlow Condensed',sans-serif;font-size:0.8rem;color:var(--silver);letter-spacing:0.5px;line-height:1.4;}
   .surge-bullet-text strong{color:var(--white);}
 
-  /* STATS */
   .stats-card{grid-column:1/4;background:var(--gray-mid);border:1px solid var(--gray-border);border-radius:4px;overflow:hidden;animation:fadein 0.5s ease both;}
   .stat-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:9px;}
   .stat-block{background:var(--gray-dark);border:1px solid var(--gray-border);border-radius:3px;padding:11px 11px 7px;position:relative;overflow:hidden;}
@@ -160,7 +156,6 @@
   .stat-lbl{font-family:'Barlow Condensed',sans-serif;font-size:0.66rem;letter-spacing:2px;text-transform:uppercase;color:var(--silver);margin-top:1px;}
   .stat-sub{font-family:'Barlow Condensed',sans-serif;font-size:0.68rem;color:var(--ice-dim);margin-top:2px;}
 
-  /* UPCOMING */
   .upcoming-card{grid-column:1/4;background:var(--gray-mid);border:1px solid var(--gray-border);border-radius:4px;overflow:hidden;animation:fadein 0.5s ease both;}
   .u-row{display:flex;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.05);gap:11px;}
   .u-row:last-child{border-bottom:none;}
@@ -173,7 +168,6 @@
   .u-type.playoff{color:var(--red);background:rgba(204,0,0,0.09);border:1px solid rgba(204,0,0,0.18);}
   .u-type.regular{color:var(--ice-dim);background:rgba(208,232,245,0.06);border:1px solid rgba(208,232,245,0.09);}
 
-  /* RESULTS */
   .results-card{grid-column:1/4;background:var(--gray-mid);border:1px solid var(--gray-border);border-radius:4px;overflow:hidden;animation:fadein 0.5s ease both;}
   .r-row{display:flex;align-items:center;padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.05);gap:7px;cursor:pointer;transition:background 0.15s ease;}
   .r-row:hover{background:rgba(255,255,255,0.03);}
@@ -199,7 +193,6 @@
   .r-player-stat{font-family:'Barlow Condensed',sans-serif;font-size:0.75rem;color:var(--ice-dim);}
   .r-player-loading{font-family:'Barlow Condensed',sans-serif;font-size:0.75rem;color:var(--silver);letter-spacing:2px;text-transform:uppercase;padding:6px 0;}
 
-  /* LEAGUE STANDINGS */
   .allteams-card{grid-column:1/4;background:var(--gray-mid);border:1px solid var(--gray-border);border-radius:4px;overflow:hidden;animation:fadein 0.5s ease both;}
   .allteams-inner{padding:0 18px 14px;}
   .div-section{margin-top:14px;}
@@ -300,7 +293,6 @@
 
 <div class="main">
 
-  <!-- GAME CARD -->
   <div class="game-card" id="game-card">
     <div class="card-header">
       <div><div class="card-label" id="game-label">Loading…</div><div class="card-title" id="game-title">GAME CENTER</div></div>
@@ -309,7 +301,6 @@
     <div id="game-body"><div class="card-body"><p class="api-error">Fetching game data…</p></div></div>
   </div>
 
-  <!-- BRACKET -->
   <div class="bracket-card">
     <div class="card-header ctoggle" onclick="tog('bkt-col','bkt-chev')">
       <div><div class="card-label">2026 Stanley Cup Playoffs</div><div class="card-title">Playoff Bracket <span class="cchev open" id="bkt-chev">▼</span></div></div>
@@ -322,7 +313,6 @@
     </div>
   </div>
 
-  <!-- PLAYOFF LEADERS -->
   <div class="leaders-card">
     <div class="card-header ctoggle" onclick="tog('ldr-col','ldr-chev');lazyLeaders()">
       <div><div class="card-label">2026 Playoffs</div><div class="card-title">Playoff Leaders <span class="cchev" id="ldr-chev">▼</span></div></div>
@@ -340,11 +330,11 @@
         <div id="ps-gls" style="display:none"><p class="ps-msg">Loading…</p></div>
         <div id="ps-ast" style="display:none"><p class="ps-msg">Loading…</p></div>
         <div id="ps-gtg" style="display:none"><p class="ps-msg">Loading…</p></div>
+        <div id="ps-debug" class="ps-debug" style="display:none"></div>
       </div>
     </div>
   </div>
 
-  <!-- SURGE -->
   <div class="surge-card" id="surge-card">
     <div class="surge-inner">
       <div class="surge-top"><div class="surge-label">⚡ Storm Surge Rating</div><div class="surge-tap-hint">Tap to learn more</div></div>
@@ -361,7 +351,6 @@
     </div>
   </div>
 
-  <!-- TEAM STATS -->
   <div class="stats-card">
     <div class="card-header ctoggle" onclick="tog('stats-col','stats-chev')">
       <div><div class="card-label">2025–26 Season</div><div class="card-title">Team Stats <span class="cchev open" id="stats-chev">▼</span></div></div>
@@ -371,7 +360,6 @@
     </div>
   </div>
 
-  <!-- UPCOMING -->
   <div class="upcoming-card">
     <div class="card-header ctoggle" onclick="tog('upc-col','upc-chev')">
       <div><div class="card-label">Schedule</div><div class="card-title">Upcoming Games <span class="cchev open" id="upc-chev">▼</span></div></div>
@@ -381,7 +369,6 @@
     </div>
   </div>
 
-  <!-- RESULTS -->
   <div class="results-card">
     <div class="card-header ctoggle" onclick="tog('res-col','res-chev')">
       <div><div class="card-label" id="results-label">Recent Games</div><div class="card-title">Results <span class="cchev open" id="res-chev">▼</span></div></div>
@@ -395,7 +382,6 @@
     </div>
   </div>
 
-  <!-- LEAGUE STANDINGS -->
   <div class="allteams-card">
     <div class="card-header ctoggle" onclick="tog('at-col','at-chev')">
       <div><div class="card-label">2025–26 NHL Season</div><div class="card-title">League Standings <span class="cchev" id="at-chev">▼</span></div></div>
@@ -496,7 +482,7 @@ function startCountdown(iso){
   tick();cdInt=setInterval(tick,1000);
 }
 
-// PLAYOFF LEADERS
+// ── PLAYOFF LEADERS ───────────────────────────────────────────────────────────
 function switchTab(tab){
   ['pts','gls','ast','gtg'].forEach(t=>{$('ps-'+t).style.display=t===tab?'block':'none';});
   document.querySelectorAll('.ps-tab').forEach((el,i)=>{el.classList.toggle('active',['pts','gls','ast','gtg'][i]===tab);});
@@ -506,36 +492,74 @@ function pName(p){return p.firstName?.default&&p.lastName?.default?`${p.firstNam
 function pTeam(p){return p.teamAbbrevs||p.teamAbbrev||'—';}
 function pIsCar(p){const t=pTeam(p);return t===CAR||t.includes(CAR);}
 
+// Exhaustive field search — tries every known NHL API field name
+function getStatVal(p,key){
+  // Direct key match
+  if(p[key]!=null)return p[key];
+  // Common NHL API alternates
+  const alts={
+    points:['points','pts','point','totalPoints'],
+    goals:['goals','goal','g'],
+    assists:['assists','assist','a'],
+    savePctg:['savePctg','savePercentage','svPct','savePct','savePercent','svp'],
+    gamesPlayed:['gamesPlayed','gp','games','gamesplayedregularseason'],
+  };
+  for(const alt of(alts[key]||[])){if(p[alt]!=null)return p[alt];}
+  // Last resort — value field
+  if(p.value!=null)return p.value;
+  return null;
+}
+
 function skaterRows(data,key,label){
+  // The API wraps results under the category key e.g. data.points = [...]
   const list=data?.[key]||[];
-  if(!list.length)return'<p class="ps-msg">No data</p>';
+  if(!list.length)return'<p class="ps-msg">No data available yet</p>';
   const hdr=`<div class="ps-col-hdr"><div style="width:18px"></div><div style="flex:1">Player</div><div style="width:32px;text-align:right">Team</div><div style="width:32px;text-align:right">${label}</div><div style="width:24px;text-align:right">GP</div></div>`;
   return hdr+list.slice(0,8).map((p,i)=>{
     const car=pIsCar(p);
-    // API may nest the value under 'value', the stat key, or 'statValue'
-    const val=p[key]??p.value??p.statValue??p.points??p.goals??p.assists??'—';
-    const gp=p.gamesPlayed??p.gp??'—';
+    const rawVal=getStatVal(p,key);
+    const val=rawVal!=null?rawVal:'—';
+    const rawGp=getStatVal(p,'gamesPlayed');
+    const gp=rawGp!=null?rawGp:'—';
     return `<div class="ps-row ${car?'ps-car':''}"><div class="ps-rank ${rankCls(i)}">${i+1}</div><div class="ps-name ${car?'car-name':''}">${pName(p)}</div><div class="ps-team ${car?'car-team':''}">${pTeam(p)}</div><div class="ps-val ${i===0?'lead':''}">${val}</div><div class="ps-gp">${gp}</div></div>`;
   }).join('');
 }
 
 function goalieRows(data){
   const list=data?.savePctg||[];
-  if(!list.length)return'<p class="ps-msg">No data</p>';
+  if(!list.length)return'<p class="ps-msg">No data available yet</p>';
   const hdr=`<div class="ps-col-hdr"><div style="width:18px"></div><div style="flex:1">Goalie</div><div style="width:32px;text-align:right">Team</div><div style="width:36px;text-align:right">SV%</div><div style="width:24px;text-align:right">GP</div></div>`;
   return hdr+list.slice(0,8).map((g,i)=>{
     const car=pIsCar(g);
-const svRaw=g.savePctg??g.value??g.statValue??null;
-const sv=svRaw!=null?parseFloat(svRaw).toFixed(3):'—';
-const gp=g.gamesPlayed??g.gp??'—';
+    const rawSv=getStatVal(g,'savePctg');
+    const sv=rawSv!=null?parseFloat(rawSv).toFixed(3):'—';
+    const rawGp=getStatVal(g,'gamesPlayed');
+    const gp=rawGp!=null?rawGp:'—';
     return `<div class="ps-row ${car?'ps-car':''}"><div class="ps-rank ${rankCls(i)}">${i+1}</div><div class="ps-name ${car?'car-name':''}">${pName(g)}</div><div class="ps-team ${car?'car-team':''}">${pTeam(g)}</div><div class="ps-val ${i===0?'lead':''}" style="width:36px;font-size:0.88rem;">${sv}</div><div class="ps-gp">${gp}</div></div>`;
   }).join('');
+}
+
+function showDebug(pts,gtg){
+  const dbg=$('ps-debug');
+  if(!dbg)return;
+  const skaterSample=pts?.points?.[0]||pts?.data?.[0]||null;
+  const goalieSample=gtg?.savePctg?.[0]||gtg?.data?.[0]||null;
+  const info={
+    ptsTopLevelKeys:pts?Object.keys(pts):[],
+    skaterSample,
+    gtgTopLevelKeys:gtg?Object.keys(gtg):[],
+    goalieSample,
+  };
+  dbg.style.display='block';
+  dbg.textContent='DEBUG:\n'+JSON.stringify(info,null,2);
+  console.log('LEADERS DEBUG',info);
 }
 
 function lazyLeaders(){
   if(!$('ldr-col').classList.contains('open')||leadersLoaded)return;
   loadLeaders();
 }
+
 async function loadLeaders(){
   if(leadersLoaded)return;
   leadersLoaded=true;
@@ -546,14 +570,19 @@ async function loadLeaders(){
       fjD(API.skatersLeaders('assists')).catch(()=>fj(API.skatersLeaders('assists')).catch(()=>null)),
       fjD(API.goalieLeaders).catch(()=>fj(API.goalieLeaders).catch(()=>null)),
     ]);
+    // Show debug panel so we can see the raw structure
+    showDebug(pts,gtg);
     $('ps-pts').innerHTML=pts?skaterRows(pts,'points','PTS'):'<p class="ps-msg">Unavailable</p>';
     $('ps-gls').innerHTML=gls?skaterRows(gls,'goals','G'):'<p class="ps-msg">Unavailable</p>';
     $('ps-ast').innerHTML=ast?skaterRows(ast,'assists','A'):'<p class="ps-msg">Unavailable</p>';
     $('ps-gtg').innerHTML=gtg?goalieRows(gtg):'<p class="ps-msg">Unavailable</p>';
-  }catch(e){['pts','gls','ast','gtg'].forEach(t=>{$('ps-'+t).innerHTML='<p class="ps-msg">Stats unavailable</p>';});}
+  }catch(e){
+    console.error('Leaders error',e);
+    ['pts','gls','ast','gtg'].forEach(t=>{$('ps-'+t).innerHTML='<p class="ps-msg">Stats unavailable</p>';});
+  }
 }
 
-// BRACKET
+// ── BRACKET ───────────────────────────────────────────────────────────────────
 function extractElim(series){const e=new Set();series.forEach(s=>{if(s.w1===4&&s.t2&&s.t2!=='TBD')e.add(s.t2);if(s.w2===4&&s.t1&&s.t1!=='TBD')e.add(s.t1);});return e;}
 function getLiveScore(t1,t2){
   const g=liveGames.find(g=>{const ha=g.homeTeam?.abbrev,aa=g.awayTeam?.abbrev;return(ha===t1&&aa===t2)||(ha===t2&&aa===t1);});
@@ -651,7 +680,7 @@ async function loadBracket(){
   renderBracket(series.filter(s=>s.conf==='east'||(s.conf!=='west'&&isE(s.t1))),series.filter(s=>s.conf==='west'||(s.conf!=='east'&&isW(s.t1))));
 }
 
-// STANDINGS
+// ── STANDINGS ─────────────────────────────────────────────────────────────────
 async function loadStandings(){
   const data=await fj(API.standings);
   const all=data.standings||[];
@@ -681,7 +710,7 @@ async function loadStandings(){
   return carData;
 }
 
-// PLAYER STATS
+// ── PLAYER STATS ──────────────────────────────────────────────────────────────
 async function loadPlayerStats(gameId,cid){
   const el=document.getElementById(cid);if(!el)return;
   el.querySelector('.r-players-inner').innerHTML='<p class="r-player-loading">Loading stats…</p>';
@@ -707,7 +736,7 @@ function toggleResult(row,gameId,pid){
   else{row.classList.add('expanded');panel.classList.add('open');expandedRow=row;loadPlayerStats(gameId,pid);}
 }
 
-// SCHEDULE
+// ── SCHEDULE ──────────────────────────────────────────────────────────────────
 async function loadSchedule(){
   const data=await fj(API.schedule(CAR)),games=data.games||[];
   const past=games.filter(g=>['OFF','FINAL'].includes(g.gameState)).sort((a,b)=>new Date(b.gameDate)-new Date(a.gameDate)).slice(0,8);
@@ -736,7 +765,7 @@ async function loadSchedule(){
   return{past,upcoming};
 }
 
-// SCOREBOARD
+// ── SCOREBOARD ────────────────────────────────────────────────────────────────
 async function loadScoreboard(){
   let data=null;
   try{const r=await fetch(API.scoreboard,{signal:mkSignal(5000),cache:'no-store'});if(r.ok)data=await r.json();}catch(e){}
@@ -746,7 +775,7 @@ async function loadScoreboard(){
   return liveGames.find(g=>g.homeTeam?.abbrev===CAR||g.awayTeam?.abbrev===CAR)||null;
 }
 
-// RENDER GAME
+// ── RENDER GAME ───────────────────────────────────────────────────────────────
 function renderGame(game,upcoming,past){
   if(game){
     const home=game.homeTeam?.abbrev===CAR,carT=home?game.homeTeam:game.awayTeam,oppT=home?game.awayTeam:game.homeTeam;
