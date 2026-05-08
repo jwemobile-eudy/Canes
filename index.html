@@ -511,7 +511,10 @@ function skaterRows(data,key,label){
   if(!list.length)return'<p class="ps-msg">No data</p>';
   const hdr=`<div class="ps-col-hdr"><div style="width:18px"></div><div style="flex:1">Player</div><div style="width:32px;text-align:right">Team</div><div style="width:32px;text-align:right">${label}</div><div style="width:24px;text-align:right">GP</div></div>`;
   return hdr+list.slice(0,8).map((p,i)=>{
-    const car=pIsCar(p),val=p[key]??'—',gp=p.gamesPlayed??'—';
+    const car=pIsCar(p);
+    // API may nest the value under 'value', the stat key, or 'statValue'
+    const val=p[key]??p.value??p.statValue??p.points??p.goals??p.assists??'—';
+    const gp=p.gamesPlayed??p.gp??'—';
     return `<div class="ps-row ${car?'ps-car':''}"><div class="ps-rank ${rankCls(i)}">${i+1}</div><div class="ps-name ${car?'car-name':''}">${pName(p)}</div><div class="ps-team ${car?'car-team':''}">${pTeam(p)}</div><div class="ps-val ${i===0?'lead':''}">${val}</div><div class="ps-gp">${gp}</div></div>`;
   }).join('');
 }
