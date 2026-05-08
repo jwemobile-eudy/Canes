@@ -524,7 +524,10 @@ function goalieRows(data){
   if(!list.length)return'<p class="ps-msg">No data</p>';
   const hdr=`<div class="ps-col-hdr"><div style="width:18px"></div><div style="flex:1">Goalie</div><div style="width:32px;text-align:right">Team</div><div style="width:36px;text-align:right">SV%</div><div style="width:24px;text-align:right">GP</div></div>`;
   return hdr+list.slice(0,8).map((g,i)=>{
-    const car=pIsCar(g),sv=g.savePctg!=null?g.savePctg.toFixed(3):'—',gp=g.gamesPlayed??'—';
+    const car=pIsCar(g);
+const svRaw=g.savePctg??g.value??g.statValue??null;
+const sv=svRaw!=null?parseFloat(svRaw).toFixed(3):'—';
+const gp=g.gamesPlayed??g.gp??'—';
     return `<div class="ps-row ${car?'ps-car':''}"><div class="ps-rank ${rankCls(i)}">${i+1}</div><div class="ps-name ${car?'car-name':''}">${pName(g)}</div><div class="ps-team ${car?'car-team':''}">${pTeam(g)}</div><div class="ps-val ${i===0?'lead':''}" style="width:36px;font-size:0.88rem;">${sv}</div><div class="ps-gp">${gp}</div></div>`;
   }).join('');
 }
