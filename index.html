@@ -53,6 +53,7 @@
   .hdr-preview-val{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:2px;color:var(--white);}
   .hdr-preview-sub{font-family:'Barlow Condensed',sans-serif;font-size:0.78rem;font-weight:600;color:var(--white);}
 
+  /* GAME CARD */
   .game-card{grid-column:1/4;background:linear-gradient(135deg,#160000,#1a0000 50%,#1c1c1c);border:1px solid var(--red);border-radius:4px;overflow:hidden;position:relative;animation:fadein 0.5s ease both;}
   .game-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--red),transparent);animation:scan 2.5s ease-in-out infinite;}
   @keyframes scan{0%,100%{opacity:0.3}50%{opacity:1}}
@@ -65,6 +66,36 @@
   .g-center{text-align:center;flex-shrink:0;}
   .g-score{font-family:'Bebas Neue',sans-serif;font-size:3.8rem;letter-spacing:4px;line-height:1;}
   .g-status{font-family:'Barlow Condensed',sans-serif;font-size:0.7rem;letter-spacing:2px;text-transform:uppercase;color:var(--ice);margin-top:3px;}
+
+  /* PP BANNER */
+  .pp-banner{display:flex;align-items:center;justify-content:center;gap:8px;padding:5px 22px;background:rgba(255,180,0,0.08);border-top:1px solid rgba(255,180,0,0.2);border-bottom:1px solid rgba(255,180,0,0.2);}
+  .pp-text{font-family:'Barlow Condensed',sans-serif;font-size:0.68rem;letter-spacing:2px;text-transform:uppercase;color:#ffb400;font-weight:600;}
+  .pp-clock{font-family:'Bebas Neue',sans-serif;font-size:0.95rem;letter-spacing:1px;color:#ffb400;}
+
+  /* SOG */
+  .sog-wrap{padding:10px 22px 4px;}
+  .sog-label{font-family:'Barlow Condensed',sans-serif;font-size:0.58rem;letter-spacing:3px;text-transform:uppercase;color:var(--silver);text-align:center;margin-bottom:6px;}
+  .sog-row{display:flex;align-items:center;gap:10px;}
+  .sog-num{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:1px;width:30px;flex-shrink:0;}
+  .sog-num.car{color:var(--red);text-align:left;}
+  .sog-num.opp{color:var(--silver);text-align:right;}
+  .sog-bar-wrap{flex:1;height:6px;background:var(--gray-border);border-radius:3px;overflow:hidden;display:flex;}
+  .sog-bar-l{height:100%;background:var(--red);transition:width 0.6s ease;}
+  .sog-bar-r{height:100%;background:var(--silver);opacity:0.35;transition:width 0.6s ease;}
+
+  /* PERIOD BREAKDOWN */
+  .period-wrap{padding:8px 22px 10px;}
+  .period-label{font-family:'Barlow Condensed',sans-serif;font-size:0.58rem;letter-spacing:3px;text-transform:uppercase;color:var(--silver);text-align:center;margin-bottom:6px;}
+  .period-table{display:flex;border:1px solid var(--gray-border);border-radius:3px;overflow:hidden;}
+  .period-col{flex:1;text-align:center;border-right:1px solid var(--gray-border);}
+  .period-col:last-child{border-right:none;}
+  .period-hdr{font-family:'Barlow Condensed',sans-serif;font-size:0.58rem;letter-spacing:2px;text-transform:uppercase;color:var(--silver);padding:4px 6px;background:var(--gray-dark);border-bottom:1px solid var(--gray-border);}
+  .period-team{font-family:'Barlow Condensed',sans-serif;font-size:0.6rem;letter-spacing:1px;text-transform:uppercase;color:var(--silver);padding:3px 6px;background:var(--gray-dark);border-bottom:1px solid var(--gray-border);}
+  .period-cell{font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:1px;padding:4px 6px;}
+  .period-cell.car{color:var(--red);}
+  .period-cell.hi{color:var(--white);}
+  .period-cell.dim{color:var(--silver);opacity:0.35;}
+
   .series-info{text-align:center;padding:7px 22px 8px;font-family:'Barlow Condensed',sans-serif;font-size:0.8rem;letter-spacing:2px;text-transform:uppercase;color:var(--silver);}
   .series-info strong{color:var(--red);}
   .series-dots{display:flex;justify-content:center;gap:6px;margin-top:7px;}
@@ -87,6 +118,7 @@
   .live-dot{width:7px;height:7px;background:white;border-radius:50%;animation:blink 1.2s ease-in-out infinite;}
   @keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
 
+  /* BRACKET */
   .bracket-card{grid-column:1/4;background:var(--gray-mid);border:1px solid var(--gray-border);border-radius:4px;overflow:hidden;animation:fadein 0.5s ease both;}
   .bracket-rounds{display:flex;overflow-x:auto;border-top:1px solid var(--gray-border);}
   .bracket-round{flex:1;min-width:160px;border-right:1px solid var(--gray-border);padding:14px 16px;}
@@ -94,7 +126,7 @@
   .round-title{font-family:'Barlow Condensed',sans-serif;font-size:0.62rem;letter-spacing:3px;text-transform:uppercase;color:var(--silver);margin-bottom:12px;text-align:center;}
   .b-series{background:var(--gray-dark);border:1px solid var(--gray-border);border-radius:3px;overflow:hidden;margin-bottom:8px;}
   .b-series:last-child{margin-bottom:0;}
-  .b-series.today{border-color:var(--ice);box-shadow:0 0 8px rgba(208,232,245,0.15);}
+  .b-series.today{border-color:var(--ice);box-shadow:0 0 8px rgba(208,232,245,0.15);cursor:pointer;}
   .b-series.tbd{opacity:0.35;}
   .b-team{display:flex;align-items:center;padding:6px 10px;border-bottom:1px solid rgba(255,255,255,0.05);gap:7px;}
   .b-team:last-child{border-bottom:none;}
@@ -104,10 +136,37 @@
   .b-name.car{color:var(--red);}
   .b-wins{font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:1px;}
   .b-wins.lead{color:var(--green);}
-  .b-live{display:flex;align-items:center;justify-content:center;gap:6px;padding:3px 10px 5px;font-family:'Barlow Condensed',sans-serif;font-size:0.6rem;letter-spacing:2px;text-transform:uppercase;color:var(--red);border-top:1px solid rgba(204,0,0,0.2);}
+  .b-live{display:flex;align-items:center;justify-content:center;gap:6px;padding:3px 10px 4px;font-family:'Barlow Condensed',sans-serif;font-size:0.6rem;letter-spacing:2px;text-transform:uppercase;color:var(--red);border-top:1px solid rgba(204,0,0,0.2);}
   .b-live-score{font-family:'Bebas Neue',sans-serif;font-size:0.9rem;letter-spacing:1px;color:var(--white);}
   .b-live-dot{width:6px;height:6px;background:var(--red);border-radius:50%;animation:blink 1.2s ease-in-out infinite;flex-shrink:0;}
+  .b-tap-hint{font-family:'Barlow Condensed',sans-serif;font-size:0.55rem;letter-spacing:1px;color:var(--silver);opacity:0.55;text-align:center;padding:2px 10px 4px;}
 
+  /* BRACKET GAME PANEL */
+  .b-game-panel{overflow:hidden;max-height:0;transition:max-height 0.4s cubic-bezier(0.4,0,0.2,1);background:rgba(0,0,0,0.35);border-top:1px solid var(--gray-border);}
+  .b-game-panel.open{max-height:400px;}
+  .bgp-inner{padding:11px 13px;}
+  .bgp-pp{display:flex;align-items:center;justify-content:center;gap:6px;padding:4px 10px;background:rgba(255,180,0,0.08);border:1px solid rgba(255,180,0,0.2);border-radius:3px;margin-bottom:9px;}
+  .bgp-pp-text{font-family:'Barlow Condensed',sans-serif;font-size:0.63rem;letter-spacing:2px;text-transform:uppercase;color:#ffb400;font-weight:600;}
+  .bgp-pp-clock{font-family:'Bebas Neue',sans-serif;font-size:0.85rem;color:#ffb400;}
+  .bgp-sog-label{font-family:'Barlow Condensed',sans-serif;font-size:0.56rem;letter-spacing:3px;text-transform:uppercase;color:var(--silver);text-align:center;margin-bottom:5px;}
+  .bgp-sog-row{display:flex;align-items:center;gap:7px;margin-bottom:9px;}
+  .bgp-sog-num{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;width:22px;flex-shrink:0;}
+  .bgp-sog-bar{flex:1;height:5px;background:var(--gray-border);border-radius:3px;overflow:hidden;display:flex;}
+  .bgp-sog-l{height:100%;transition:width 0.5s ease;}
+  .bgp-sog-r{height:100%;opacity:0.35;transition:width 0.5s ease;}
+  .bgp-period-label{font-family:'Barlow Condensed',sans-serif;font-size:0.56rem;letter-spacing:3px;text-transform:uppercase;color:var(--silver);text-align:center;margin-bottom:5px;}
+  .bgp-period-table{display:flex;border:1px solid var(--gray-border);border-radius:3px;overflow:hidden;}
+  .bgp-period-col{flex:1;text-align:center;border-right:1px solid var(--gray-border);}
+  .bgp-period-col:last-child{border-right:none;}
+  .bgp-period-hdr{font-family:'Barlow Condensed',sans-serif;font-size:0.56rem;letter-spacing:2px;text-transform:uppercase;color:var(--silver);padding:3px 4px;background:var(--gray-dark);border-bottom:1px solid var(--gray-border);}
+  .bgp-period-team{font-family:'Barlow Condensed',sans-serif;font-size:0.58rem;letter-spacing:1px;text-transform:uppercase;color:var(--silver);padding:3px 4px;background:var(--gray-dark);border-bottom:1px solid var(--gray-border);}
+  .bgp-period-cell{font-family:'Bebas Neue',sans-serif;font-size:0.9rem;padding:3px 4px;}
+  .bgp-period-cell.hi{color:var(--white);}
+  .bgp-period-cell.red{color:var(--red);}
+  .bgp-period-cell.dim{color:var(--silver);opacity:0.3;}
+  .bgp-close{font-family:'Barlow Condensed',sans-serif;font-size:0.55rem;letter-spacing:2px;text-transform:uppercase;color:var(--silver);opacity:0.45;text-align:center;margin-top:9px;}
+
+  /* LEADERS */
   .leaders-card{grid-column:1/4;background:var(--gray-mid);border:1px solid var(--gray-border);border-radius:4px;overflow:hidden;animation:fadein 0.5s ease both;}
   .ps-inner{padding:14px 18px;}
   .ps-tabs{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap;}
@@ -124,7 +183,6 @@
   .ps-team.car-team{color:var(--red);}
   .ps-val{font-family:'Bebas Neue',sans-serif;font-size:1.05rem;letter-spacing:1px;width:32px;text-align:right;}
   .ps-val.lead{color:var(--green);}
-  .ps-gp{font-family:'Barlow Condensed',sans-serif;font-size:0.7rem;color:var(--silver);width:24px;text-align:right;}
   .ps-msg{font-family:'Barlow Condensed',sans-serif;font-size:0.78rem;color:var(--silver);letter-spacing:2px;text-transform:uppercase;padding:14px 0;text-align:center;}
 
   .surge-card{grid-column:1/4;background:linear-gradient(135deg,#100000,var(--gray-dark));border:1px solid var(--gray-border);border-radius:4px;overflow:hidden;cursor:pointer;user-select:none;animation:fadein 0.5s ease both;}
@@ -424,7 +482,6 @@ const PROXIES=[
 const PERIOD_LABEL=['','1st','2nd','3rd','OT','OT2'];
 const $=id=>document.getElementById(id);
 let playoffEliminatedTeams=new Set(),liveGames=[],cachedEast=[],cachedWest=[],leadersLoaded=false;
-// Store past playoff games for team GP calculation
 window._playoffPastGames=[];
 
 function mkSignal(ms){try{return AbortSignal.timeout(ms);}catch(e){const c=new AbortController();setTimeout(()=>c.abort(),ms);return c.signal;}}
@@ -488,14 +545,67 @@ function startCountdown(iso){
   tick();cdInt=setInterval(tick,1000);
 }
 
+// ── PERIOD BREAKDOWN HELPER ───────────────────────────────────────────────────
+function buildPeriodTable(goals,homeAbbr,awayAbbr,leftAbbr,rightAbbr,isLive,currentPer){
+  // Count goals per period per team
+  const periods={};
+  (goals||[]).forEach(g=>{
+    const per=g.periodDescriptor?.number||1;
+    if(!periods[per])periods[per]={[homeAbbr]:0,[awayAbbr]:0};
+    periods[per][g.teamAbbrev]=(periods[per][g.teamAbbrev]||0)+1;
+  });
+  const maxPer=Math.max(currentPer||1,Object.keys(periods).length?Math.max(...Object.keys(periods).map(Number)):1);
+  const cols=Math.max(maxPer,3);
+  let leftTot=0,rightTot=0;
+  let html=`<div class="period-wrap"><div class="period-label">Period Breakdown</div><div class="period-table">`;
+  html+=`<div class="period-col"><div class="period-hdr">Team</div><div class="period-team">${leftAbbr}</div><div class="period-team">${rightAbbr}</div></div>`;
+  for(let p=1;p<=cols;p++){
+    const lv=(periods[p]?.[leftAbbr]||0),rv=(periods[p]?.[rightAbbr]||0);
+    leftTot+=lv;rightTot+=rv;
+    const inProgress=isLive&&p===currentPer;
+    const notStarted=isLive&&p>currentPer;
+    const lCls=notStarted?'dim':leftAbbr===CAR?'car':'hi';
+    const rCls=notStarted?'dim':'hi';
+    const lbl=p<=3?`${p===1?'1st':p===2?'2nd':'3rd'}`:`OT${p>4?p-3:''}`;
+    html+=`<div class="period-col"><div class="period-hdr">${lbl}</div><div class="period-cell ${lCls}">${notStarted?'—':lv}</div><div class="period-cell ${rCls}">${notStarted?'—':rv}</div></div>`;
+  }
+  html+=`<div class="period-col"><div class="period-hdr">TOT</div><div class="period-cell ${leftAbbr===CAR?'car':'hi'}">${leftTot}</div><div class="period-cell hi">${rightTot}</div></div>`;
+  html+=`</div></div>`;
+  return html;
+}
+
+// ── SOG HELPER ────────────────────────────────────────────────────────────────
+function buildSOG(homeSog,awaySog,homeAbbr,leftAbbr){
+  if(homeSog==null&&awaySog==null)return'';
+  const leftSog=leftAbbr===homeAbbr?homeSog:awaySog;
+  const rightSog=leftAbbr===homeAbbr?awaySog:homeSog;
+  const tot=(leftSog||0)+(rightSog||0);
+  const leftPct=tot?Math.round((leftSog||0)/tot*100):50;
+  const rightPct=100-leftPct;
+  const leftCar=leftAbbr===CAR;
+  return `<div class="sog-wrap"><div class="sog-label">Shots on Goal</div><div class="sog-row"><div class="sog-num ${leftCar?'car':'opp'}">${leftSog??'—'}</div><div class="sog-bar-wrap"><div class="sog-bar-l" style="width:${leftPct}%;background:${leftCar?'var(--red)':'var(--silver)'};opacity:${leftCar?1:0.5}"></div><div class="sog-bar-r" style="width:${rightPct}%;background:${leftCar?'var(--silver)':'var(--red)'};opacity:${leftCar?0.35:1}"></div></div><div class="sog-num opp">${rightSog??'—'}</div></div></div>`;
+}
+
+// ── PP HELPER ─────────────────────────────────────────────────────────────────
+function buildPP(game,homeAbbr){
+  const sit=game.situation;if(!sit)return'';
+  const homeCount=sit.homeTeam?.situationCode,awayCount=sit.awayTeam?.situationCode;
+  if(!homeCount&&!awayCount)return'';
+  // 5v4, 5v3, 4v3 etc — PP is when skater counts differ
+  const hSkaters=sit.homeTeam?.onIce||5,aSkaters=sit.awayTeam?.onIce||5;
+  if(hSkaters===aSkaters)return'';
+  const ppTeam=hSkaters>aSkaters?homeAbbr:(homeAbbr===game.homeTeam?.abbrev?game.awayTeam?.abbrev:game.homeTeam?.abbrev);
+  const timeLeft=sit.timeRemaining||'';
+  const isCar=ppTeam===CAR;
+  return `<div class="pp-banner"><div style="font-size:0.8rem;">⚡</div><div class="pp-text">${ppTeam} Power Play</div>${timeLeft?`<div class="pp-clock">${timeLeft}</div>`:''}</div>`;
+}
+
 // ── PLAYOFF LEADERS ───────────────────────────────────────────────────────────
 function switchTab(tab){
   ['pts','gls','ast','gtg'].forEach(t=>{$('ps-'+t).style.display=t===tab?'block':'none';});
   document.querySelectorAll('.ps-tab').forEach((el,i)=>{el.classList.toggle('active',['pts','gls','ast','gtg'][i]===tab);});
 }
-
 function leaderList(data,cat){return data?.[cat]||data?.data||data?.leaders||data?.stats||[];}
-
 function pName(p){
   const first=p.firstName?.default||p.firstName||'';
   const last=p.lastName?.default||p.lastName||'';
@@ -505,42 +615,21 @@ function pName(p){
 function pTeam(p){return String(p.teamAbbrev?.default||p.teamAbbrev||p.teamAbbrevs||'—');}
 function pIsCar(p){return pTeam(p)===CAR||pTeam(p).includes(CAR);}
 
-// Build GP map by counting completed playoff games per team
-function buildTeamGPMap(){
-  const map={};
-  const allGames=[...liveGames,...(window._playoffPastGames||[])];
-  // Deduplicate by game id
-  const seen=new Set();
-  allGames.forEach(g=>{
-    if(g.gameType!==3)return;
-    if(seen.has(g.id))return;
-    seen.add(g.id);
-    const active=['OFF','FINAL','LIVE','CRIT'].includes(g.gameState);
-    if(!active)return;
-    const ha=g.homeTeam?.abbrev,aa=g.awayTeam?.abbrev;
-    if(ha)map[ha]=(map[ha]||0)+1;
-    if(aa)map[aa]=(map[aa]||0)+1;
-  });
-  return map;
-}
-
-function getGP(p,gpMap){return gpMap?.[pTeam(p)]??'—';}
-
-function skaterRows(list,label,gpMap){
+function skaterRows(list,label){
   if(!list?.length)return'<p class="ps-msg">No data available yet</p>';
-  const hdr=`<div class="ps-col-hdr"><div style="width:18px"></div><div style="flex:1">Player</div><div style="width:32px;text-align:right">Team</div><div style="width:32px;text-align:right">${label}</div><div style="width:24px;text-align:right">GP</div></div>`;
+  const hdr=`<div class="ps-col-hdr"><div style="width:18px"></div><div style="flex:1">Player</div><div style="width:32px;text-align:right">Team</div><div style="width:32px;text-align:right">${label}</div></div>`;
   return hdr+list.slice(0,8).map((p,i)=>{
-    const car=pIsCar(p),val=p.value??'—',gp=getGP(p,gpMap);
-    return `<div class="ps-row ${car?'ps-car':''}"><div class="ps-rank">${i+1}</div><div class="ps-name ${car?'car-name':''}">${pName(p)}</div><div class="ps-team ${car?'car-team':''}">${pTeam(p)}</div><div class="ps-val ${i===0?'lead':''}">${val}</div><div class="ps-gp">${gp}</div></div>`;
+    const car=pIsCar(p),val=p.value??'—';
+    return `<div class="ps-row ${car?'ps-car':''}"><div class="ps-rank">${i+1}</div><div class="ps-name ${car?'car-name':''}">${pName(p)}</div><div class="ps-team ${car?'car-team':''}">${pTeam(p)}</div><div class="ps-val ${i===0?'lead':''}">${val}</div></div>`;
   }).join('');
 }
 
-function goalieRows(list,gpMap){
+function goalieRows(list){
   if(!list?.length)return'<p class="ps-msg">No data available yet</p>';
-  const hdr=`<div class="ps-col-hdr"><div style="width:18px"></div><div style="flex:1">Goalie</div><div style="width:32px;text-align:right">Team</div><div style="width:36px;text-align:right">SV%</div><div style="width:24px;text-align:right">GP</div></div>`;
+  const hdr=`<div class="ps-col-hdr"><div style="width:18px"></div><div style="flex:1">Goalie</div><div style="width:32px;text-align:right">Team</div><div style="width:36px;text-align:right">SV%</div></div>`;
   return hdr+list.slice(0,8).map((g,i)=>{
-    const car=pIsCar(g),sv=g.value!=null?parseFloat(g.value).toFixed(3):'—',gp=getGP(g,gpMap);
-    return `<div class="ps-row ${car?'ps-car':''}"><div class="ps-rank">${i+1}</div><div class="ps-name ${car?'car-name':''}">${pName(g)}</div><div class="ps-team ${car?'car-team':''}">${pTeam(g)}</div><div class="ps-val ${i===0?'lead':''}" style="width:36px;font-size:0.88rem;">${sv}</div><div class="ps-gp">${gp}</div></div>`;
+    const car=pIsCar(g),sv=g.value!=null?parseFloat(g.value).toFixed(3):'—';
+    return `<div class="ps-row ${car?'ps-car':''}"><div class="ps-rank">${i+1}</div><div class="ps-name ${car?'car-name':''}">${pName(g)}</div><div class="ps-team ${car?'car-team':''}">${pTeam(g)}</div><div class="ps-val ${i===0?'lead':''}" style="width:36px;font-size:0.88rem;">${sv}</div></div>`;
   }).join('');
 }
 
@@ -559,11 +648,10 @@ async function loadLeaders(){
       fjD(API.skatersLeaders('assists')).catch(()=>null),
       fjD(API.goalieLeaders).catch(()=>null),
     ]);
-    const gpMap=buildTeamGPMap();
-    $('ps-pts').innerHTML=pts?skaterRows(leaderList(pts,'points'),'PTS',gpMap):'<p class="ps-msg">Unavailable</p>';
-    $('ps-gls').innerHTML=gls?skaterRows(leaderList(gls,'goals'),'G',gpMap):'<p class="ps-msg">Unavailable</p>';
-    $('ps-ast').innerHTML=ast?skaterRows(leaderList(ast,'assists'),'A',gpMap):'<p class="ps-msg">Unavailable</p>';
-    $('ps-gtg').innerHTML=gtg?goalieRows(leaderList(gtg,'savePctg'),gpMap):'<p class="ps-msg">Unavailable</p>';
+    $('ps-pts').innerHTML=pts?skaterRows(leaderList(pts,'points'),'PTS'):'<p class="ps-msg">Unavailable</p>';
+    $('ps-gls').innerHTML=gls?skaterRows(leaderList(gls,'goals'),'G'):'<p class="ps-msg">Unavailable</p>';
+    $('ps-ast').innerHTML=ast?skaterRows(leaderList(ast,'assists'),'A'):'<p class="ps-msg">Unavailable</p>';
+    $('ps-gtg').innerHTML=gtg?goalieRows(leaderList(gtg,'savePctg')):'<p class="ps-msg">Unavailable</p>';
   }catch(e){
     console.error('Leaders error',e);
     ['pts','gls','ast','gtg'].forEach(t=>{$('ps-'+t).innerHTML='<p class="ps-msg">Stats unavailable</p>';});
@@ -572,18 +660,84 @@ async function loadLeaders(){
 
 // ── BRACKET ───────────────────────────────────────────────────────────────────
 function extractElim(series){const e=new Set();series.forEach(s=>{if(s.w1===4&&s.t2&&s.t2!=='TBD')e.add(s.t2);if(s.w2===4&&s.t1&&s.t1!=='TBD')e.add(s.t1);});return e;}
-function getLiveScore(t1,t2){
-  const g=liveGames.find(g=>{const ha=g.homeTeam?.abbrev,aa=g.awayTeam?.abbrev;return(ha===t1&&aa===t2)||(ha===t2&&aa===t1);});
-  if(!g||g.gameState!=='LIVE'&&g.gameState!=='CRIT')return null;
-  const per=g.periodDescriptor?.number||1;
-  return{hs:g.homeTeam?.score||0,as:g.awayTeam?.score||0,ha:g.homeTeam?.abbrev,aa:g.awayTeam?.abbrev,perLbl:PERIOD_LABEL[per]||(per+'P'),clock:g.clock?.timeRemaining||''};
-}
-function seriesHasGameToday(t1,t2){
-  return liveGames.some(g=>{
+
+function getLiveGameForSeries(t1,t2){
+  return liveGames.find(g=>{
     const ha=g.homeTeam?.abbrev,aa=g.awayTeam?.abbrev;
-    return((ha===t1&&aa===t2)||(ha===t2&&aa===t1))&&isToday(g.startTimeUTC||g.gameDate||'');
-  });
+    return(ha===t1&&aa===t2)||(ha===t2&&aa===t1);
+  })||null;
 }
+
+function seriesHasGameToday(t1,t2){
+  const g=getLiveGameForSeries(t1,t2);
+  return g?isToday(g.startTimeUTC||g.gameDate||''):false;
+}
+
+// Build inline bracket panel HTML for a live/today game
+function buildBracketPanel(panelId,t1,t2){
+  const g=getLiveGameForSeries(t1,t2);
+  if(!g)return'';
+  const live=g.gameState==='LIVE'||g.gameState==='CRIT';
+  const ha=g.homeTeam?.abbrev,aa=g.awayTeam?.abbrev;
+  const hs=g.homeTeam?.score??0,as=g.awayTeam?.score??0;
+  const hSog=g.homeTeam?.sog??null,aSog=g.awayTeam?.sog??null;
+  const per=g.periodDescriptor?.number||1;
+
+  // SOG bar — use t1 as left
+  const leftAbbr=t1,rightAbbr=t2;
+  const leftSog=ha===t1?hSog:aSog,rightSog=ha===t1?aSog:hSog;
+  const tot=(leftSog||0)+(rightSog||0);
+  const leftPct=tot?Math.round((leftSog||0)/tot*100):50;
+  const rightPct=100-leftPct;
+  const leftCar=t1===CAR||t2===CAR?(t1===CAR?true:false):false;
+
+  // PP
+  const sit=g.situation;
+  let ppHTML='';
+  if(sit&&live){
+    const hSkaters=sit.homeTeam?.onIce??5,aSkaters=sit.awayTeam?.onIce??5;
+    if(hSkaters!==aSkaters){
+      const ppTeam=hSkaters>aSkaters?ha:aa;
+      const timeLeft=sit.timeRemaining||'';
+      ppHTML=`<div class="bgp-pp"><div style="font-size:0.7rem">⚡</div><div class="bgp-pp-text">${ppTeam} PP</div>${timeLeft?`<div class="bgp-pp-clock">${timeLeft}</div>`:''}</div>`;
+    }
+  }
+
+  // Period table
+  const goals=g.goals||[];
+  const periods={};
+  goals.forEach(goal=>{
+    const p=goal.periodDescriptor?.number||1;
+    if(!periods[p])periods[p]={[ha]:0,[aa]:0};
+    periods[p][goal.teamAbbrev]=(periods[p][goal.teamAbbrev]||0)+1;
+  });
+  const cols=Math.max(per,3);
+  let leftTot=0,rightTot=0;
+  let periodHTML=`<div class="bgp-period-label">Period Breakdown</div><div class="bgp-period-table">`;
+  periodHTML+=`<div class="bgp-period-col"><div class="bgp-period-hdr">Team</div><div class="bgp-period-team">${leftAbbr}</div><div class="bgp-period-team">${rightAbbr}</div></div>`;
+  for(let p=1;p<=cols;p++){
+    const lv=periods[p]?.[ha===leftAbbr?ha:aa]||0;
+    const rv=periods[p]?.[ha===leftAbbr?aa:ha]||0;
+    leftTot+=lv;rightTot+=rv;
+    const notStarted=live&&p>per;
+    const lbl=p===1?'1st':p===2?'2nd':p===3?'3rd':`OT`;
+    const lCls=notStarted?'dim':leftAbbr===CAR?'red':'hi';
+    periodHTML+=`<div class="bgp-period-col"><div class="bgp-period-hdr">${lbl}</div><div class="bgp-period-cell ${lCls}">${notStarted?'—':lv}</div><div class="bgp-period-cell ${notStarted?'dim':'hi'}">${notStarted?'—':rv}</div></div>`;
+  }
+  periodHTML+=`<div class="bgp-period-col"><div class="bgp-period-hdr">TOT</div><div class="bgp-period-cell ${leftAbbr===CAR?'red':'hi'}">${leftTot}</div><div class="bgp-period-cell hi">${rightTot}</div></div></div>`;
+
+  return `<div class="b-game-panel" id="${panelId}"><div class="bgp-inner">${ppHTML}<div class="bgp-sog-label">Shots on Goal</div><div class="bgp-sog-row"><div class="bgp-sog-num" style="color:${leftCar?'var(--red)':'var(--silver)'};text-align:left">${leftSog??'—'}</div><div class="bgp-sog-bar"><div class="bgp-sog-l" style="width:${leftPct}%;background:${leftCar?'var(--red)':'var(--silver)'};opacity:${leftCar?1:0.6}"></div><div class="bgp-sog-r" style="width:${rightPct}%;background:${leftCar?'var(--silver)':'var(--red)'};opacity:0.35"></div></div><div class="bgp-sog-num" style="color:var(--silver);text-align:right">${rightSog??'—'}</div></div>${periodHTML}<div class="bgp-close">Tap series to close</div></div></div>`;
+}
+
+let openBracketPanel=null;
+function toggleBracketPanel(panelId){
+  const el=document.getElementById(panelId);
+  if(!el)return;
+  if(openBracketPanel&&openBracketPanel!==el){openBracketPanel.classList.remove('open');}
+  el.classList.toggle('open');
+  openBracketPanel=el.classList.contains('open')?el:null;
+}
+
 function renderBracket(east,west){
   cachedEast=east;cachedWest=west;
   const all=[...east,...west];
@@ -591,16 +745,32 @@ function renderBracket(east,west){
   const carS=all.find(s=>(s.t1===CAR||s.t2===CAR)&&s.w1<4&&s.w2<4);
   if(carS){const cW=carS.t1===CAR?carS.w1:carS.w2,oW=carS.t1===CAR?carS.w2:carS.w1,opp=carS.t1===CAR?carS.t2:carS.t1;$('bracket-summary').textContent=`CAR ${cW}–${oW} ${opp}`;}
   const TBD=`<div class="b-series tbd"><div class="b-team"><div class="b-seed">—</div><div class="b-name">TBD</div><div class="b-wins">—</div></div><div class="b-team"><div class="b-seed">—</div><div class="b-name">TBD</div><div class="b-wins">—</div></div></div>`;
+
+  let panelCounter=0;
   function sH(s){
     const t1c=s.t1===CAR,t2c=s.t2===CAR,done=s.w1===4||s.w2===4,tbd=!s.t1||s.t1==='TBD';
     const seed1=s.s1||SEED_MAP[s.t1]||'',seed2=s.s2||SEED_MAP[s.t2]||'';
-    const ls=(!tbd&&!done)?getLiveScore(s.t1,s.t2):null;
     const hasToday=!tbd&&!done&&seriesHasGameToday(s.t1,s.t2);
+    const liveGame=hasToday?getLiveGameForSeries(s.t1,s.t2):null;
+    const isLive=liveGame&&(liveGame.gameState==='LIVE'||liveGame.gameState==='CRIT');
     const seriesCls=tbd?'tbd':hasToday?'today':'';
-    let lH='';
-    if(ls){const t1s=ls.ha===s.t1?ls.hs:ls.as,t2s=ls.ha===s.t1?ls.as:ls.hs;lH=`<div class="b-live"><div class="b-live-dot"></div>LIVE <span class="b-live-score">${s.t1} ${t1s}–${t2s} ${s.t2}</span> <span style="color:var(--silver);font-size:0.58rem;">${ls.perLbl} ${ls.clock}</span></div>`;}
-    return `<div class="b-series ${seriesCls}"><div class="b-team ${done&&s.w1>s.w2?'winner':''}"><div class="b-seed">${seed1}</div><div class="b-name ${t1c?'car':''}">${s.t1||'TBD'}</div><div class="b-wins ${s.w1>=s.w2&&s.w1>0?'lead':''}">${tbd?'—':s.w1}</div></div><div class="b-team ${done&&s.w2>s.w1?'winner':''}"><div class="b-seed">${seed2}</div><div class="b-name ${t2c?'car':''}">${s.t2||'TBD'}</div><div class="b-wins ${s.w2>s.w1&&s.w2>0?'lead':''}">${tbd?'—':s.w2}</div></div>${lH}</div>`;
+    const panelId=hasToday?`bgp-${panelCounter++}`:'';
+    const clickAttr=hasToday?`onclick="toggleBracketPanel('${panelId}')" style="cursor:pointer"`:'';
+
+    let liveRow='';
+    if(liveGame&&isLive){
+      const ha=liveGame.homeTeam?.abbrev,aa=liveGame.awayTeam?.abbrev;
+      const hs=liveGame.homeTeam?.score||0,as=liveGame.awayTeam?.score||0;
+      const per=liveGame.periodDescriptor?.number||1,clock=liveGame.clock?.timeRemaining||'';
+      const t1s=ha===s.t1?hs:as,t2s=ha===s.t1?as:hs;
+      liveRow=`<div class="b-live"><div class="b-live-dot"></div>LIVE <span class="b-live-score">${s.t1} ${t1s}–${t2s} ${s.t2}</span> <span style="color:var(--silver);font-size:0.58rem;">${PERIOD_LABEL[per]||per+'P'} ${clock}</span></div>`;
+    }
+    const tapHint=hasToday?`<div class="b-tap-hint">Tap for details</div>`:'';
+    const panelHTML=hasToday?buildBracketPanel(panelId,s.t1,s.t2):'';
+
+    return `<div class="b-series ${seriesCls}" ${clickAttr}><div class="b-team ${done&&s.w1>s.w2?'winner':''}"><div class="b-seed">${seed1}</div><div class="b-name ${t1c?'car':''}">${s.t1||'TBD'}</div><div class="b-wins ${s.w1>=s.w2&&s.w1>0?'lead':''}">${tbd?'—':s.w1}</div></div><div class="b-team ${done&&s.w2>s.w1?'winner':''}"><div class="b-seed">${seed2}</div><div class="b-name ${t2c?'car':''}">${s.t2||'TBD'}</div><div class="b-wins ${s.w2>s.w1&&s.w2>0?'lead':''}">${tbd?'—':s.w2}</div></div>${liveRow}${tapHint}</div>${panelHTML}`;
   }
+
   const eN=['Eastern First Round','Eastern Semifinals','Eastern Finals'];
   const wN=['Western Finals','Western Semifinals','Western First Round'];
   let html='';
@@ -610,6 +780,7 @@ function renderBracket(east,west){
   for(let r=3;r>=1;r--){const rd=west.filter(s=>s.round===r);html+=`<div class="bracket-round"><div class="round-title">${wN[3-r]}</div>${rd.length?rd.map(sH).join(''):TBD}</div>`;}
   $('bracket-body').innerHTML=html;
 }
+
 function buildFromSchedules(allGames){
   const seen=new Set();
   const games=allGames.filter(g=>{if(seen.has(g.id))return false;seen.add(g.id);return true;}).filter(g=>g.gameType===3);
@@ -632,6 +803,7 @@ function buildFromSchedules(allGames){
     return{conf:isEast?'east':'west',round,t1:top,t2:bot,s1:sl[top]||'',s2:sl[bot]||'',w1:s.wins[top]||0,w2:s.wins[bot]||0};
   });
 }
+
 async function loadBracket(){
   let series=null;
   try{
@@ -686,15 +858,7 @@ async function loadStandings(){
   let carData=null,atHtml='';
   for(const[divName,divData]of Object.entries(divisions)){
     atHtml+=`<div class="div-section"><div class="div-header"><div class="div-conf">${divData.conf}</div><div class="div-name">${divName}</div></div>
-    <div class="at-col-hdr">
-      <div style="width:16px"></div>
-      <div style="flex:1"></div>
-      <div style="width:24px;text-align:right">W</div>
-      <div style="width:24px;text-align:right">L</div>
-      <div style="width:24px;text-align:right">OT</div>
-      <div style="width:28px;text-align:right">PTS</div>
-      <div style="width:20px;text-align:center">Cup</div>
-    </div>`;
+    <div class="at-col-hdr"><div style="width:16px"></div><div style="flex:1"></div><div style="width:24px;text-align:right">W</div><div style="width:24px;text-align:right">L</div><div style="width:24px;text-align:right">OT</div><div style="width:28px;text-align:right">PTS</div><div style="width:20px;text-align:center">Cup</div></div>`;
     divData.teams.forEach((t,i)=>{
       const abbr=t.teamAbbrev?.default||'',isCar=abbr===CAR;
       if(isCar)carData=t;
@@ -707,15 +871,7 @@ async function loadStandings(){
       else if(elim)icon=`<div class="at-icon">🗑️</div>`;
       else if(inPO&&!ppElim)icon=`<div class="at-icon">⚠️</div>`;
       else icon=`<div class="at-icon"></div>`;
-      atHtml+=`<div class="at-row ${isCar?'car-row':''}">
-        <div class="at-rank">${i+1}</div>
-        <div class="at-name ${isCar?'car-name':''}">${t.teamName?.default||abbr}</div>
-        <div class="at-w">${t.wins||0}</div>
-        <div class="at-w">${t.losses||0}</div>
-        <div class="at-w">${t.otLosses||0}</div>
-        <div class="at-pts">${t.points||0}</div>
-        ${icon}
-      </div>`;
+      atHtml+=`<div class="at-row ${isCar?'car-row':''}"><div class="at-rank">${i+1}</div><div class="at-name ${isCar?'car-name':''}">${t.teamName?.default||abbr}</div><div class="at-w">${t.wins||0}</div><div class="at-w">${t.losses||0}</div><div class="at-w">${t.otLosses||0}</div><div class="at-pts">${t.points||0}</div>${icon}</div>`;
     });
     atHtml+=`</div>`;
   }
@@ -754,7 +910,6 @@ async function loadSchedule(){
   const data=await fj(API.schedule(CAR)),games=data.games||[];
   const past=games.filter(g=>['OFF','FINAL'].includes(g.gameState)).sort((a,b)=>new Date(b.gameDate)-new Date(a.gameDate)).slice(0,8);
   const upcoming=games.filter(g=>['FUT','PRE'].includes(g.gameState)).sort((a,b)=>new Date(a.gameDate)-new Date(b.gameDate)).slice(0,4);
-  // Store past playoff games for team GP calculation
   window._playoffPastGames=past.filter(g=>g.gameType===3);
   let streak=0,st='';
   for(const g of past){
@@ -805,19 +960,36 @@ function renderGame(game,upcoming,past){
     $('game-label').textContent=pp?`🏒 ${game.gameLabel||'Playoff'} · Eastern Conf`:live?'⚡ In Progress':final?'Final':'Today';
     $('game-title').textContent=home?`CAR vs ${oppT?.abbrev}`:`${oppT?.abbrev} vs CAR`;
     $('game-badge').innerHTML=live?`<div class="live-pill"><div class="live-dot"></div>Live</div>`:final?`<span style="font-family:'Barlow Condensed',sans-serif;font-size:0.78rem;letter-spacing:2px;color:var(--silver);text-transform:uppercase;">Final</span>`:'';
+
+    const leftAbbr=home?CAR:oppT?.abbrev||'?',rightAbbr=home?oppT?.abbrev||'?':CAR;
+    const leftName=home?'Carolina Hurricanes':oppT?.name?.default||oppT?.abbrev||'?';
+    const rightName=home?oppT?.name?.default||oppT?.abbrev||'?':'Carolina Hurricanes';
+    const leftSeed=(home?carT:oppT)?.seed||SEED_MAP[leftAbbr]||null;
+    const rightSeed=(home?oppT:carT)?.seed||SEED_MAP[rightAbbr]||null;
+
+    const matchupHTML=`<div class="game-matchup"><div class="g-team"><div class="g-abbr ${home?'car':''}">${leftAbbr}</div><div class="g-name">${leftName}</div>${leftSeed?`<div class="g-seed">SEED #${leftSeed}</div>`:''}</div><div class="g-center"><div class="g-score">${home?cS:oS} — ${home?oS:cS}</div><div class="g-status">${live?perLbl+' · '+clock:final?'Final':fmtDate(game.startTimeUTC)+' · '+fmtTime(game.startTimeUTC)}</div></div><div class="g-team"><div class="g-abbr ${!home?'car':''}">${rightAbbr}</div><div class="g-name">${rightName}</div>${rightSeed?`<div class="g-seed">SEED #${rightSeed}</div>`:''}</div></div>`;
+
+    // PP banner (live only)
+    const ppBannerHTML=live?buildPP(game,game.homeTeam?.abbrev):'';
+
+    // SOG (live or final)
+    const sogHTML=(live||final)?buildSOG(game.homeTeam?.sog,game.awayTeam?.sog,game.homeTeam?.abbrev,leftAbbr):'';
+
+    // Period breakdown (live or final)
+    const periodHTML=(live||final)?buildPeriodTable(game.goals,game.homeTeam?.abbrev,game.awayTeam?.abbrev,leftAbbr,rightAbbr,live,per):'';
+
     let seriesHTML='';
     if(pp){const apiCW=ss?(home?ss.homeTeamWins||0:ss.awayTeamWins||0):0,apiOW=ss?(home?ss.awayTeamWins||0:ss.homeTeamWins||0):0,{dots,cW,oW}=buildDots(past,oppT?.abbrev,apiCW,apiOW,live);seriesHTML=`<div class="series-info">Series: <strong>CAR ${cW} – ${oW} ${oppT?.abbrev}</strong> · Best of 7<div class="series-dots">${dots}</div></div>`;}
+
     const cG=(game.goals||[]).filter(g=>g.teamAbbrev===CAR).slice(0,4),oG=(game.goals||[]).filter(g=>g.teamAbbrev!==CAR).slice(0,4);
     let scorersHTML='';
     if(cG.length||oG.length){scorersHTML=`<div class="scorers-wrap"><div class="scorers-col"><div class="scorers-label" style="color:var(--red)">CAR Goals</div>${cG.map(g=>`<div class="scorer-row"><span class="scorer-name">${g.name?.default||'—'}</span><span class="scorer-detail">${g.periodDescriptor?.number||''}P ${g.timeInPeriod||''}</span></div>`).join('')}${!cG.length?'<div class="scorer-row" style="color:var(--silver)">—</div>':''}</div><div class="scorers-col"><div class="scorers-label">${oppT?.abbrev} Goals</div>${oG.map(g=>`<div class="scorer-row"><span class="scorer-name">${g.name?.default||'—'}</span><span class="scorer-detail">${g.periodDescriptor?.number||''}P ${g.timeInPeriod||''}</span></div>`).join('')}${!oG.length?'<div class="scorer-row" style="color:var(--silver)">—</div>':''}</div></div>`;}
-    const carName='Carolina Hurricanes',oppName=oppT?.name?.default||oppT?.abbrev||'?';
-    const leftAbbr=home?CAR:oppT?.abbrev||'?',rightAbbr=home?oppT?.abbrev||'?':CAR;
-    const leftName=home?carName:oppName,rightName=home?oppName:carName;
-    const leftSeed=(home?carT:oppT)?.seed||SEED_MAP[leftAbbr]||null;
-    const rightSeed=(home?oppT:carT)?.seed||SEED_MAP[rightAbbr]||null;
+
     const cdHTML=pregame?`<div class="countdown-wrap"><div class="countdown-label">Time until puck drop</div><div class="countdown-timer" id="game-countdown">—</div></div>`:'';
-    $('game-body').innerHTML=`<div class="game-matchup"><div class="g-team"><div class="g-abbr ${home?'car':''}">${leftAbbr}</div><div class="g-name">${leftName}</div>${leftSeed?`<div class="g-seed">SEED #${leftSeed}</div>`:''}</div><div class="g-center"><div class="g-score">${home?cS:oS} — ${home?oS:cS}</div><div class="g-status">${live?perLbl+' · '+clock:final?'Final':fmtDate(game.startTimeUTC)+' · '+fmtTime(game.startTimeUTC)}</div></div><div class="g-team"><div class="g-abbr ${!home?'car':''}">${rightAbbr}</div><div class="g-name">${rightName}</div>${rightSeed?`<div class="g-seed">SEED #${rightSeed}</div>`:''}</div></div>${seriesHTML}${scorersHTML}${cdHTML}`;
+
+    $('game-body').innerHTML=matchupHTML+ppBannerHTML+sogHTML+periodHTML+seriesHTML+scorersHTML+cdHTML;
     if(pregame)startCountdown(game.startTimeUTC);
+
   }else if(upcoming?.length){
     const next=upcoming[0],home=next.homeTeam?.abbrev===CAR,opp=home?next.awayTeam:next.homeTeam,pp=next.gameType===3;
     $('game-label').textContent=pp?`🏒 ${next.gameLabel||'Playoff'} · Up Next`:'Next Game';
