@@ -399,13 +399,8 @@
 </footer>
 
 <script>
-// Fix 1: force scroll to top on load
 if('scrollRestoration' in history)history.scrollRestoration='manual';
-function forceTop(){
-  document.documentElement.scrollTop=0;
-  document.body.scrollTop=0;
-  window.scrollTo({top:0,left:0,behavior:'instant'});
-}
+function forceTop(){document.documentElement.scrollTop=0;document.body.scrollTop=0;window.scrollTo({top:0,left:0,behavior:'instant'});}
 window.addEventListener('load',()=>setTimeout(forceTop,0));
 
 const CAR='CAR',SEASON='20252026',TZ='America/Chicago';
@@ -419,9 +414,7 @@ const API={
   boxscore:id=>`https://api-web.nhle.com/v1/gamecenter/${id}/boxscore`,
   espn:`https://site.api.espn.com/apis/v2/sports/hockey/nhl/playoffs`,
   skatersLeaders:cat=>`https://api-web.nhle.com/v1/skater-stats-leaders/${SEASON}/3?categories=${cat}&limit=10`,
-  skatersGP:`https://api-web.nhle.com/v1/skater-stats-leaders/${SEASON}/3?categories=gamesPlayed&limit=50`,
   goalieLeaders:`https://api-web.nhle.com/v1/goalie-stats-leaders/${SEASON}/3?categories=savePctg&limit=10`,
-  goalieGP:`https://api-web.nhle.com/v1/goalie-stats-leaders/${SEASON}/3?categories=gamesPlayed&limit=50`,
 };
 const PROXIES=[
   u=>`https://corsproxy.io/?url=${encodeURIComponent(u)}&_cb=${Date.now()}`,
@@ -431,6 +424,8 @@ const PROXIES=[
 const PERIOD_LABEL=['','1st','2nd','3rd','OT','OT2'];
 const $=id=>document.getElementById(id);
 let playoffEliminatedTeams=new Set(),liveGames=[],cachedEast=[],cachedWest=[],leadersLoaded=false;
+// Store past playoff games for team GP calculation
+window._playoffPastGames=[];
 
 function mkSignal(ms){try{return AbortSignal.timeout(ms);}catch(e){const c=new AbortController();setTimeout(()=>c.abort(),ms);return c.signal;}}
 async function fj(url){for(const p of PROXIES){try{const r=await fetch(p(url),{signal:mkSignal(8000),cache:'no-store'});if(r.ok)return r.json();}catch(e){continue;}}throw new Error('proxies failed');}
@@ -493,21 +488,13 @@ function startCountdown(iso){
   tick();cdInt=setInterval(tick,1000);
 }
 
-// ── PLAYOFF LEADERS — Fix 2: improved GP lookup, Fix 3: improved list extraction ──
+// ── PLAYOFF LEADERS ───────────────────────────────────────────────────────────
 function switchTab(tab){
   ['pts','gls','ast','gtg'].forEach(t=>{$('ps-'+t).style.display=t===tab?'block':'none';});
   document.querySelectorAll('.ps-tab').forEach((el,i)=>{el.classList.toggle('active',['pts','gls','ast','gtg'][i]===tab);});
 }
 
-// Fix 3: try multiple array key names
-function leaderList(data,cat){
-  return data?.[cat]||data?.data||data?.leaders||data?.stats||[];
-}
-
-// Fix 2: try multiple ID field names
-function getPlayerKey(p){
-  return p.playerId??p.skaterId??p.goalieId??p.id??p.entityId??null;
-}
+function leaderList(data,cat){return data?.[cat]||data?.data||data?.leaders||data?.stats||[];}
 
 function pName(p){
   const first=p.firstName?.default||p.firstName||'';
@@ -518,29 +505,26 @@ function pName(p){
 function pTeam(p){return String(p.teamAbbrev?.default||p.teamAbbrev||p.teamAbbrevs||'—');}
 function pIsCar(p){return pTeam(p)===CAR||pTeam(p).includes(CAR);}
 
-// Fix 2: build GP map with both ID key and name+team fallback
-function buildGPMap(data){
+// Build GP map by counting completed playoff games per team
+function buildTeamGPMap(){
   const map={};
-  const list=leaderList(data,'gamesPlayed');
-  list.forEach(p=>{
-    const key=getPlayerKey(p);
-    const gp=p.value??p.gamesPlayed??p.gp??p.stats?.gamesPlayed??0;
-    if(key!=null)map[key]=gp;
-    map[`${pName(p)}|${pTeam(p)}`]=gp;
+  const allGames=[...liveGames,...(window._playoffPastGames||[])];
+  // Deduplicate by game id
+  const seen=new Set();
+  allGames.forEach(g=>{
+    if(g.gameType!==3)return;
+    if(seen.has(g.id))return;
+    seen.add(g.id);
+    const active=['OFF','FINAL','LIVE','CRIT'].includes(g.gameState);
+    if(!active)return;
+    const ha=g.homeTeam?.abbrev,aa=g.awayTeam?.abbrev;
+    if(ha)map[ha]=(map[ha]||0)+1;
+    if(aa)map[aa]=(map[aa]||0)+1;
   });
   return map;
 }
 
-// Fix 2: multi-strategy GP lookup
-function getGP(p,gpMap){
-  const direct=p.gamesPlayed??p.gp??p.stats?.gamesPlayed;
-  if(direct!=null)return direct;
-  const key=getPlayerKey(p);
-  if(key!=null&&gpMap?.[key]!=null)return gpMap[key];
-  const nameKey=`${pName(p)}|${pTeam(p)}`;
-  if(gpMap?.[nameKey]!=null)return gpMap[nameKey];
-  return '—';
-}
+function getGP(p,gpMap){return gpMap?.[pTeam(p)]??'—';}
 
 function skaterRows(list,label,gpMap){
   if(!list?.length)return'<p class="ps-msg">No data available yet</p>';
@@ -569,20 +553,17 @@ async function loadLeaders(){
   if(leadersLoaded)return;
   leadersLoaded=true;
   try{
-    const[pts,gls,ast,gtg,skaterGP,goalieGP]=await Promise.all([
+    const[pts,gls,ast,gtg]=await Promise.all([
       fjD(API.skatersLeaders('points')).catch(()=>null),
       fjD(API.skatersLeaders('goals')).catch(()=>null),
       fjD(API.skatersLeaders('assists')).catch(()=>null),
       fjD(API.goalieLeaders).catch(()=>null),
-      fjD(API.skatersGP).catch(()=>null),
-      fjD(API.goalieGP).catch(()=>null),
     ]);
-    const sGPMap=buildGPMap(skaterGP);
-    const gGPMap=buildGPMap(goalieGP);
-    $('ps-pts').innerHTML=pts?skaterRows(leaderList(pts,'points'),'PTS',sGPMap):'<p class="ps-msg">Unavailable</p>';
-    $('ps-gls').innerHTML=gls?skaterRows(leaderList(gls,'goals'),'G',sGPMap):'<p class="ps-msg">Unavailable</p>';
-    $('ps-ast').innerHTML=ast?skaterRows(leaderList(ast,'assists'),'A',sGPMap):'<p class="ps-msg">Unavailable</p>';
-    $('ps-gtg').innerHTML=gtg?goalieRows(leaderList(gtg,'savePctg'),gGPMap):'<p class="ps-msg">Unavailable</p>';
+    const gpMap=buildTeamGPMap();
+    $('ps-pts').innerHTML=pts?skaterRows(leaderList(pts,'points'),'PTS',gpMap):'<p class="ps-msg">Unavailable</p>';
+    $('ps-gls').innerHTML=gls?skaterRows(leaderList(gls,'goals'),'G',gpMap):'<p class="ps-msg">Unavailable</p>';
+    $('ps-ast').innerHTML=ast?skaterRows(leaderList(ast,'assists'),'A',gpMap):'<p class="ps-msg">Unavailable</p>';
+    $('ps-gtg').innerHTML=gtg?goalieRows(leaderList(gtg,'savePctg'),gpMap):'<p class="ps-msg">Unavailable</p>';
   }catch(e){
     console.error('Leaders error',e);
     ['pts','gls','ast','gtg'].forEach(t=>{$('ps-'+t).innerHTML='<p class="ps-msg">Stats unavailable</p>';});
@@ -705,7 +686,15 @@ async function loadStandings(){
   let carData=null,atHtml='';
   for(const[divName,divData]of Object.entries(divisions)){
     atHtml+=`<div class="div-section"><div class="div-header"><div class="div-conf">${divData.conf}</div><div class="div-name">${divName}</div></div>
-    <div class="at-col-hdr"><div style="width:16px"></div><div style="flex:1"></div><div style="width:24px;text-align:right">W</div><div style="width:24px;text-align:right">L</div><div style="width:24px;text-align:right">OT</div><div style="width:28px;text-align:right">PTS</div><div style="width:20px"></div></div>`;
+    <div class="at-col-hdr">
+      <div style="width:16px"></div>
+      <div style="flex:1"></div>
+      <div style="width:24px;text-align:right">W</div>
+      <div style="width:24px;text-align:right">L</div>
+      <div style="width:24px;text-align:right">OT</div>
+      <div style="width:28px;text-align:right">PTS</div>
+      <div style="width:20px;text-align:center">Cup</div>
+    </div>`;
     divData.teams.forEach((t,i)=>{
       const abbr=t.teamAbbrev?.default||'',isCar=abbr===CAR;
       if(isCar)carData=t;
@@ -718,7 +707,15 @@ async function loadStandings(){
       else if(elim)icon=`<div class="at-icon">🗑️</div>`;
       else if(inPO&&!ppElim)icon=`<div class="at-icon">⚠️</div>`;
       else icon=`<div class="at-icon"></div>`;
-      atHtml+=`<div class="at-row ${isCar?'car-row':''}"><div class="at-rank">${i+1}</div><div class="at-name ${isCar?'car-name':''}">${t.teamName?.default||abbr}</div><div class="at-w">${t.wins||0}</div><div class="at-w">${t.losses||0}</div><div class="at-w">${t.otLosses||0}</div><div class="at-pts">${t.points||0}</div>${icon}</div>`;
+      atHtml+=`<div class="at-row ${isCar?'car-row':''}">
+        <div class="at-rank">${i+1}</div>
+        <div class="at-name ${isCar?'car-name':''}">${t.teamName?.default||abbr}</div>
+        <div class="at-w">${t.wins||0}</div>
+        <div class="at-w">${t.losses||0}</div>
+        <div class="at-w">${t.otLosses||0}</div>
+        <div class="at-pts">${t.points||0}</div>
+        ${icon}
+      </div>`;
     });
     atHtml+=`</div>`;
   }
@@ -757,6 +754,8 @@ async function loadSchedule(){
   const data=await fj(API.schedule(CAR)),games=data.games||[];
   const past=games.filter(g=>['OFF','FINAL'].includes(g.gameState)).sort((a,b)=>new Date(b.gameDate)-new Date(a.gameDate)).slice(0,8);
   const upcoming=games.filter(g=>['FUT','PRE'].includes(g.gameState)).sort((a,b)=>new Date(a.gameDate)-new Date(b.gameDate)).slice(0,4);
+  // Store past playoff games for team GP calculation
+  window._playoffPastGames=past.filter(g=>g.gameType===3);
   let streak=0,st='';
   for(const g of past){
     const home=g.homeTeam?.abbrev===CAR,cS=home?g.homeTeam?.score:g.awayTeam?.score,oS=home?g.awayTeam?.score:g.homeTeam?.score,win=cS>oS;
@@ -840,7 +839,6 @@ function renderStats(car,ppW,ppL){
   $('stats-body').innerHTML=`<div class="stat-grid"><div class="stat-block"><div class="stat-num">${car.wins||0}</div><div class="stat-lbl">Wins</div><div class="stat-sub">Regular season</div></div><div class="stat-block"><div class="stat-num">${car.points||0}</div><div class="stat-lbl">Points</div><div class="stat-sub">${pct} pt%</div></div><div class="stat-block"><div class="stat-num">#${car.divisionSequence||'?'}</div><div class="stat-lbl">Div Rank</div><div class="stat-sub">Metropolitan</div></div><div class="stat-block"><div class="stat-num">${car.wins||0}-${car.losses||0}${car.otLosses?'-'+car.otLosses:''}</div><div class="stat-lbl">Record</div><div class="stat-sub">W-L${car.otLosses?'-OTL':''}</div></div><div class="stat-block"><div class="stat-num">${ppW}-${ppL}</div><div class="stat-lbl">Playoffs</div><div class="stat-sub">W-L this year</div></div><div class="stat-block"><div class="stat-num">#${car.conferenceSequence||'?'}</div><div class="stat-lbl">Conf Seed</div><div class="stat-sub">Eastern Conf</div></div></div>`;
 }
 
-// ── MAIN ──────────────────────────────────────────────────────────────────────
 async function fetchAndRender(){
   lastFetch=Date.now();
   try{
@@ -858,10 +856,7 @@ async function fetchAndRender(){
 
 async function init(){
   forceTop();
-  fetchAndRender().finally(()=>{
-    hideLoader();
-    setTimeout(forceTop,50);
-  });
+  fetchAndRender().finally(()=>{hideLoader();setTimeout(forceTop,50);});
 }
 
 async function manualRefresh(){
