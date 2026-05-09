@@ -8,6 +8,7 @@
 <style>
   :root{--red:#CC0000;--red-dark:#990000;--red-glow:rgba(204,0,0,0.35);--black:#0A0A0A;--gray-dark:#141414;--gray-mid:#1E1E1E;--gray-border:#2A2A2A;--white:#F5F5F5;--silver:#B0B0B0;--ice:#D0E8F5;--ice-dim:#8cb8d4;--green:#00cc44;}
   *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:auto;}
   body{background:var(--black);color:var(--white);font-family:'Barlow',sans-serif;min-height:100vh;overflow-x:hidden;}
 
   #loader{position:fixed;inset:0;z-index:9999;background:var(--black);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;transition:opacity 0.5s ease;}
@@ -306,9 +307,7 @@
       <div id="bracket-summary" style="font-family:'Barlow Condensed',sans-serif;font-size:0.78rem;letter-spacing:1px;color:var(--silver);text-align:right;"></div>
     </div>
     <div class="ccol" id="bkt-col">
-      <div class="bracket-rounds" id="bracket-body">
-        <div class="card-body"><p class="api-error">Loading bracket…</p></div>
-      </div>
+      <div class="bracket-rounds" id="bracket-body"><div class="card-body"><p class="api-error">Loading bracket…</p></div></div>
     </div>
   </div>
 
@@ -400,10 +399,18 @@
 </footer>
 
 <script>
+// Fix 1: force scroll to top on load
+if('scrollRestoration' in history)history.scrollRestoration='manual';
+function forceTop(){
+  document.documentElement.scrollTop=0;
+  document.body.scrollTop=0;
+  window.scrollTo({top:0,left:0,behavior:'instant'});
+}
+window.addEventListener('load',()=>setTimeout(forceTop,0));
+
 const CAR='CAR',SEASON='20252026',TZ='America/Chicago';
 const EAST_TEAMS=['CAR','BUF','TB','TBL','MTL','BOS','OTT','PHI','PIT'];
 const WEST_TEAMS=['COL','DAL','VGK','ANA','MIN','EDM','UTA','LAK'];
-// Backlog #8: added TBL and TBJ aliases for Tampa
 const SEED_MAP={CAR:1,PHI:8,BUF:2,MTL:4,OTT:6,BOS:5,PIT:7,TB:3,TBL:3,TBJ:3,COL:1,MIN:3,DAL:2,VGK:4,ANA:7,EDM:5,UTA:6,LAK:8};
 const API={
   standings:`https://api-web.nhle.com/v1/standings/now`,
@@ -436,12 +443,7 @@ function fmtDate(iso){return new Date(iso).toLocaleDateString('en-US',{month:'sh
 function fmtMo(iso){return new Date(iso).toLocaleDateString('en-US',{month:'short',timeZone:TZ}).toUpperCase();}
 function fmtDay(iso){return new Date(iso).toLocaleDateString('en-US',{day:'numeric',timeZone:TZ});}
 function fmtTime(iso){return new Date(iso).toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit',timeZoneName:'short',timeZone:TZ});}
-
-function isToday(iso){
-  if(!iso)return false;
-  const d=new Date(iso),now=new Date();
-  return d.toLocaleDateString('en-US',{timeZone:TZ})===now.toLocaleDateString('en-US',{timeZone:TZ});
-}
+function isToday(iso){if(!iso)return false;const d=new Date(iso),now=new Date();return d.toLocaleDateString('en-US',{timeZone:TZ})===now.toLocaleDateString('en-US',{timeZone:TZ});}
 
 function tog(colId,chevId){const c=$(colId),h=$(chevId);c.classList.toggle('open');h.classList.toggle('open');}
 
@@ -491,27 +493,60 @@ function startCountdown(iso){
   tick();cdInt=setInterval(tick,1000);
 }
 
-// PLAYOFF LEADERS
+// ── PLAYOFF LEADERS — Fix 2: improved GP lookup, Fix 3: improved list extraction ──
 function switchTab(tab){
   ['pts','gls','ast','gtg'].forEach(t=>{$('ps-'+t).style.display=t===tab?'block':'none';});
   document.querySelectorAll('.ps-tab').forEach((el,i)=>{el.classList.toggle('active',['pts','gls','ast','gtg'][i]===tab);});
 }
-function pName(p){return p.firstName?.default&&p.lastName?.default?`${p.firstName.default[0]}. ${p.lastName.default}`:p.name?.default||'—';}
-function pTeam(p){return p.teamAbbrev||p.teamAbbrevs||'—';}
-function pIsCar(p){const t=pTeam(p);return t===CAR||t.includes(CAR);}
 
+// Fix 3: try multiple array key names
+function leaderList(data,cat){
+  return data?.[cat]||data?.data||data?.leaders||data?.stats||[];
+}
+
+// Fix 2: try multiple ID field names
+function getPlayerKey(p){
+  return p.playerId??p.skaterId??p.goalieId??p.id??p.entityId??null;
+}
+
+function pName(p){
+  const first=p.firstName?.default||p.firstName||'';
+  const last=p.lastName?.default||p.lastName||'';
+  if(first&&last)return`${first[0]}. ${last}`;
+  return p.name?.default||p.fullName?.default||p.fullName||p.name||'—';
+}
+function pTeam(p){return String(p.teamAbbrev?.default||p.teamAbbrev||p.teamAbbrevs||'—');}
+function pIsCar(p){return pTeam(p)===CAR||pTeam(p).includes(CAR);}
+
+// Fix 2: build GP map with both ID key and name+team fallback
 function buildGPMap(data){
   const map={};
-  const list=data?.gamesPlayed||data?.points||data?.goals||data?.assists||data?.savePctg||[];
-  list.forEach(p=>{if(p.id!=null)map[p.id]=p.value??0;});
+  const list=leaderList(data,'gamesPlayed');
+  list.forEach(p=>{
+    const key=getPlayerKey(p);
+    const gp=p.value??p.gamesPlayed??p.gp??p.stats?.gamesPlayed??0;
+    if(key!=null)map[key]=gp;
+    map[`${pName(p)}|${pTeam(p)}`]=gp;
+  });
   return map;
+}
+
+// Fix 2: multi-strategy GP lookup
+function getGP(p,gpMap){
+  const direct=p.gamesPlayed??p.gp??p.stats?.gamesPlayed;
+  if(direct!=null)return direct;
+  const key=getPlayerKey(p);
+  if(key!=null&&gpMap?.[key]!=null)return gpMap[key];
+  const nameKey=`${pName(p)}|${pTeam(p)}`;
+  if(gpMap?.[nameKey]!=null)return gpMap[nameKey];
+  return '—';
 }
 
 function skaterRows(list,label,gpMap){
   if(!list?.length)return'<p class="ps-msg">No data available yet</p>';
   const hdr=`<div class="ps-col-hdr"><div style="width:18px"></div><div style="flex:1">Player</div><div style="width:32px;text-align:right">Team</div><div style="width:32px;text-align:right">${label}</div><div style="width:24px;text-align:right">GP</div></div>`;
   return hdr+list.slice(0,8).map((p,i)=>{
-    const car=pIsCar(p),val=p.value??'—',gp=gpMap&&p.id!=null&&gpMap[p.id]!=null?gpMap[p.id]:'—';
+    const car=pIsCar(p),val=p.value??'—',gp=getGP(p,gpMap);
     return `<div class="ps-row ${car?'ps-car':''}"><div class="ps-rank">${i+1}</div><div class="ps-name ${car?'car-name':''}">${pName(p)}</div><div class="ps-team ${car?'car-team':''}">${pTeam(p)}</div><div class="ps-val ${i===0?'lead':''}">${val}</div><div class="ps-gp">${gp}</div></div>`;
   }).join('');
 }
@@ -520,7 +555,7 @@ function goalieRows(list,gpMap){
   if(!list?.length)return'<p class="ps-msg">No data available yet</p>';
   const hdr=`<div class="ps-col-hdr"><div style="width:18px"></div><div style="flex:1">Goalie</div><div style="width:32px;text-align:right">Team</div><div style="width:36px;text-align:right">SV%</div><div style="width:24px;text-align:right">GP</div></div>`;
   return hdr+list.slice(0,8).map((g,i)=>{
-    const car=pIsCar(g),sv=g.value!=null?parseFloat(g.value).toFixed(3):'—',gp=gpMap&&g.id!=null&&gpMap[g.id]!=null?gpMap[g.id]:'—';
+    const car=pIsCar(g),sv=g.value!=null?parseFloat(g.value).toFixed(3):'—',gp=getGP(g,gpMap);
     return `<div class="ps-row ${car?'ps-car':''}"><div class="ps-rank">${i+1}</div><div class="ps-name ${car?'car-name':''}">${pName(g)}</div><div class="ps-team ${car?'car-team':''}">${pTeam(g)}</div><div class="ps-val ${i===0?'lead':''}" style="width:36px;font-size:0.88rem;">${sv}</div><div class="ps-gp">${gp}</div></div>`;
   }).join('');
 }
@@ -535,42 +570,39 @@ async function loadLeaders(){
   leadersLoaded=true;
   try{
     const[pts,gls,ast,gtg,skaterGP,goalieGP]=await Promise.all([
-      fjD(API.skatersLeaders('points')).catch(()=>fj(API.skatersLeaders('points')).catch(()=>null)),
-      fjD(API.skatersLeaders('goals')).catch(()=>fj(API.skatersLeaders('goals')).catch(()=>null)),
-      fjD(API.skatersLeaders('assists')).catch(()=>fj(API.skatersLeaders('assists')).catch(()=>null)),
-      fjD(API.goalieLeaders).catch(()=>fj(API.goalieLeaders).catch(()=>null)),
-      fjD(API.skatersGP).catch(()=>fj(API.skatersGP).catch(()=>null)),
-      fjD(API.goalieGP).catch(()=>fj(API.goalieGP).catch(()=>null)),
+      fjD(API.skatersLeaders('points')).catch(()=>null),
+      fjD(API.skatersLeaders('goals')).catch(()=>null),
+      fjD(API.skatersLeaders('assists')).catch(()=>null),
+      fjD(API.goalieLeaders).catch(()=>null),
+      fjD(API.skatersGP).catch(()=>null),
+      fjD(API.goalieGP).catch(()=>null),
     ]);
     const sGPMap=buildGPMap(skaterGP);
     const gGPMap=buildGPMap(goalieGP);
-    $('ps-pts').innerHTML=pts?skaterRows(pts.points,'PTS',sGPMap):'<p class="ps-msg">Unavailable</p>';
-    $('ps-gls').innerHTML=gls?skaterRows(gls.goals,'G',sGPMap):'<p class="ps-msg">Unavailable</p>';
-    $('ps-ast').innerHTML=ast?skaterRows(ast.assists,'A',sGPMap):'<p class="ps-msg">Unavailable</p>';
-    $('ps-gtg').innerHTML=gtg?goalieRows(gtg.savePctg,gGPMap):'<p class="ps-msg">Unavailable</p>';
+    $('ps-pts').innerHTML=pts?skaterRows(leaderList(pts,'points'),'PTS',sGPMap):'<p class="ps-msg">Unavailable</p>';
+    $('ps-gls').innerHTML=gls?skaterRows(leaderList(gls,'goals'),'G',sGPMap):'<p class="ps-msg">Unavailable</p>';
+    $('ps-ast').innerHTML=ast?skaterRows(leaderList(ast,'assists'),'A',sGPMap):'<p class="ps-msg">Unavailable</p>';
+    $('ps-gtg').innerHTML=gtg?goalieRows(leaderList(gtg,'savePctg'),gGPMap):'<p class="ps-msg">Unavailable</p>';
   }catch(e){
     console.error('Leaders error',e);
     ['pts','gls','ast','gtg'].forEach(t=>{$('ps-'+t).innerHTML='<p class="ps-msg">Stats unavailable</p>';});
   }
 }
 
-// BRACKET
+// ── BRACKET ───────────────────────────────────────────────────────────────────
 function extractElim(series){const e=new Set();series.forEach(s=>{if(s.w1===4&&s.t2&&s.t2!=='TBD')e.add(s.t2);if(s.w2===4&&s.t1&&s.t1!=='TBD')e.add(s.t1);});return e;}
-
 function getLiveScore(t1,t2){
   const g=liveGames.find(g=>{const ha=g.homeTeam?.abbrev,aa=g.awayTeam?.abbrev;return(ha===t1&&aa===t2)||(ha===t2&&aa===t1);});
   if(!g||g.gameState!=='LIVE'&&g.gameState!=='CRIT')return null;
   const per=g.periodDescriptor?.number||1;
   return{hs:g.homeTeam?.score||0,as:g.awayTeam?.score||0,ha:g.homeTeam?.abbrev,aa:g.awayTeam?.abbrev,perLbl:PERIOD_LABEL[per]||(per+'P'),clock:g.clock?.timeRemaining||''};
 }
-
 function seriesHasGameToday(t1,t2){
   return liveGames.some(g=>{
     const ha=g.homeTeam?.abbrev,aa=g.awayTeam?.abbrev;
     return((ha===t1&&aa===t2)||(ha===t2&&aa===t1))&&isToday(g.startTimeUTC||g.gameDate||'');
   });
 }
-
 function renderBracket(east,west){
   cachedEast=east;cachedWest=west;
   const all=[...east,...west];
@@ -582,7 +614,6 @@ function renderBracket(east,west){
     const t1c=s.t1===CAR,t2c=s.t2===CAR,done=s.w1===4||s.w2===4,tbd=!s.t1||s.t1==='TBD';
     const seed1=s.s1||SEED_MAP[s.t1]||'',seed2=s.s2||SEED_MAP[s.t2]||'';
     const ls=(!tbd&&!done)?getLiveScore(s.t1,s.t2):null;
-    // Backlog #9: only ice border for today's games, no red box at all
     const hasToday=!tbd&&!done&&seriesHasGameToday(s.t1,s.t2);
     const seriesCls=tbd?'tbd':hasToday?'today':'';
     let lH='';
@@ -598,7 +629,6 @@ function renderBracket(east,west){
   for(let r=3;r>=1;r--){const rd=west.filter(s=>s.round===r);html+=`<div class="bracket-round"><div class="round-title">${wN[3-r]}</div>${rd.length?rd.map(sH).join(''):TBD}</div>`;}
   $('bracket-body').innerHTML=html;
 }
-
 function buildFromSchedules(allGames){
   const seen=new Set();
   const games=allGames.filter(g=>{if(seen.has(g.id))return false;seen.add(g.id);return true;}).filter(g=>g.gameType===3);
@@ -621,7 +651,6 @@ function buildFromSchedules(allGames){
     return{conf:isEast?'east':'west',round,t1:top,t2:bot,s1:sl[top]||'',s2:sl[bot]||'',w1:s.wins[top]||0,w2:s.wins[bot]||0};
   });
 }
-
 async function loadBracket(){
   let series=null;
   try{
@@ -666,7 +695,7 @@ async function loadBracket(){
   renderBracket(series.filter(s=>s.conf==='east'||(s.conf!=='west'&&isE(s.t1))),series.filter(s=>s.conf==='west'||(s.conf!=='east'&&isW(s.t1))));
 }
 
-// STANDINGS
+// ── STANDINGS ─────────────────────────────────────────────────────────────────
 async function loadStandings(){
   const data=await fj(API.standings);
   const all=data.standings||[];
@@ -697,7 +726,7 @@ async function loadStandings(){
   return carData;
 }
 
-// PLAYER STATS
+// ── PLAYER STATS ──────────────────────────────────────────────────────────────
 async function loadPlayerStats(gameId,cid){
   const el=document.getElementById(cid);if(!el)return;
   el.querySelector('.r-players-inner').innerHTML='<p class="r-player-loading">Loading stats…</p>';
@@ -723,7 +752,7 @@ function toggleResult(row,gameId,pid){
   else{row.classList.add('expanded');panel.classList.add('open');expandedRow=row;loadPlayerStats(gameId,pid);}
 }
 
-// SCHEDULE
+// ── SCHEDULE ──────────────────────────────────────────────────────────────────
 async function loadSchedule(){
   const data=await fj(API.schedule(CAR)),games=data.games||[];
   const past=games.filter(g=>['OFF','FINAL'].includes(g.gameState)).sort((a,b)=>new Date(b.gameDate)-new Date(a.gameDate)).slice(0,8);
@@ -756,7 +785,7 @@ async function loadSchedule(){
   return{past,upcoming};
 }
 
-// SCOREBOARD
+// ── SCOREBOARD ────────────────────────────────────────────────────────────────
 async function loadScoreboard(){
   let data=null;
   try{const r=await fetch(API.scoreboard,{signal:mkSignal(5000),cache:'no-store'});if(r.ok)data=await r.json();}catch(e){}
@@ -766,7 +795,7 @@ async function loadScoreboard(){
   return liveGames.find(g=>g.homeTeam?.abbrev===CAR||g.awayTeam?.abbrev===CAR)||null;
 }
 
-// RENDER GAME
+// ── RENDER GAME ───────────────────────────────────────────────────────────────
 function renderGame(game,upcoming,past){
   if(game){
     const home=game.homeTeam?.abbrev===CAR,carT=home?game.homeTeam:game.awayTeam,oppT=home?game.awayTeam:game.homeTeam;
@@ -811,6 +840,7 @@ function renderStats(car,ppW,ppL){
   $('stats-body').innerHTML=`<div class="stat-grid"><div class="stat-block"><div class="stat-num">${car.wins||0}</div><div class="stat-lbl">Wins</div><div class="stat-sub">Regular season</div></div><div class="stat-block"><div class="stat-num">${car.points||0}</div><div class="stat-lbl">Points</div><div class="stat-sub">${pct} pt%</div></div><div class="stat-block"><div class="stat-num">#${car.divisionSequence||'?'}</div><div class="stat-lbl">Div Rank</div><div class="stat-sub">Metropolitan</div></div><div class="stat-block"><div class="stat-num">${car.wins||0}-${car.losses||0}${car.otLosses?'-'+car.otLosses:''}</div><div class="stat-lbl">Record</div><div class="stat-sub">W-L${car.otLosses?'-OTL':''}</div></div><div class="stat-block"><div class="stat-num">${ppW}-${ppL}</div><div class="stat-lbl">Playoffs</div><div class="stat-sub">W-L this year</div></div><div class="stat-block"><div class="stat-num">#${car.conferenceSequence||'?'}</div><div class="stat-lbl">Conf Seed</div><div class="stat-sub">Eastern Conf</div></div></div>`;
 }
 
+// ── MAIN ──────────────────────────────────────────────────────────────────────
 async function fetchAndRender(){
   lastFetch=Date.now();
   try{
@@ -826,7 +856,14 @@ async function fetchAndRender(){
   }catch(e){console.error(e);}
 }
 
-async function init(){fetchAndRender().finally(hideLoader);}
+async function init(){
+  forceTop();
+  fetchAndRender().finally(()=>{
+    hideLoader();
+    setTimeout(forceTop,50);
+  });
+}
+
 async function manualRefresh(){
   const btn=$('refresh-btn');
   btn.textContent='↻ Updating…';btn.style.color='var(--red)';btn.style.borderColor='var(--red)';
