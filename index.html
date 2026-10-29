@@ -312,22 +312,20 @@
 </head>
 <body>
 
-<div id="loader">
-  <div class="loader-glow"></div>
-  <div class="loader-ring-wrap">
-    <div class="loader-ring"></div>
-    <div class="loader-ring2"></div>
     <div class="loader-logo-wrap">
-      <svg width="68" height="68" viewBox="0 0 66 66" fill="none">
-        <circle cx="33" cy="33" r="32" fill="#CC0000" stroke="#000" stroke-width="1.5"/>
-        <circle cx="33" cy="33" r="26" fill="none" stroke="#000" stroke-width="1.5"/>
-        <path d="M11 33 Q33 17 55 33 Q33 49 11 33Z" fill="white" opacity="0.15"/>
-        <text x="33" y="39" font-family="Bebas Neue,sans-serif" font-size="17" fill="white" text-anchor="middle" letter-spacing="2">CAR</text>
+      <svg width="68" height="68" viewBox="0 0 200 200" role="img" aria-label="Spinning hurricane spiral">
+        <circle cx="100" cy="100" r="96" fill="#CC0000" stroke="#000" stroke-width="4"/>
+        <circle cx="100" cy="100" r="78" fill="none" stroke="#000" stroke-width="4"/>
+        <g>
+          <animateTransform attributeName="transform" type="rotate" from="360 100 100" to="0 100 100" dur="1.8s" repeatCount="indefinite"/>
+          <g transform="translate(100 100) scale(2.2) translate(-20 -20)" fill="none" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round">
+            <path d="M17 20 A3 3 0 0 1 20 17 A6 6 0 0 1 26 23 A10 10 0 0 1 16 33 A14 14 0 0 1 2 19"/>
+            <path d="M17 20 A3 3 0 0 1 20 17 A6 6 0 0 1 26 23 A10 10 0 0 1 16 33 A14 14 0 0 1 2 19" transform="rotate(180 20 20)"/>
+          </g>
+        </g>
+        <circle cx="100" cy="100" r="9" fill="#FFFFFF"/>
       </svg>
     </div>
-  </div>
-  <div class="loader-label">Loading live NHL data…</div>
-</div>
 
 <header>
   <div class="hbg"></div>
